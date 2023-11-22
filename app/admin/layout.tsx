@@ -5,6 +5,8 @@ import NavBar from "@/components/Elements/NavBar/NavBar";
 import AdminNav from "@/components/Elements/AdminNavbar/AdminNavbar";
 import AdminPage from "./page";
 import AdminLeftDrawer from "@/components/Elements/AdminLeftDrawer/AdminLeftDrawer";
+import { Provider } from "react-redux";
+import { store } from "@/redux/store";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,16 +19,17 @@ function layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <header>
-          <nav>
-            <AdminNav />
-          </nav>
-        </header>
-        <section className="flex w-full h-full pr-5">
-          <AdminLeftDrawer />
-          <AdminPage />
-        </section>
-        {/* <AdminPage /> */}
+        <Provider store={store}>
+          <header>
+            <nav>
+              <AdminNav />
+            </nav>
+          </header>
+          <section className="flex w-full h-full pr-5">
+            <AdminLeftDrawer />
+            <AdminPage />
+          </section>
+        </Provider>
       </body>
     </html>
   );
