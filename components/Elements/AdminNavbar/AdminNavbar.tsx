@@ -3,6 +3,8 @@ import { NavMenu } from "../NavMenu/NavMenu";
 import { PiList } from "react-icons/pi";
 import { Button } from "../../ui/button";
 import { Input } from "@/components/ui/input";
+import UserIconContainer from "../UserIconContainer/UserIconContainer";
+// import { UserIcon } from "lucide-react";
 
 function AdminNav() {
   return (
@@ -14,13 +16,14 @@ function AdminNav() {
         </span>
       </div>
       <div>
-        <Input type="text" placeholder="Search"/>
+        <Input type="text" placeholder="Search" />
       </div>
       {/* <NavMenu /> */}
       <div className="h-full w-auto flex justify-center items-center">
         <Button variant={"text"} size={"md"}>
           Login
         </Button>
+        <UserIconContainer userIconTitle="Lorem Name And the " />
       </div>
     </div>
   );
