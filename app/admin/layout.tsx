@@ -22,8 +22,8 @@ function layout({ children }: { children: React.ReactNode }) {
             <AdminNav />
           </nav>
         </header>
-        <section>
-          
+        <section className="flex w-full h-full pr-5">
+          <AdminLeftDrawer />
           <AdminPage />
         </section>
         {/* <AdminPage /> */}

@@ -3,7 +3,7 @@ import React from "react";
 import image from "../../../public/next.svg";
 const UserIconContainer = ({ userIconTitle }: { userIconTitle: string }) => {
   return (
-    <div className="flex gap-4 h-10 transition-colors ease-linear duration-100 group items-center rounded-md flex-1 overflow-hidden px-[5px] justify-center max-w-[10rem] hover:bg-accent hover:cursor-pointer">
+    <div className="flex gap-4 h-10 transition-colors ease-linear duration-100 group items-center rounded-md flex-1 overflow-hidden px-[5px] justify-center max-w-[8rem] hover:bg-accent hover:cursor-pointer">
       <Image
         src={image}
         alt="image "

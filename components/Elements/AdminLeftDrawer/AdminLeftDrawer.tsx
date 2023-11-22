@@ -3,8 +3,8 @@ import React from "react";
 import { GiSupersonicBullet } from "react-icons/gi";
 import { useSelector } from "react-redux";
 const AdminLeftDrawer = () => {
-  const state = useSelector((state: any) => state.global);
-  console.log(state)
+  //   const state = useSelector((state: any) => state.global);
+  //   console.log(state)
   return (
     <div className="h-screen w-[20rem] px-5 flex flex-col items-start justify-start">
       <ul className="w-full flex flex-col items-start justify-start gap-2 border-b-[1px] pb-4">

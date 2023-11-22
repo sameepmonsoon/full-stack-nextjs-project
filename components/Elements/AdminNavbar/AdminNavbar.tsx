@@ -18,7 +18,7 @@ function AdminNav() {
   return (
     <div className="flex w-auto h-[6rem] justify-start items-center px-3 pt-0 pb-0  gap-5">
       <div className="w-[15rem] flex justify-between items-center">
-        <Logo to="/" title="MARIO" />
+        <Logo to="/admin" title="MARIO" />
         <span
           onClick={() => setDrawerOpen(!isDrawerOpen)}
           className="cursor-pointer hover:text-black text-black bg-gray-100/60 hover:bg-gray-200/60 h-10 w-10  flex justify-center items-center rounded-[5px]">
@@ -31,7 +31,7 @@ function AdminNav() {
           type="text"
           placeholder="Search"
           width={90}
-          className=" pl-10 w-[20rem] h-[2.8rem] rounded-[0.4rem] border-gray-500/30 focus:border-transparent focus:ring-0 text-[#C0C5CC]"
+          className=" pl-10 w-[20rem] h-[2.8rem] rounded-[0.4rem] border-gray-500/30 focus:border-transparent focus:ring-0 text-black"
         />
       </div>
       {/* <NavMenu /> */}
