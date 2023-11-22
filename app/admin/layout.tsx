@@ -1,9 +1,11 @@
+"use client";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import NavBar from "@/components/Elements/NavBar/NavBar";
 import AdminNav from "@/components/Elements/AdminNavbar/AdminNavbar";
 import AdminPage from "./page";
+import AdminLeftDrawer from "@/components/Elements/AdminLeftDrawer/AdminLeftDrawer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,8 +22,11 @@ function layout({ children }: { children: React.ReactNode }) {
             <AdminNav />
           </nav>
         </header>
-        <AdminPage />
-        <div className="bg-red-900 h-10">lorem</div>
+        <section className="flex w-full h-full pr-5">
+          <AdminLeftDrawer />
+          <AdminPage />
+        </section>
+        {/* <AdminPage /> */}
       </body>
     </html>
   );
