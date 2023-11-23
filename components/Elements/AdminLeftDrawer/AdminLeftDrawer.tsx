@@ -4,12 +4,15 @@ import { GiSupersonicBullet } from "react-icons/gi";
 import { useSelector } from "react-redux";
 import { FaHouse } from "react-icons/fa6";
 const AdminLeftDrawer = () => {
-  //   const state = useSelector((state: any) => state.global);
-  //   console.log(state)
+  const state = useSelector((state: any) => state.global);
+
+  console.log(state);
   return (
     <div className="h-screen w-[20rem] px-5 flex flex-col items-start justify-start">
       <ul className="w-full flex flex-col items-start justify-start gap-2 border-b-[1px] pb-4">
-        <div className="h-8 flex justify-start items-center font-semibold text-[16px]">Dashboard</div>
+        <div className="h-8 flex justify-start items-center font-semibold text-[16px]">
+          Dashboard
+        </div>
         <Button variant={"icon"} size={"iconWithText"}>
           <FaHouse className="mr-2 h-4 w-4" />
           <h5> Home</h5>

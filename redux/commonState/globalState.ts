@@ -10,7 +10,9 @@ export const globalState = createSlice({
   name: "global",
   initialState,
   reducers: {
-    openSideDrawer: () => {},
+    openSideDrawer: (state: any, payload: any): any => {
+      return (state.isOpen = payload);
+    },
   },
 });
 

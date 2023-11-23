@@ -9,11 +9,12 @@ import { IoSearchOutline } from "react-icons/io5";
 import { FaBell } from "react-icons/fa";
 import { SiGooglemessages } from "react-icons/si";
 import { useState } from "react";
-// import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function AdminNav() {
-  // const state = useSelector((state: any) => state.global);
-  // console.log(state)
+  const state = useSelector((state: any) => state.global);
+  const rdxDisdpatch  = useDispatch()
+  console.log(state);
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   return (
     <div className="flex w-auto h-[6rem] justify-start items-center px-3 pt-0 pb-0  gap-5">
