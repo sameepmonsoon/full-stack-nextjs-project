@@ -19,7 +19,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         text: " hover:text-accent-foreground hover:text-red-500",
-        icon: " flex justify-start gap-2 capitalize rounded-[10px] pl-5 bg-transparent hover:bg-gray-200/30 text-black",
+        icon: " flex justify-start gap-2 capitalize rounded-[10px] pl-5 bg-transparent hover:bg-accent text-black",
       },
       size: {
         default: "h-10 px-4 py-2",
