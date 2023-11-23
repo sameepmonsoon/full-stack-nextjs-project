@@ -14,14 +14,14 @@ import { useLeftSiderState } from "@/store/commonState/globalState";
 
 function AdminNav() {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
-  const { setIsSiderOpen } = useLeftSiderState((state: any) => state);
+  const { setSiderState } = useLeftSiderState((state: any) => state);
 
   return (
     <div className="flex w-auto h-[6rem] justify-start items-center px-3 pt-0 pb-0  gap-5">
       <div className="w-[15rem] flex justify-between items-center">
         <Logo to="/admin" title="MARIO" />
         <span
-          onClick={setIsSiderOpen}
+          onClick={setSiderState}
           className="cursor-pointer hover:text-black text-black bg-gray-100/60 hover:bg-gray-200/60 h-10 w-10  flex justify-center items-center rounded-[5px]">
           <PiList size={20} />
         </span>

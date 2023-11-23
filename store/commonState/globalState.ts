@@ -1,10 +1,10 @@
 import { create } from "zustand";
 type Store = {
-  isSiderOpen: boolean;
-  setIsSiderOpen: () => void;
+  siderState: number;
+  setSiderState: () => void;
 };
 export const useLeftSiderState = create<Store>((set) => ({
-  isSiderOpen: false,
-  setIsSiderOpen: () =>
-    set((state: any) => ({ isSiderOpen: !state.isSiderOpen })),
+  siderState: 0,
+  setSiderState: () =>
+    set((state: any) => ({ siderState: (state.siderState + 1) % 3 })),
 }));
