@@ -6,8 +6,6 @@ import AdminNav from "@/components/Elements/AdminNavbar/AdminNavbar";
 import AdminPage from "./page";
 import AdminLeftDrawer from "@/components/Elements/AdminLeftDrawer/AdminLeftDrawer";
 
-import ReduxProvider from "@/components/Elements/ReduxProvider/ReduxProvider";
-
 function layout({ children }: { children: React.ReactNode }) {
   return (
     <>
