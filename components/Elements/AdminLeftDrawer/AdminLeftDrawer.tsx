@@ -14,13 +14,13 @@ const AdminLeftDrawer = () => {
 
   return (
     <div
-      className={`adminLeftDrawer px-5 left-0 h-screen visible transition-width duration-300 ease-in-out ${
+      className={`adminLeftDrawer px-5 left-0  overflow-y-scroll h-screen visible transition-width duration-300 ease-in-out ${
         siderState == 0
           ? "w-[20rem]"
           : siderState == 1
           ? "w-[6rem]"
-          : "w-0 left-[-20rem] pr-0 pl-5 overflow-hidden"
-      }  flex flex-col items-start justify-start hover:overflow-y-scroll`}>
+          : "w-0 left-[-20rem] pr-0 pl-5 "
+      }  flex flex-col items-start justify-start`}>
       {adminLeftDrawerList.map((item: any) => (
         <>
           <ul

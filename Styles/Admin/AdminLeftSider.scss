@@ -1,17 +1,27 @@
-.adminLeftDrawer::-webkit-scrollbar {
-  width: 5px;
-  max-height: 50px;
+.adminLeftDrawer {
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 5px;
+  }
 }
-.adminLeftDrawer::-webkit-scrollbar-track {
-  background: none;
-  width: none;
+.adminLeftDrawer:hover {
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
 }
-.adminLeftDrawer::-webkit-scrollbar-thumb {
-  background-color: grey;
-  border-radius: 20px;
-  border: 3px solid rgb(178, 178, 178);
-  max-height: 10px;
-}
-.adminLeftDrawer::-webkit-scrollbar-button {
-  height: 10px;
+@media (hover: none) {
+  .adminLeftDrawer {
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+  }
 }
