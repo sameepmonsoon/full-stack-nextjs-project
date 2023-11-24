@@ -22,7 +22,7 @@ function AdminNav() {
 
   return (
     <div className=" top-0 bg-white fixed flex w-full z-40 h-[6rem] justify-start items-center px-3 pt-0 pb-0  gap-5">
-      <div className="w-[20%] flex justify-between items-center">
+      <div className="min-w-[15.5rem] flex justify-between items-center">
         <Logo to="/admin" title="MARIO" />
         <span
           onClick={setSiderState}

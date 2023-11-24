@@ -9,7 +9,6 @@ import "../../../Styles/Admin/AdminLeftSider.scss";
 const AdminLeftDrawer = () => {
   const { siderState } = useLeftSiderState((state: any) => state);
   const hideSiderDetail = siderState === 1 || siderState === 2;
-
   const pathname = usePathname();
 
   return (
