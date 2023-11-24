@@ -26,4 +26,39 @@ export const adminLeftDrawerList = [
       { icon: IoLogoJavascript, listName: "JS" },
     ],
   },
+  {
+    title: "PL",
+    list: [
+      { icon: IoLogoPython, listName: "Python" },
+      { icon: IoLogoJavascript, listName: "JS" },
+    ],
+  },
+  {
+    title: "PL",
+    list: [
+      { icon: IoLogoPython, listName: "Python" },
+      { icon: IoLogoJavascript, listName: "JS" },
+    ],
+  },
+  {
+    title: "PL",
+    list: [
+      { icon: IoLogoPython, listName: "Python" },
+      { icon: IoLogoJavascript, listName: "JS" },
+    ],
+  },
+  {
+    title: "PL",
+    list: [
+      { icon: IoLogoPython, listName: "Python" },
+      { icon: IoLogoJavascript, listName: "JS" },
+    ],
+  },
+  {
+    title: "PL",
+    list: [
+      { icon: IoLogoPython, listName: "Python" },
+      { icon: IoLogoJavascript, listName: "JS" },
+    ],
+  },
 ];

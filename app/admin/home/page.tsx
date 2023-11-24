@@ -2,7 +2,9 @@ import React from "react";
 
 function AdminPage() {
   return (
-    <div className="bg-red-100 w-full rounded-xl p-5 relative">This is admin page.</div>
+    <div className="bg-accent w-full rounded-xl p-5 relative">
+      This is admin page.
+    </div>
   );
 }
 

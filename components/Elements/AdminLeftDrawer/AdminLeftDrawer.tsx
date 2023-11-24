@@ -5,7 +5,7 @@ import { useLeftSiderState } from "@/store/commonState/globalState";
 import { adminLeftDrawerList } from "./AdminLeftDrawerList";
 import { usePathname } from "next/navigation";
 import CustomToolTip from "../CustomToolTip/CustomToolTip";
-
+import "../../../Styles/Admin/AdminLeftSider.scss";
 const AdminLeftDrawer = () => {
   const { siderState } = useLeftSiderState((state: any) => state);
   const hideSiderDetail = siderState === 1 || siderState === 2;
@@ -14,13 +14,13 @@ const AdminLeftDrawer = () => {
 
   return (
     <div
-      className={` px-5 left-0 h-screen visible transition-width duration-300 ease-in-out ${
+      className={`adminLeftDrawer px-5 left-0 h-screen visible transition-width duration-300 ease-in-out ${
         siderState == 0
           ? "w-[20rem]"
           : siderState == 1
           ? "w-[6rem]"
-          : "w-0 left-[-20rem] pr-0 pl-5"
-      }  flex flex-col items-start justify-start`}>
+          : "w-0 left-[-20rem] pr-0 pl-5 overflow-hidden"
+      }  flex flex-col items-start justify-start hover:overflow-y-scroll`}>
       {adminLeftDrawerList.map((item: any) => (
         <>
           <ul

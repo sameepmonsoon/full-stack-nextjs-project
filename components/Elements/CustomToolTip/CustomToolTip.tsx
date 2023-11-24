@@ -42,7 +42,7 @@ const CustomToolTip = ({
           <TooltipTrigger asChild>{children}</TooltipTrigger>
           <TooltipContent side={toolTipPosition}>
             <p>{toolTipContent}</p>
-            <TooltipArrow className="opacity-60" />
+            <TooltipArrow className="opacity-80" />
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

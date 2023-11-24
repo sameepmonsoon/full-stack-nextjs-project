@@ -1,0 +1,17 @@
+.adminLeftDrawer::-webkit-scrollbar {
+  width: 5px;
+  max-height: 50px;
+}
+.adminLeftDrawer::-webkit-scrollbar-track {
+  background: none;
+  width: none;
+}
+.adminLeftDrawer::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 20px;
+  border: 3px solid rgb(178, 178, 178);
+  max-height: 10px;
+}
+.adminLeftDrawer::-webkit-scrollbar-button {
+  height: 10px;
+}
