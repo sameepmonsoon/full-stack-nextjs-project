@@ -11,6 +11,10 @@ import { SiGooglemessages } from "react-icons/si";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLeftSiderState } from "@/store/commonState/globalState";
+import { CustomPopOver } from "../CustomPopOver/CustomPopOver";
+import { Label } from "@radix-ui/react-label";
+import { lightModeToggleConstants } from "@/Helpers/Constants/NavBarConstants";
+import { MdOutlineWbSunny } from "react-icons/md";
 
 function AdminNav() {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -47,6 +51,27 @@ function AdminNav() {
           className="w-10 flex justify-center items-center p-1">
           <SiGooglemessages size={21} />
         </Button>
+        <CustomPopOver
+          popOverContent={
+            <>
+              {lightModeToggleConstants.map((item: any) => (
+                <>
+                  <div className="gap-2 overflow-hidden cursor-pointer hover:bg-accent rounded-sm w-full text-sm flex justify-start items-center py-[2px] px-2">
+                    <item.icon size={15} />
+                    <Label className="text-ellipsis overflow-hidden max-w-[75%] h-full">
+                      {item.label}
+                    </Label>
+                  </div>
+                </>
+              ))}
+            </>
+          }>
+          <Button
+            variant={"ghost"}
+            className="w-10 flex justify-center items-center p-1">
+            <MdOutlineWbSunny size={21} />
+          </Button>
+        </CustomPopOver>
         <UserIconContainer userIconTitle="Lorem Name And the " />
       </div>
     </div>
