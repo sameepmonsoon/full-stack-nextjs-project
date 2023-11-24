@@ -19,7 +19,7 @@ import { MdOutlineWbSunny } from "react-icons/md";
 function AdminNav() {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const { setSiderState } = useLeftSiderState((state: any) => state);
-
+console.log('lorem')
   return (
     <div className=" top-0 bg-white fixed flex w-full z-40 h-[6rem] justify-start items-center px-3 pt-0 pb-0  gap-5">
       <div className="min-w-[15.5rem] flex justify-between items-center">
