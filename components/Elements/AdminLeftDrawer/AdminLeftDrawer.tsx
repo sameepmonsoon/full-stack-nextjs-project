@@ -4,26 +4,28 @@ import React from "react";
 import { useLeftSiderState } from "@/store/commonState/globalState";
 import { adminLeftDrawerList } from "./AdminLeftDrawerList";
 import { usePathname } from "next/navigation";
+import CustomToolTip from "../CustomToolTip/CustomToolTip";
+
 const AdminLeftDrawer = () => {
   const { siderState } = useLeftSiderState((state: any) => state);
   const hideSiderDetail = siderState === 1 || siderState === 2;
 
   const pathname = usePathname();
-  console.log(pathname);
+
   return (
     <div
-      className={`relative px-5 left-0 h-screen visible transition-width duration-300 ease-in-out ${
+      className={` px-5 left-0 h-screen visible transition-width duration-300 ease-in-out ${
         siderState == 0
-          ? "w-[20rem] "
+          ? "w-[20rem]"
           : siderState == 1
           ? "w-[6rem]"
-          : "w-0 left-[-20rem] px-0 pl-5"
+          : "w-0 left-[-20rem] pr-0 pl-5"
       }  flex flex-col items-start justify-start`}>
       {adminLeftDrawerList.map((item: any) => (
         <>
           <ul
             className={`w-full flex flex-col items-start justify-start gap-2  ${
-              hideSiderDetail ? "border-b-0 pb-0" : "border-b-[1px] pb-4"
+              hideSiderDetail ? "border-b-0 py-0" : "border-b-[1px] py-3"
             }
               `}>
             <div
@@ -34,10 +36,20 @@ const AdminLeftDrawer = () => {
             </div>
             {item.list.map((item: any) => (
               <>
-                <Button variant={"icon"} size={"iconWithText"}>
-                  <item.icon className="mr-2 h-4 w-4" />
-                  {!hideSiderDetail && <h5> {item.listName}</h5>}
-                </Button>
+                <CustomToolTip
+                  toolTipContent={item.listName}
+                  showToolTip={hideSiderDetail}>
+                  <Button
+                    variant={
+                      pathname.includes(item.listName.toLowerCase())
+                        ? "selected"
+                        : "icon"
+                    }
+                    size={"iconWithText"}>
+                    <item.icon className="mr-2 h-4 w-4" />
+                    {!hideSiderDetail && <h5> {item.listName}</h5>}
+                  </Button>
+                </CustomToolTip>
               </>
             ))}
           </ul>

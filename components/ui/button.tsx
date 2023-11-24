@@ -20,6 +20,8 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         text: " hover:text-accent-foreground hover:text-red-500",
         icon: " flex justify-start gap-2 capitalize rounded-[10px] pl-5 bg-transparent hover:bg-accent text-black",
+        selected:
+          " flex justify-start gap-2 capitalize rounded-[10px] pl-5 bg-transparent hover:bg-accent text-black bg-accent",
       },
       size: {
         default: "h-10 px-4 py-2",
@@ -29,6 +31,7 @@ const buttonVariants = cva(
         icon: "h-10 w-10",
         iconWithText: "h-[3rem] w-full",
       },
+     
     },
     defaultVariants: {
       variant: "default",

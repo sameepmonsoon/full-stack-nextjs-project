@@ -17,7 +17,7 @@ function AdminNav() {
   const { setSiderState } = useLeftSiderState((state: any) => state);
 
   return (
-    <div className="flex w-auto h-[6rem] justify-start items-center px-3 pt-0 pb-0  gap-5">
+    <div className=" top-0 fixed flex w-full z-40 h-[6rem] justify-start items-center px-3 pt-0 pb-0  gap-5 bg-white">
       <div className="w-[15rem] flex justify-between items-center">
         <Logo to="/admin" title="MARIO" />
         <span
