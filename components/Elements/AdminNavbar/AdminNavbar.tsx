@@ -58,7 +58,7 @@ function AdminNav() {
                 <>
                   <div className="gap-2 overflow-hidden cursor-pointer hover:bg-accent rounded-sm w-full text-sm flex justify-start items-center py-[2px] px-2">
                     <item.icon size={15} />
-                    <Label className="text-ellipsis overflow-hidden max-w-[75%] h-full">
+                    <Label className="text-ellipsis cursor-pointer overflow-hidden max-w-[75%] h-full">
                       {item.label}
                     </Label>
                   </div>

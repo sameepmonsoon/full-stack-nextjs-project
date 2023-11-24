@@ -45,8 +45,13 @@ const AdminLeftDrawer = () => {
                         ? "selected"
                         : "icon"
                     }
-                    size={"iconWithText"}>
-                    <item.icon className="mr-2 h-4 w-4" />
+                    size={"iconWithText"}
+                    className={`${hideSiderDetail && "justify-center p-0"} `}>
+                    <item.icon
+                      className={`${
+                        hideSiderDetail ? "mr-0 " : "mr-2 "
+                      } h-4 w-4`}
+                    />
                     {!hideSiderDetail && <h5> {item.listName}</h5>}
                   </Button>
                 </CustomToolTip>
