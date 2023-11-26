@@ -13,7 +13,7 @@ const AdminLeftDrawer = () => {
 
   return (
     <div
-      className={`adminLeftDrawer px-5 left-0  overflow-y-scroll h-screen visible transition-width duration-300 ease-in-out ${
+      className={`adminLeftDrawer px-5 overflow-y-scroll h-screen visible transition-width duration-300 ease-in-out ${
         siderState == 0
           ? "w-[20rem]"
           : siderState == 1

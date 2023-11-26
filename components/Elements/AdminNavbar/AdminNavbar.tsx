@@ -1,6 +1,5 @@
 "use client";
 import Logo from "../Logo/Logo";
-import { NavMenu } from "../NavMenu/NavMenu";
 import { PiList } from "react-icons/pi";
 import { Button } from "../../ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,8 +7,6 @@ import UserIconContainer from "../UserIconContainer/UserIconContainer";
 import { IoSearchOutline } from "react-icons/io5";
 import { FaBell } from "react-icons/fa";
 import { SiGooglemessages } from "react-icons/si";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useLeftSiderState } from "@/store/commonState/globalState";
 import { CustomPopOver } from "../CustomPopOver/CustomPopOver";
 import { Label } from "@radix-ui/react-label";
@@ -17,8 +14,9 @@ import { lightModeToggleConstants } from "@/Helpers/Constants/NavBarConstants";
 import { MdOutlineWbSunny } from "react-icons/md";
 
 function AdminNav() {
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
   const { setSiderState } = useLeftSiderState((state: any) => state);
+
+  const currentLighMode = "L";
   return (
     <div className=" top-0 bg-white fixed flex w-full z-40 h-[6rem] justify-start items-center px-3 pt-0 pb-0  gap-5">
       <div className="min-w-[15.5rem] flex justify-between items-center">
@@ -55,12 +53,15 @@ function AdminNav() {
             <>
               {lightModeToggleConstants.map((item: any) => (
                 <>
-                  <div className="gap-2 overflow-hidden cursor-pointer hover:bg-accent rounded-sm w-full text-sm flex justify-start items-center py-[2px] px-2">
+                  <button
+                    className={`gap-2 overflow-hidden cursor-pointer ${
+                      currentLighMode === item.mode && "bg-accent"
+                    } hover:bg-accent rounded-sm w-full text-sm flex justify-start items-center py-[2px] px-2`}>
                     <item.icon size={15} />
                     <Label className="text-ellipsis cursor-pointer overflow-hidden max-w-[75%] h-full">
                       {item.label}
                     </Label>
-                  </div>
+                  </button>
                 </>
               ))}
             </>
