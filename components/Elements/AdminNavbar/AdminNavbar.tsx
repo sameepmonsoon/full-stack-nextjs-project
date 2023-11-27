@@ -19,7 +19,10 @@ import localThemeChecker from "@/Helpers/localThemeChecker";
 function AdminNav() {
   const { setSiderState } = useLeftSiderState((state: any) => state);
   const isDarkTheme = useSystemThemeDetector();
-
+  const [toggle, setToggle] = useState(
+    localStorage.getItem("toggle") === "true"
+  );
+  const prevToggleRef = useRef(toggle);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "L");
 
   useEffect(() => {
@@ -28,6 +31,14 @@ function AdminNav() {
   const handleThemeToggle = (themeMode: SetStateAction<string>) => {
     setTheme(themeMode);
   };
+
+  const handleToggle = () => {
+    const newToggle = !toggle;
+    prevToggleRef.current = toggle;
+    setToggle(newToggle);
+    localStorage.setItem("toggle", `${newToggle}`);
+  };
+
   return (
     <div className=" top-0 bg-white fixed flex w-full z-40 h-[6rem] justify-start items-center px-3 pt-0 pb-0  gap-5 dark:bg-black dark:text-white">
       <div className="min-w-[15.5rem] flex justify-between items-center">
@@ -59,6 +70,8 @@ function AdminNav() {
           <SiGooglemessages size={21} />
         </Button>
         <CustomPopOver
+          defaultOpen={true}
+          open={toggle}
           popOverContent={
             <>
               {lightModeToggleConstants.map((item: any) => (
@@ -66,7 +79,7 @@ function AdminNav() {
                   <button
                     onClick={() => {
                       handleThemeToggle(item.mode);
-                      // handleToggle();
+                      handleToggle();
                     }}
                     className={`gap-2 overflow-hidden cursor-pointer ${
                       theme === item.mode && "bg-accent"
@@ -81,6 +94,7 @@ function AdminNav() {
             </>
           }>
           <Button
+            onClick={handleToggle}
             variant={"ghost"}
             className="w-10 flex justify-center items-center p-1">
             {lightModeToggleConstants
