@@ -6,14 +6,17 @@ import { adminLeftDrawerList } from "./AdminLeftDrawerList";
 import { usePathname } from "next/navigation";
 import CustomToolTip from "../CustomToolTip/CustomToolTip";
 import "../../../Styles/Admin/AdminLeftSider.scss";
+import { colorPallette } from "@/Helpers/Constants/ColourConstants";
 const AdminLeftDrawer = () => {
   const { siderState } = useLeftSiderState((state: any) => state);
   const hideSiderDetail = siderState === 1 || siderState === 2;
   const pathname = usePathname();
-
+  const theme = localStorage.getItem("theme");
   return (
     <div
-      className={`adminLeftDrawer dark:bg-[#292929] dark:text-white px-5 overflow-y-scroll h-screen visible transition-width duration-300 ease-in-out ${
+      className={`adminLeftDrawer dark:bg-[${
+        colorPallette.darkBg
+      }] dark:text-white px-5 overflow-y-scroll h-screen visible transition-width duration-300 ease-in-out ${
         siderState == 0
           ? "w-[20rem]"
           : siderState == 1
@@ -23,8 +26,10 @@ const AdminLeftDrawer = () => {
       {adminLeftDrawerList.map((item: any) => (
         <>
           <ul
-            className={`w-full flex flex-col items-start justify-start gap-2 dark:bg-[#292929] dark:text-gray-300 dark:border-b-gray-400/40  ${
-              hideSiderDetail ? "border-b-0 py-0" : "border-b-[1px] py-3"
+            className={`w-full flex flex-col items-start justify-start gap-2 dark:bg-[${
+              colorPallette.darkBg
+            }] dark:text-gray-300 dark:border-b-gray-400/40  ${
+              hideSiderDetail ? "border-b-0 py-1" : "border-b-[1px] py-3"
             }
               `}>
             <div

@@ -19,7 +19,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         text: " hover:text-accent-foreground hover:text-red-500 ",
-        icon: " flex justify-start gap-2 dark:bg-[#292929] dark:hover:bg-gray-600/40 dark:text-gray-300 capitalize rounded-[10px] pl-5 bg-transparent hover:bg-accent text-black",
+        icon: " flex justify-start gap-2  dark:hover:bg-gray-600/40 dark:text-gray-300 capitalize rounded-[10px] pl-5 bg-transparent hover:bg-accent text-black",
         selected:
           " flex justify-start gap-2 dark:text-gray-300 capitalize rounded-[10px] pl-5 bg-transparent dark:bg-gray-600/40 text-black bg-accent",
       },
