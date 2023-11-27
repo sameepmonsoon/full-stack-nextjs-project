@@ -12,7 +12,7 @@
   }
   &::-webkit-scrollbar-thumb {
     border-radius: 15px;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(157, 157, 157, 0.2);
   }
 }
 @media (hover: none) {
@@ -21,7 +21,7 @@
       width: 8px;
     }
     &::-webkit-scrollbar-thumb {
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: rgba(181, 181, 181, 0.2);
     }
   }
 }

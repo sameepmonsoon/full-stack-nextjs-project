@@ -14,7 +14,7 @@ function layout({ children }: { children: React.ReactNode }) {
           <AdminNav />
         </nav>
       </header>
-      <section className="flex w-full h-full pr-5 mt-[6rem]">
+      <section className="flex w-full h-full pr-5 mt-[6rem] dark:bg-red-500">
         <AdminLeftDrawer />
         {children}
       </section>

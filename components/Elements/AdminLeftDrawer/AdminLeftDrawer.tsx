@@ -13,7 +13,7 @@ const AdminLeftDrawer = () => {
 
   return (
     <div
-      className={`adminLeftDrawer px-5 overflow-y-scroll h-screen visible transition-width duration-300 ease-in-out ${
+      className={`adminLeftDrawer dark:bg-[#292929] dark:text-white px-5 overflow-y-scroll h-screen visible transition-width duration-300 ease-in-out ${
         siderState == 0
           ? "w-[20rem]"
           : siderState == 1
@@ -23,7 +23,7 @@ const AdminLeftDrawer = () => {
       {adminLeftDrawerList.map((item: any) => (
         <>
           <ul
-            className={`w-full flex flex-col items-start justify-start gap-2  ${
+            className={`w-full flex flex-col items-start justify-start gap-2 dark:bg-[#292929] dark:text-gray-300 dark:border-b-gray-400/40  ${
               hideSiderDetail ? "border-b-0 py-0" : "border-b-[1px] py-3"
             }
               `}>
