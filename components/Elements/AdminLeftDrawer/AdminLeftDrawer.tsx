@@ -18,7 +18,7 @@ const AdminLeftDrawer = () => {
         colorPallette.darkBg
       }] dark:text-white px-5 overflow-y-scroll h-screen visible transition-width duration-300 ease-in-out ${
         siderState == 0
-          ? "w-[20rem]"
+          ? "w-[19rem]"
           : siderState == 1
           ? "w-[6rem]"
           : "w-0 left-[-20rem] pr-0 pl-5 "

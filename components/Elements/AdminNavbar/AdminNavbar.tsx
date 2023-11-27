@@ -40,12 +40,12 @@ function AdminNav() {
   };
 
   return (
-    <div className=" top-0 bg-white fixed flex w-full z-40 h-[6rem] justify-start items-center px-3 pt-0 pb-0  gap-5 dark:bg-[#1E1E1E] dark:text-white">
+    <div className=" top-0 bg-white fixed flex w-full z-40 h-[5.5rem] justify-start items-center px-3 pt-0 pb-0  gap-5 dark:bg-[#1E1E1E] dark:text-white">
       <div className="min-w-[15.5rem] flex justify-between items-center">
         <Logo to="/admin" title="MARIO" />
         <span
           onClick={setSiderState}
-          className="cursor-pointer hover:text-black text-black dark:bg-gray-600/70 dark:text-white dark:hover:bg-accent dark:hover:text-black bg-gray-100/60 hover:bg-gray-200/60 h-10 w-10  flex justify-center items-center rounded-[5px]">
+          className="cursor-pointer hover:text-black text-black dark:bg-transparent dark:text-white dark:hover:bg-accent dark:hover:text-black bg-gray-100/60 hover:bg-gray-200/60 h-10 w-10  flex justify-center items-center rounded-[5px]">
           <PiList size={20} />
         </span>
       </div>
