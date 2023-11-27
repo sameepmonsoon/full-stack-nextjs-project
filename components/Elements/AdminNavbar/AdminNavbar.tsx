@@ -12,13 +12,51 @@ import { CustomPopOver } from "../CustomPopOver/CustomPopOver";
 import { Label } from "@radix-ui/react-label";
 import { lightModeToggleConstants } from "@/Helpers/Constants/NavBarConstants";
 import { MdOutlineWbSunny } from "react-icons/md";
+import { useEffect, useRef, useState } from "react";
+import { useSystemThemeDetector } from "@/Hooks/useSystemThemeDetector";
 
 function AdminNav() {
   const { setSiderState } = useLeftSiderState((state: any) => state);
-
+  const isDarkTheme = useSystemThemeDetector();
+  console.log(isDarkTheme);
   const currentLighMode = "L";
+
+  const [toggle, setToggle] = useState(
+    localStorage.getItem("toggle") === "true"
+  );
+  const prevToggleRef = useRef(toggle);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "L");
+
+  useEffect(() => {
+    if (theme === "D") {
+      localStorage.setItem("theme", "D");
+      document.documentElement.classList.add("dark");
+    } else if (theme === "S" || isDarkTheme) {
+      localStorage.setItem("theme", "S");
+      document.documentElement.classList.add("dark");
+    } else if (theme === "S" || !isDarkTheme) {
+      localStorage.setItem("theme", "S");
+      document.documentElement.classList.remove("dark");
+    } else {
+      localStorage.setItem("theme", "L");
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme, isDarkTheme]);
+
+  const handleThemeToggle = (themeMode: String) => {
+    console.log(themeMode);
+    setTheme(theme === "D" ? "L" : "D");
+  };
+
+  const handleToggle = () => {
+    const newToggle = !toggle;
+    prevToggleRef.current = toggle;
+    setToggle(newToggle);
+    localStorage.setItem("toggle", `${newToggle}`);
+  };
+
   return (
-    <div className=" top-0 bg-white fixed flex w-full z-40 h-[6rem] justify-start items-center px-3 pt-0 pb-0  gap-5">
+    <div className=" top-0 bg-white fixed flex w-full z-40 h-[6rem] justify-start items-center px-3 pt-0 pb-0  gap-5 dark:bg-red-900">
       <div className="min-w-[15.5rem] flex justify-between items-center">
         <Logo to="/admin" title="MARIO" />
         <span
@@ -36,7 +74,6 @@ function AdminNav() {
           className=" pl-10 w-[20rem] h-[2.8rem] rounded-[0.4rem] border-gray-500/30 focus:border-transparent focus:ring-0 text-black"
         />
       </div>
-      {/* <NavMenu /> */}
       <div className="h-full w-full flex justify-end items-center l gap-2">
         <Button
           variant={"ghost"}
@@ -54,8 +91,12 @@ function AdminNav() {
               {lightModeToggleConstants.map((item: any) => (
                 <>
                   <button
+                    onClick={() => {
+                      handleThemeToggle(item.mode);
+                      handleToggle();
+                    }}
                     className={`gap-2 overflow-hidden cursor-pointer ${
-                      currentLighMode === item.mode && "bg-accent"
+                      theme === item.mode && "bg-accent"
                     } hover:bg-accent rounded-sm w-full text-sm flex justify-start items-center py-[2px] px-2`}>
                     <item.icon size={15} />
                     <Label className="text-ellipsis cursor-pointer overflow-hidden max-w-[75%] h-full">
