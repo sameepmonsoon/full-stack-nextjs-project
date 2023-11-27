@@ -12,51 +12,24 @@ import { CustomPopOver } from "../CustomPopOver/CustomPopOver";
 import { Label } from "@radix-ui/react-label";
 import { lightModeToggleConstants } from "@/Helpers/Constants/NavBarConstants";
 import { MdOutlineWbSunny } from "react-icons/md";
-import { useEffect, useRef, useState } from "react";
+import { SetStateAction, useEffect, useRef, useState } from "react";
 import { useSystemThemeDetector } from "@/Hooks/useSystemThemeDetector";
+import localThemeChecker from "@/Helpers/localThemeChecker";
 
 function AdminNav() {
   const { setSiderState } = useLeftSiderState((state: any) => state);
   const isDarkTheme = useSystemThemeDetector();
-  console.log(isDarkTheme);
-  const currentLighMode = "L";
 
-  const [toggle, setToggle] = useState(
-    localStorage.getItem("toggle") === "true"
-  );
-  const prevToggleRef = useRef(toggle);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "L");
 
   useEffect(() => {
-    if (theme === "D") {
-      localStorage.setItem("theme", "D");
-      document.documentElement.classList.add("dark");
-    } else if (theme === "S" || isDarkTheme) {
-      localStorage.setItem("theme", "S");
-      document.documentElement.classList.add("dark");
-    } else if (theme === "S" || !isDarkTheme) {
-      localStorage.setItem("theme", "S");
-      document.documentElement.classList.remove("dark");
-    } else {
-      localStorage.setItem("theme", "L");
-      document.documentElement.classList.remove("dark");
-    }
+    localThemeChecker(theme, isDarkTheme);
   }, [theme, isDarkTheme]);
-
-  const handleThemeToggle = (themeMode: String) => {
-    console.log(themeMode);
-    setTheme(theme === "D" ? "L" : "D");
+  const handleThemeToggle = (themeMode: SetStateAction<string>) => {
+    setTheme(themeMode);
   };
-
-  const handleToggle = () => {
-    const newToggle = !toggle;
-    prevToggleRef.current = toggle;
-    setToggle(newToggle);
-    localStorage.setItem("toggle", `${newToggle}`);
-  };
-
   return (
-    <div className=" top-0 bg-white fixed flex w-full z-40 h-[6rem] justify-start items-center px-3 pt-0 pb-0  gap-5 dark:bg-red-900">
+    <div className=" top-0 bg-white fixed flex w-full z-40 h-[6rem] justify-start items-center px-3 pt-0 pb-0  gap-5 dark:bg-black dark:text-white">
       <div className="min-w-[15.5rem] flex justify-between items-center">
         <Logo to="/admin" title="MARIO" />
         <span
@@ -93,7 +66,7 @@ function AdminNav() {
                   <button
                     onClick={() => {
                       handleThemeToggle(item.mode);
-                      handleToggle();
+                      // handleToggle();
                     }}
                     className={`gap-2 overflow-hidden cursor-pointer ${
                       theme === item.mode && "bg-accent"
@@ -110,7 +83,11 @@ function AdminNav() {
           <Button
             variant={"ghost"}
             className="w-10 flex justify-center items-center p-1">
-            <MdOutlineWbSunny size={21} />
+            {lightModeToggleConstants
+              .filter((item: any) => item.mode === theme)
+              .map((item: any, index: number) => (
+                <item.icon size={21} key={index} />
+              ))}
           </Button>
         </CustomPopOver>
         <UserIconContainer userIconTitle="Lorem Name And the " />
