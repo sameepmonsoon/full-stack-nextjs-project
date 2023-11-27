@@ -29,8 +29,11 @@ function AdminNav() {
   useEffect(() => {
     localThemeChecker(theme, isDarkTheme);
   }, [theme, isDarkTheme]);
+
   const handleThemeToggle = (themeMode: SetStateAction<string>) => {
-    setTheme(themeMode);
+    setTimeout(() => {
+      setTheme(themeMode);
+    }, 300);
   };
 
   const handleToggle = () => {
