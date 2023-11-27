@@ -1,6 +1,6 @@
 export const colorPallette = {
-  darkBg: "#1E1E1E",
+  darkBg: "#051114",
   darkText: "#ffffff",
   darkBorderColor: "#C2D9FF",
-  darkAdminSiderBg:'#292929'
+  darkAdminSiderBg: "#292929",
 };
