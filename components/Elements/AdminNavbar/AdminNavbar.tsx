@@ -11,6 +11,7 @@ import { useLeftSiderState } from "@/store/commonState/globalState";
 import { CustomPopOver } from "../CustomPopOver/CustomPopOver";
 import { Label } from "@radix-ui/react-label";
 import { lightModeToggleConstants } from "@/Helpers/Constants/NavBarConstants";
+import { MdOutlineWbSunny } from "react-icons/md";
 import { SetStateAction, useEffect, useRef, useState } from "react";
 import { useSystemThemeDetector } from "@/Hooks/useSystemThemeDetector";
 import localThemeChecker from "@/Helpers/localThemeChecker";
@@ -61,7 +62,7 @@ function AdminNav() {
           <PiList size={20} />
         </span>
       </div>
-      <div className="h-full w-full flex justify-end items-center l gap-2">
+      <div className="h-full flex-1 flex justify-end items-center gap-2">
         <div className="relative flex items-center justify-start">
           <IoSearchOutline size={18} className="absolute left-[13px]" />
           <Input
