@@ -23,9 +23,10 @@ const AdminLeftDrawer = () => {
           ? "w-[6rem]"
           : "w-0 left-[-20rem] pr-0 pl-5 "
       }  flex flex-col items-start justify-start`}>
-      {adminLeftDrawerList.map((item: any) => (
+      {adminLeftDrawerList.map((item: any, index: number) => (
         <>
           <ul
+            key={index}
             className={`w-full flex flex-col items-start justify-start gap-2 dark:bg-[${
               colorPallette.darkBg
             }] dark:text-gray-300 dark:border-b-gray-400/40  ${
@@ -33,14 +34,16 @@ const AdminLeftDrawer = () => {
             }
               `}>
             <div
+              key={index}
               className={`${
                 hideSiderDetail ? "hidden" : "h-6"
               } flex justify-start items-center font-bold text-[14px] transition-all visible duration-300 ease-in-out`}>
               {item.title}
             </div>
-            {item.list.map((item: any) => (
+            {item.list.map((item: any, index: number) => (
               <>
                 <CustomToolTip
+                  key={index}
                   toolTipContent={item.listName}
                   showToolTip={hideSiderDetail}>
                   <Button
@@ -52,6 +55,7 @@ const AdminLeftDrawer = () => {
                     size={"iconWithText"}
                     className={`${hideSiderDetail && "justify-center p-0"} `}>
                     <item.icon
+                      key={index}
                       className={`${
                         hideSiderDetail ? "mr-0 " : "mr-2 "
                       } h-4 w-4`}

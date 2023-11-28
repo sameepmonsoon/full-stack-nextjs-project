@@ -16,7 +16,8 @@ import { SetStateAction, useEffect, useRef, useState } from "react";
 import { useSystemThemeDetector } from "@/Hooks/useSystemThemeDetector";
 import localThemeChecker from "@/Helpers/localThemeChecker";
 import { colorPallette } from "@/Helpers/Constants/ColourConstants";
-
+import { AiOutlineFullscreen } from "react-icons/ai";
+import { AiOutlineFullscreenExit } from "react-icons/ai";
 function AdminNav() {
   const { setSiderState } = useLeftSiderState((state: any) => state);
   const isDarkTheme = useSystemThemeDetector();
@@ -50,7 +51,7 @@ function AdminNav() {
         <Logo to="/admin" title="MARIO" />
         <span
           onClick={setSiderState}
-          className="cursor-pointer hover:text-black text-black dark:bg-transparent dark:text-white dark:hover:bg-accent dark:hover:text-black bg-gray-100/60 hover:bg-gray-200/60 h-10 w-10  flex justify-center items-center rounded-[5px]">
+          className="cursor-pointer hover:text-black text-black dark:bg-transparent dark:text-white dark:hover:bg-accent dark:hover:text-black bg-gray-100/60 hover:bg-gray-200/60 h-[2rem] w-[2rem]  flex justify-center items-center rounded-[5px]">
           <PiList size={20} />
         </span>
       </div>
@@ -66,22 +67,28 @@ function AdminNav() {
       <div className="h-full w-full flex justify-end items-center l gap-2">
         <Button
           variant={"ghost"}
-          className="w-10 flex justify-center items-center p-1">
-          <FaBell size={20} />
+          className="w-[2rem] h-[2rem] flex justify-center items-center p-1">
+          <FaBell size={17} />
         </Button>
         <Button
           variant={"ghost"}
-          className="w-10 flex justify-center items-center p-1">
-          <SiGooglemessages size={21} />
+          className="w-[2rem] h-[2rem] flex justify-center items-center p-1">
+          <SiGooglemessages size={18} />
+        </Button>
+        <Button
+          variant={"ghost"}
+          className="w-[2rem] h-[2rem] flex justify-center items-center p-1">
+          <AiOutlineFullscreen size={21} />
         </Button>
         <CustomPopOver
           defaultOpen={true}
           open={toggle}
           popOverContent={
             <>
-              {lightModeToggleConstants.map((item: any) => (
+              {lightModeToggleConstants.map((item: any, index: number) => (
                 <>
                   <button
+                    key={index}
                     onClick={() => {
                       handleThemeToggle(item.mode);
                       handleToggle();
@@ -89,7 +96,7 @@ function AdminNav() {
                     className={`gap-2 overflow-hidden cursor-pointer ${
                       theme === item.mode && "bg-accent"
                     } hover:bg-accent rounded-sm w-full text-sm flex justify-start items-center py-[2px] px-2`}>
-                    <item.icon size={15} />
+                    <item.icon size={16} />
                     <Label className="text-ellipsis cursor-pointer overflow-hidden max-w-[75%] h-full">
                       {item.label}
                     </Label>
@@ -101,11 +108,11 @@ function AdminNav() {
           <Button
             onClick={handleToggle}
             variant={"ghost"}
-            className="w-10 flex justify-center items-center p-1">
+            className="w-[2rem] h-[2rem] flex justify-center items-center p-1">
             {lightModeToggleConstants
               .filter((item: any) => item.mode === theme)
               .map((item: any, index: number) => (
-                <item.icon size={21} key={index} />
+                <item.icon size={18} key={index} />
               ))}
           </Button>
         </CustomPopOver>

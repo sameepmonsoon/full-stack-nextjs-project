@@ -1,6 +1,7 @@
+"use client";
 export default function localThemeChecker(
-  themeMode: String,
-  systemTheme: Boolean
+  themeMode: string,
+  systemTheme: boolean | null
 ) {
   if (themeMode === "D") {
     localStorage.setItem("theme", "D");

@@ -1,17 +1,21 @@
 .adminLeftDrawer {
-  overflow-y: scroll;
+  overflow-y: overlay;
+  overflow: scroll;
+  overflow-x: hidden;
   &::-webkit-scrollbar {
     background-color: transparent;
     width: 5px;
   }
+
 }
 .adminLeftDrawer:hover {
   &::-webkit-scrollbar {
     width: 5px;
   }
+
   &::-webkit-scrollbar-thumb {
     border-radius: 15px;
-    background-color: #D1D5DB;
+    background-color: #d1d5db;
   }
 }
 @media (hover: none) {
@@ -20,7 +24,7 @@
       width: 8px;
     }
     &::-webkit-scrollbar-thumb {
-      background-color: #D1D5DB;
+      background-color: #d1d5db;
     }
   }
 }
