@@ -53,8 +53,8 @@ function AdminNav() {
 
   return (
     <div
-      className={` top-0 bg-white fixed flex w-full z-40 h-[5.5rem] justify-start items-center px-3 pt-0 pb-0  gap-5 dark:bg-[${colorPallette.darkBg}] dark:text-white`}>
-      <div className="w-[18rem] flex justify-between items-center">
+      className={` top-0 bg-white fixed flex w-full z-40 h-[5.5rem] flex-nowrap justify-start items-center px-3 pt-0 pb-0  gap-5 dark:bg-[${colorPallette.darkBg}] dark:text-white`}>
+      <div className="w-[18rem] flex justify-between items-center flex-nowrap">
         <Logo to="/admin" title="MARIO" />
         <span
           onClick={setSiderState}
@@ -62,7 +62,7 @@ function AdminNav() {
           <PiList size={20} />
         </span>
       </div>
-      <div className="h-full flex-1 flex justify-end items-center gap-2">
+      <div className="h-full flex-1 flex justify-end items-center gap-2 flex-nowrap">
         <div className="relative flex items-center justify-start">
           <IoSearchOutline size={18} className="absolute left-[13px]" />
           <Input

@@ -4,7 +4,7 @@ import React from "react";
 function AdminPage() {
   return (
     <div
-      className={`dark:bg-[#030708] dark:text-white bg-accent w-full rounded-xl p-5 relative`}>
+      className={`dark:bg-[#030708] dark:text-white bg-accent flex-1 w-auto rounded-xl p-5`}>
       This is admin page.
     </div>
   );
