@@ -94,7 +94,7 @@ function AdminNav() {
               <Button
                 onClick={handleFullScreen}
                 variant={"ghost"}
-                className="w-[2rem] h-[2rem] flex justify-center items-center p-1">
+                className="w-[2rem] hidden xl:flex h-[2rem] justify-center items-center p-1">
                 <AiOutlineFullscreenExit size={21} />
               </Button>
             </CustomToolTip>
@@ -108,7 +108,7 @@ function AdminNav() {
               <Button
                 onClick={handleFullScreen}
                 variant={"ghost"}
-                className="w-[2rem] h-[2rem] flex justify-center items-center p-1">
+                className="w-[2rem] hidden xl:flex h-[2rem]  justify-center items-center p-1">
                 <AiOutlineFullscreen size={21} />{" "}
               </Button>
             </CustomToolTip>
