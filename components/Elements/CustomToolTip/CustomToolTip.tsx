@@ -20,6 +20,8 @@ const CustomToolTip = ({
   collisionPadding,
   hideWhenDetached,
   showToolContent,
+  showArrow,
+  sideOffset,
 }: {
   showToolTip: boolean;
   toolTipContent: string;
@@ -33,16 +35,20 @@ const CustomToolTip = ({
   hideWhenDetached?: boolean;
   delayDuration?: number;
   collisionPadding?: number;
+  sideOffset?: number;
   toolTipPosition?: any;
+  showArrow: boolean;
 }) => {
   if (showToolTip)
     return (
       <TooltipProvider delayDuration={delayDuration}>
-        <Tooltip open={open}>
+        <Tooltip open={open} defaultOpen={false}>
           <TooltipTrigger asChild>{children}</TooltipTrigger>
-          <TooltipContent side={toolTipPosition}>
+          <TooltipContent side={toolTipPosition} sideOffset={sideOffset}>
             <p>{toolTipContent}</p>
-            <TooltipArrow className="opacity-80" />
+            {showArrow && (
+              <TooltipArrow className="opacity-80 dark:fill-accent dark:text-accent" />
+            )}
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

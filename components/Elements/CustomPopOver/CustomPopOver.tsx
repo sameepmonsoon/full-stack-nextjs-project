@@ -11,14 +11,16 @@ export function CustomPopOver({
   children,
   popOverContent,
   defaultOpen,
+  onOpenChange,
 }: {
   open?: boolean | undefined;
   children: React.ReactNode;
   popOverContent: any;
   defaultOpen: boolean;
+  onOpenChange?: () => any;
 }) {
   return (
-    <Popover open={open} defaultOpen={defaultOpen}>
+    <Popover open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
       <PopoverContent
         className=" PopoverContent w-[7rem] p-1 gap-1 flex flex-col"

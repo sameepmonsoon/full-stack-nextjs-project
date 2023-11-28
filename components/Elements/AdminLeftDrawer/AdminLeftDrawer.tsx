@@ -14,9 +14,7 @@ const AdminLeftDrawer = () => {
   const theme = localStorage.getItem("theme");
   return (
     <div
-      className={`adminLeftDrawer dark:bg-[${
-        colorPallette.darkBg
-      }] dark:text-white px-5 overflow-y-scroll h-screen visible transition-width duration-300 ease-in-out ${
+      className={`adminLeftDrawer dark:bg-[#051114] dark:text-white px-5 overflow-y-scroll h-screen visible transition-width duration-300 ease-in-out ${
         siderState == 0
           ? "w-[19rem]"
           : siderState == 1
@@ -43,6 +41,7 @@ const AdminLeftDrawer = () => {
             {item.list.map((item: any, index: number) => (
               <>
                 <CustomToolTip
+                  showArrow={true}
                   key={index}
                   toolTipContent={item.listName}
                   showToolTip={hideSiderDetail}>

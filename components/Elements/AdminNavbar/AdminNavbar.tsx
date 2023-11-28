@@ -18,18 +18,25 @@ import localThemeChecker from "@/Helpers/localThemeChecker";
 import { colorPallette } from "@/Helpers/Constants/ColourConstants";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { AiOutlineFullscreenExit } from "react-icons/ai";
+import { makeFullScreen, isInFullScreenMode } from "@/Helpers/makeFullScreen";
+import CustomToolTip from "../CustomToolTip/CustomToolTip";
 function AdminNav() {
   const { setSiderState } = useLeftSiderState((state: any) => state);
   const isDarkTheme = useSystemThemeDetector();
   const [toggle, setToggle] = useState(
     localStorage.getItem("toggle") === "true"
   );
+  const [isFullScreen, setIsFullScreen] = useState(false);
   const prevToggleRef = useRef(toggle);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "L");
 
   useEffect(() => {
     localThemeChecker(theme, isDarkTheme);
   }, [theme, isDarkTheme]);
+
+  // useEffect(() => {
+  //   setIsFullScreen(!isFullScreen);
+  // }, []);
 
   const handleThemeToggle = (themeMode: SetStateAction<string>) => {
     setTimeout(() => {
@@ -42,6 +49,10 @@ function AdminNav() {
     prevToggleRef.current = toggle;
     setToggle(newToggle);
     localStorage.setItem("toggle", `${newToggle}`);
+  };
+  const handleFullScreen = () => {
+    makeFullScreen();
+    setIsFullScreen(!isFullScreen);
   };
 
   return (
@@ -75,12 +86,39 @@ function AdminNav() {
           className="w-[2rem] h-[2rem] flex justify-center items-center p-1">
           <SiGooglemessages size={18} />
         </Button>
-        <Button
-          variant={"ghost"}
-          className="w-[2rem] h-[2rem] flex justify-center items-center p-1">
-          <AiOutlineFullscreen size={21} />
-        </Button>
+
+        {isFullScreen ? (
+          <CustomToolTip
+            showArrow={false}
+            toolTipContent={"Exit FullScreen"}
+            showToolTip={true}
+            toolTipPosition={"bottom"}
+            sideOffset={7}>
+            <Button
+              onClick={handleFullScreen}
+              variant={"ghost"}
+              className="w-[2rem] h-[2rem] flex justify-center items-center p-1">
+              <AiOutlineFullscreenExit size={21} />
+            </Button>
+          </CustomToolTip>
+        ) : (
+          <CustomToolTip
+            toolTipContent={"Full screen"}
+            showToolTip={true}
+            showArrow={false}
+            toolTipPosition={"bottom"}
+            sideOffset={7}>
+            <Button
+              onClick={handleFullScreen}
+              variant={"ghost"}
+              className="w-[2rem] h-[2rem] flex justify-center items-center p-1">
+              <AiOutlineFullscreen size={21} />{" "}
+            </Button>
+          </CustomToolTip>
+        )}
+
         <CustomPopOver
+          onOpenChange={handleToggle}
           defaultOpen={true}
           open={toggle}
           popOverContent={
@@ -105,16 +143,23 @@ function AdminNav() {
               ))}
             </>
           }>
-          <Button
-            onClick={handleToggle}
-            variant={"ghost"}
-            className="w-[2rem] h-[2rem] flex justify-center items-center p-1">
-            {lightModeToggleConstants
-              .filter((item: any) => item.mode === theme)
-              .map((item: any, index: number) => (
-                <item.icon size={18} key={index} />
-              ))}
-          </Button>
+          {/* <CustomToolTip
+            toolTipContent={"Toggle Theme"}
+            showToolTip={true}
+            showArrow={false}
+            toolTipPosition={"bottom"}
+            sideOffset={7}> */}
+            <Button
+              onClick={handleToggle}
+              variant={"ghost"}
+              className="w-[2rem] h-[2rem] flex justify-center items-center p-1">
+              {lightModeToggleConstants
+                .filter((item: any) => item.mode === theme)
+                .map((item: any, index: number) => (
+                  <item.icon size={18} key={index} />
+                ))}
+            </Button>
+          {/* </CustomToolTip> */}
         </CustomPopOver>
         <UserIconContainer userIconTitle="Lorem Name And the " />
       </div>
