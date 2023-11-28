@@ -55,6 +55,7 @@ function AdminNav() {
     setIsFullScreen(!isFullScreen);
   };
 
+  console.log(isFullScreen);
   return (
     <div
       className={` top-0 bg-white fixed flex w-full z-40 h-[5.5rem] justify-start items-center px-3 pt-0 pb-0  gap-5 dark:bg-[${colorPallette.darkBg}] dark:text-white`}>
@@ -143,23 +144,16 @@ function AdminNav() {
               ))}
             </>
           }>
-          {/* <CustomToolTip
-            toolTipContent={"Toggle Theme"}
-            showToolTip={true}
-            showArrow={false}
-            toolTipPosition={"bottom"}
-            sideOffset={7}> */}
-            <Button
-              onClick={handleToggle}
-              variant={"ghost"}
-              className="w-[2rem] h-[2rem] flex justify-center items-center p-1">
-              {lightModeToggleConstants
-                .filter((item: any) => item.mode === theme)
-                .map((item: any, index: number) => (
-                  <item.icon size={18} key={index} />
-                ))}
-            </Button>
-          {/* </CustomToolTip> */}
+          <Button
+            onClick={handleToggle}
+            variant={"ghost"}
+            className="w-[2rem] h-[2rem] flex justify-center items-center p-1">
+            {lightModeToggleConstants
+              .filter((item: any) => item.mode === theme)
+              .map((item: any, index: number) => (
+                <item.icon size={18} key={index} />
+              ))}
+          </Button>
         </CustomPopOver>
         <UserIconContainer userIconTitle="Lorem Name And the " />
       </div>
