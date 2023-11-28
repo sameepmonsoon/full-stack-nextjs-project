@@ -1,3 +1,4 @@
+"use client";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
@@ -18,7 +19,7 @@ function layout({ children }: { children: React.ReactNode }) {
       <section
         className={`flex w-full h-full pr-5 mt-[5.5rem] dark:bg-[${colorPallette.darkBg}]`}>
         <AdminLeftDrawer />
-        {children}
+        <div>{children}</div>
       </section>
     </>
   );
