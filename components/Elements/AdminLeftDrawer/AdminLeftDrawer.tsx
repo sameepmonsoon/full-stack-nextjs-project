@@ -20,25 +20,32 @@ const AdminLeftDrawer = () => {
   return (
     <>
       <div
-        className={`fixed transition-all duration-900 ease-in-out top-0 left-0 z-[99] bg-black/40 w-screen h-screen lg:hidden ${
+        className={`fixed  top-0 left-0 z-[99] bg-black/40 w-screen h-screen lg:hidden ${
           siderState === 2 ? "hidden" : "block"
         }`}
         onClick={setSiderState}
       />
       <nav
         id="adminLeftDrawer"
-        className={`adminLeftDrawer bg-white dark:bg-[#051114] dark:text-white px-5 overflow-y-scroll h-screen visible transition-[width, left ,all] duration-300 ease-in-out ${
+        className={`adminLeftDrawer bg-white dark:bg-[#051114] dark:text-white px-5 overflow-y-scroll h-screen visible transition-width duration-300 ease-in-out ${
           siderState == 0
             ? "w-[19rem]"
             : siderState == 1
             ? "w-[6rem]"
             : "w-0 left-[-20rem] pr-0 pl-5 "
         } lg:relative left-0  z-[100] lg:z-0 fixed top-0 lg:flex flex-col items-start justify-start`}>
-        <div className="w-full pr-3 pt-3 flex justify-between items-center flex-nowrap lg:hidden">
-          <Logo to="/admin" title="MARIO" />
+        <div
+          className={`w-full  pt-3 flex  items-center flex-nowrap lg:hidden ${
+            hideSiderDetail
+              ? "justify-center pl-[14px]"
+              : "justify-between pr-3"
+          }`}>
+          <Logo to="/admin" title={`${!hideSiderDetail ? "MARIO" : ""} `} />
           <span
             onClick={closeSider}
-            className="cursor-pointer hover:text-black text-black dark:bg-transparent dark:text-white dark:hover:bg-accent dark:hover:text-black bg-gray-100/60 hover:bg-gray-200/60 h-[2rem] w-[2rem]  flex justify-center items-center rounded-[5px]">
+            className={`cursor-pointer ${
+              hideSiderDetail && "hidden  w-0"
+            } hover:text-black text-black dark:bg-transparent dark:text-white dark:hover:bg-accent dark:hover:text-black bg-gray-100/60 hover:bg-gray-200/60 h-[2rem] w-[2rem]  flex justify-center items-center rounded-[5px]`}>
             <CgClose size={20} />
           </span>
         </div>

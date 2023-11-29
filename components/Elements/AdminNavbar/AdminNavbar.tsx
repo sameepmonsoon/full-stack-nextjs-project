@@ -20,6 +20,7 @@ import { AiOutlineFullscreen } from "react-icons/ai";
 import { AiOutlineFullscreenExit } from "react-icons/ai";
 import { makeFullScreen, isInFullScreenMode } from "@/Helpers/makeFullScreen";
 import CustomToolTip from "../CustomToolTip/CustomToolTip";
+import { PiDotsThreeVertical } from "react-icons/pi";
 function AdminNav() {
   const { setSiderState } = useLeftSiderState((state: any) => state);
   const isDarkTheme = useSystemThemeDetector();
@@ -67,14 +68,14 @@ function AdminNav() {
         className="lg:hidden cursor-pointer hover:text-black text-black dark:bg-transparent dark:text-white dark:hover:bg-accent dark:hover:text-black bg-gray-100/60 hover:bg-gray-200/60 h-[2rem] w-[2rem]  flex justify-center items-center rounded-[5px]">
         <PiList size={20} />
       </span>
-      <div className="h-full flex-1 flex justify-end items-center gap-2 flex-nowrap">
-        <div className="relative flex items-center justify-start">
+      <div className="h-full  flex-1 flex justify-end items-center gap-2 flex-nowrap">
+        <div className="relative hidden items-center md:flex  justify-start">
           <IoSearchOutline size={18} className="absolute left-[13px]" />
           <Input
             type="text"
             placeholder="Search"
             width={90}
-            className=" pl-10 w-[20rem] h-[2.8rem] rounded-[0.4rem] border-gray-500/30 focus:border-transparent focus:ring-0 text-black"
+            className=" pl-10 w-[20rem]  h-[2.8rem] rounded-[0.4rem] border-gray-500/30 focus:border-transparent focus:ring-0 text-black"
           />
         </div>
         <div className="h-full w-full flex justify-end items-center l gap-2">
@@ -156,6 +157,11 @@ function AdminNav() {
                 ))}
             </Button>
           </CustomPopOver>
+          <Button
+            variant={"ghost"}
+            className="md:hidden w-[2rem] h-[2rem] flex justify-center items-center p-1 rounded-full">
+            <PiDotsThreeVertical size={25} />
+          </Button>
           <UserIconContainer userIconTitle="Lorem Name And the " />
         </div>
       </div>
