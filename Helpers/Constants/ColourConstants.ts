@@ -3,4 +3,5 @@ export const colorPallette = {
   darkText: "#ffffff",
   darkBorderColor: "#C2D9FF",
   darkAdminSiderBg: "#292929",
+  darkBgBlur: "#14272b",
 };

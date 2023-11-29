@@ -8,46 +8,35 @@ import CustomToolTip from "../CustomToolTip/CustomToolTip";
 import "../../../Styles/Admin/AdminLeftSider.scss";
 import { colorPallette } from "@/Helpers/Constants/ColourConstants";
 import Logo from "../Logo/Logo";
-import { PiList } from "react-icons/pi";
-import { CgClose } from "react-icons/cg";
+
 const AdminLeftDrawer = () => {
   const { siderState, setSiderState, closeSider } = useLeftSiderState(
     (state: any) => state
   );
   const hideSiderDetail = siderState === 1 || siderState === 2;
   const pathname = usePathname();
-  const theme = localStorage.getItem("theme");
   return (
     <>
       <div
-        className={`fixed  top-0 left-0 z-[99] bg-black/40 w-screen h-screen lg:hidden ${
-          siderState === 2 ? "hidden" : "block"
+        className={`fixed top-0 z-[99] bg-black/40 w-screen h-screen lg:hidden ${
+          siderState === 2
+            ? "left-[-60rem] opacity-0 transition-[left,opacity] duration-500 ease-in-out"
+            : "left-0 opacity-100 transition-[left,opacity] duration-500 ease-in-out"
         }`}
-        onClick={setSiderState}
+        onClick={closeSider}
       />
       <nav
         id="adminLeftDrawer"
-        className={`adminLeftDrawer bg-white dark:bg-[#051114] dark:text-white px-5 overflow-y-scroll h-screen visible transition-width duration-300 ease-in-out ${
+        className={`adminLeftDrawer fixed bg-white dark:bg-[#051114] dark:text-white px-5 overflow-y-scroll h-screen visible transition-width duration-300 ease-in-out ${
           siderState == 0
-            ? "w-[19rem]"
+            ? "w-[19rem] left-0 transition-left duration-400 ease-in-out l"
             : siderState == 1
-            ? "w-[6rem]"
-            : "w-0 left-[-20rem] pr-0 pl-5 "
-        } lg:relative left-0  z-[100] lg:z-0 fixed top-0 lg:flex flex-col items-start justify-start`}>
+            ? "w-[6rem] transition-width duration-400 ease-in-out"
+            : " lg:w-[0] w-[19rem] left-[-20rem] pr-0 pl-5   transition-[width, left] duration-400 ease-in-out "
+        } lg:relative  z-[100] lg:z-0 fixed top-0 lg:flex flex-col items-start justify-start`}>
         <div
-          className={`w-full  pt-3 flex  items-center flex-nowrap lg:hidden ${
-            hideSiderDetail
-              ? "justify-center pl-[14px]"
-              : "justify-between pr-3"
-          }`}>
-          <Logo to="/admin" title={`${!hideSiderDetail ? "MARIO" : ""} `} />
-          <span
-            onClick={closeSider}
-            className={`cursor-pointer ${
-              hideSiderDetail && "hidden  w-0"
-            } hover:text-black text-black dark:bg-transparent dark:text-white dark:hover:bg-accent dark:hover:text-black bg-gray-100/60 hover:bg-gray-200/60 h-[2rem] w-[2rem]  flex justify-center items-center rounded-[5px]`}>
-            <CgClose size={20} />
-          </span>
+          className={`w-full  pt-3 flex  items-center flex-nowrap lg:hidden justify-between pr-3`}>
+          <Logo to="/admin" title="MARIO" />
         </div>
         {adminLeftDrawerList.map((item: any, index: number) => (
           <>
@@ -56,13 +45,15 @@ const AdminLeftDrawer = () => {
               className={`w-full flex flex-col items-start justify-start gap-2 dark:bg-[${
                 colorPallette.darkBg
               }] dark:text-gray-300 dark:border-b-gray-400/40  ${
-                hideSiderDetail ? "border-b-0 py-1" : "border-b-[1px] py-3"
+                hideSiderDetail
+                  ? "lg:border-b-0 lg:py-1 border-b-[1px] py-3"
+                  : "border-b-[1px] py-3"
               }
               `}>
               <div
                 key={index}
                 className={`${
-                  hideSiderDetail ? "hidden" : "h-6"
+                  hideSiderDetail ? "lg:hidden h-6 lg:h-0" : "h-6"
                 } flex justify-start items-center font-bold text-[14px] transition-all visible duration-300 ease-in-out`}>
                 {item.title}
               </div>
@@ -80,14 +71,22 @@ const AdminLeftDrawer = () => {
                           : "icon"
                       }
                       size={"iconWithText"}
-                      className={`${hideSiderDetail && "justify-center p-0"} `}>
+                      className={`${
+                        hideSiderDetail &&
+                        "lg:justify-center lg:p-0 justify-start gap-4 lg:gap-0"
+                      } `}>
                       <item.icon
                         key={index}
                         className={`${
                           hideSiderDetail ? "mr-0 " : "mr-2 "
                         } h-4 w-4`}
                       />
-                      {!hideSiderDetail && <h5> {item.listName}</h5>}
+                      <h5
+                        className={`${
+                          !hideSiderDetail ? "flex" : "flex lg:hidden"
+                        }`}>
+                        {item.listName}
+                      </h5>
                     </Button>
                   </CustomToolTip>
                 </>
