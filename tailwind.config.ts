@@ -65,15 +65,10 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        // "fade ": {
-        //   from: { transform: "rotate(0.0deg)" },
-        //   to: { transform: "rotate(90deg)" },
-        // },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        // fadeIn: "fade  2s ease-in-out 1",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
