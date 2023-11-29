@@ -9,8 +9,9 @@ import "../../../Styles/Admin/AdminLeftSider.scss";
 import { colorPallette } from "@/Helpers/Constants/ColourConstants";
 import Logo from "../Logo/Logo";
 import { PiList } from "react-icons/pi";
+import { CgClose } from "react-icons/cg";
 const AdminLeftDrawer = () => {
-  const { siderState, setSiderState } = useLeftSiderState(
+  const { siderState, setSiderState, closeSider } = useLeftSiderState(
     (state: any) => state
   );
   const hideSiderDetail = siderState === 1 || siderState === 2;
@@ -23,7 +24,7 @@ const AdminLeftDrawer = () => {
           siderState === 2 ? "hidden" : "block"
         }`}
         onClick={setSiderState}
-      />{" "}
+      />
       <nav
         id="adminLeftDrawer"
         className={`adminLeftDrawer dark:bg-[#051114] dark:text-white px-5 overflow-y-scroll h-screen visible transition-width duration-300 ease-in-out ${
@@ -33,12 +34,12 @@ const AdminLeftDrawer = () => {
             ? "w-[6rem]"
             : "w-0 left-[-20rem] pr-0 pl-5 "
         } lg:relative left-0  z-[100] lg:z-0 fixed top-0 lg:flex flex-col items-start justify-start`}>
-        <div className="w-[18rem] flex justify-between items-center flex-nowrap">
+        <div className="w-[18rem] px-3 flex justify-between items-center flex-nowrap lg:hidden">
           <Logo to="/admin" title="MARIO" />
           <span
-            onClick={setSiderState}
+            onClick={closeSider}
             className="cursor-pointer hover:text-black text-black dark:bg-transparent dark:text-white dark:hover:bg-accent dark:hover:text-black bg-gray-100/60 hover:bg-gray-200/60 h-[2rem] w-[2rem]  flex justify-center items-center rounded-[5px]">
-            <PiList size={20} />
+            <CgClose size={20} />
           </span>
         </div>
         {adminLeftDrawerList.map((item: any, index: number) => (
