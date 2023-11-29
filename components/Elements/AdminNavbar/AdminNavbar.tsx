@@ -54,7 +54,7 @@ function AdminNav() {
   return (
     <div
       className={` top-0 bg-white fixed flex w-full z-40 h-[5.5rem] flex-nowrap justify-start items-center px-3 pt-0 pb-0  gap-5 dark:bg-[${colorPallette.darkBg}] dark:text-white`}>
-      <div className="hidden w-[18rem] lg:flex justify-between items-center flex-nowrap">
+      <div className="hidden pl-5 w-[18rem] lg:flex justify-between items-center flex-nowrap">
         <Logo to="/admin" title="MARIO" />
         <span
           onClick={setSiderState}
