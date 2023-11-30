@@ -20,11 +20,12 @@ import { AiOutlineFullscreenExit } from "react-icons/ai";
 import { makeFullScreen, isInFullScreenMode } from "@/Helpers/makeFullScreen";
 import CustomToolTip from "../CustomToolTip/CustomToolTip";
 import { PiDotsThreeVertical } from "react-icons/pi";
+import useScreenSize from "@/Hooks/useScreenSize";
 function AdminNav() {
   const { setSiderState } = useLeftSiderState((state: any) => state);
   const isDarkTheme = useSystemThemeDetector();
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "L");
-
+  const screenSize = useScreenSize();
   const [toggle, setToggle] = useState(
     localStorage.getItem("toggle") === "true"
   );
@@ -37,6 +38,12 @@ function AdminNav() {
   useEffect(() => {
     localThemeChecker(theme, isDarkTheme);
   }, [theme, isDarkTheme]);
+
+  useEffect(() => {
+    if (screenSize.width > 666) {
+      setOpenList(false);
+    }
+  }, [screenSize]);
 
   const handleThemeToggle = (themeMode: SetStateAction<string>) => {
     setTimeout(() => {
