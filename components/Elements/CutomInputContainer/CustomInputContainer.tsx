@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { colorPallette } from "@/Helpers/Constants/ColourConstants";
 import { HiEye } from "react-icons/hi";
+import { HiEyeOff } from "react-icons/hi";
 //variants
 const containerVariant = cva(
   `border-2 group rounded-[8px] p-0 pb-0 gap-0 border-gray-300 h-[50px] w-full flex flex-col justify-end items-start focus-within:ring-black/60 dark:focus-within:ring-gray-200/60 `,
@@ -82,7 +83,7 @@ const inputVariant = cva(
 
 //variant for icon container
 const iconContainerVariant = cva(
-  `group cursor-pointer hover:bg-red-100 absolute right-[1px] p-2 mt-auto rounded-full flex justify-center items-center`,
+  `group cursor-pointer hover:bg-[#EEF0F2] hover:bg-gray-600/40 transition-all duration-300 ease-in-out absolute right-[1px] p-2 mt-auto rounded-full flex justify-center items-center`,
   {
     variants: {
       size: {
@@ -134,7 +135,7 @@ const CustomInputContainer = ({
         </Label>
 
         <span className={cn(iconContainerVariant({ size, className }))}>
-          <HiEye />
+          <HiEye size={25} />
         </span>
         {/* <p
           id="filled_success_help"
