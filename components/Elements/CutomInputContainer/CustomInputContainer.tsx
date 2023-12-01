@@ -53,12 +53,13 @@ const CustomInputContainer = ({
         <div className="relative w-full h-[90%]">
           <Input
             type={type}
-            id="username"
+            id={type}
             className={cn(inputVariant({ inputBorder, className }))}
+            placeholder=" "
           />
           <Label
-            htmlFor="username"
-            className="dark:text-white absolute left-0 duration-200 linear top-0 h-full peer-focus:h-[10px] w-full text-gray-600 text-lg cursor-text peer-focus:text-sm peer-focus:-top-3  transition-all">
+            htmlFor={type}
+            className="absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-[2px] z-10 origin-[0] start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">
             {label}
           </Label>
         </div>
