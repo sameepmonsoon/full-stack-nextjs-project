@@ -36,7 +36,7 @@ const labelVariant = cva(
     variants: {
       size: {
         default:
-          "absolute text-md text-gray-500 dark:text-gray-400 px-5 duration-200 transform -translate-y-[28%] top-[28%] z-10 origin-0 start-0 peer-focus:dark:text-gray-200/60 peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-[28%] rtl:peer-focus:left-auto",
+          "absolute text-md  text-gray-500 dark:text-gray-400 px-5 duration-200 transform -translate-y-[28%] top-[28%] z-10 origin-0 start-0 peer-focus:dark:text-gray-200/60 peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-[28%] rtl:peer-focus:left-auto",
         medium:
           "absolute text-xl text-gray-500 dark:text-gray-400 px-5 duration-200 transform -translate-y-[30%] top-[30%] z-10 origin-0 start-0 peer-focus:dark:text-gray-200/60 peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-[30%] rtl:peer-focus:left-auto",
         small:
@@ -83,7 +83,7 @@ const inputVariant = cva(
 
 //variant for icon container
 const iconContainerVariant = cva(
-  `group cursor-pointer hover:bg-[#EEF0F2] hover:bg-gray-600/40 transition-all duration-300 ease-in-out absolute right-[1px] p-2 mt-auto rounded-full flex justify-center items-center`,
+  `group cursor-pointer text-gray-400 hover:bg-gray-400/10 dark:hover:bg-gray-600/40 transition-all duration-300 ease-in-out absolute right-[1px] p-2 mt-auto rounded-full flex justify-center items-center`,
   {
     variants: {
       size: {
