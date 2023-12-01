@@ -8,7 +8,7 @@ function AdminPage() {
       className={`dark:bg-[#030708] dark:text-white bg-accent flex-1 w-auto rounded-xl p-5`}>
       This is admin page.
       <CustomInputContainer
-        size={"small"}
+        size={"default"}
         font={"medium"}
         type="='text"
         inputBorder={"none"}

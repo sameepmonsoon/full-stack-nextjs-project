@@ -14,7 +14,7 @@ const containerVariant = cva(
         border: `focus-within:border-black overflow-hidden focus-within:ring-[1px] focus-within:ring-black/60 dark:focus-within:ring-gray-200/60  border-[1px] dark:focus-within:border-gray-200 dark:border-gray-200 hover:border-black border-[1px] cursor-text group rounded-[8px] p-0 pb-0 gap-0 border-gray-300 h-20  w-full flex flex-col justify-end items-start`,
       },
       size: {
-        default: "h-[60px] bg-yellow-500",
+        default: "h-[60px]",
         medium: "h-20 ",
         small: "h-[50px] ",
       },
@@ -58,13 +58,13 @@ const inputVariant = cva(
         none: "border-b px-[16px]  dark:text-white w-full h-full focus:outline-none border-none focus:border-nonetransition-colors peer",
       },
       font: {
-        default: "text-sm font-normal",
-        medium: "text-lg font-medium",
+        default: "font-normal",
+        medium: " font-medium",
       },
       size: {
-        default: " pt-5",
-        medium: " pt-7",
-        small: "pt-6",
+        default: "text-sm  pt-5",
+        medium: " pt-7 text-lg",
+        small: "pt-4 text-sm ",
       },
     },
     defaultVariants: {
