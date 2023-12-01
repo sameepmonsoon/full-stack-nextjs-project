@@ -7,14 +7,16 @@ function AdminPage() {
     <div
       className={`dark:bg-[#030708] dark:text-white bg-accent flex-1 w-auto rounded-xl p-5`}>
       This is admin page.
-      <CustomInputContainer
-        size={"default"}
-        font={"medium"}
-        type="='text"
-        inputBorder={"none"}
-        containerStyle={"border"}
-        label={"User Name"}
-      />
+      <div className="h-40 p-2 w-full">
+        <CustomInputContainer
+          size={"default"}
+          font={"medium"}
+          type="text"
+          inputBorder={"none"}
+          containerStyle={"border"}
+          label={"User Name"}
+        />
+      </div>
     </div>
   );
 }

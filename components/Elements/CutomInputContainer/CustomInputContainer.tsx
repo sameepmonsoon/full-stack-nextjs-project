@@ -5,6 +5,8 @@ import { Label } from "@radix-ui/react-label";
 import React, { useState } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { colorPallette } from "@/Helpers/Constants/ColourConstants";
+import { HiEye } from "react-icons/hi";
+//variants
 const containerVariant = cva(
   `border-2 group rounded-[8px] p-0 pb-0 gap-0 border-gray-300 h-[50px] w-full flex flex-col justify-end items-start focus-within:ring-black/60 dark:focus-within:ring-gray-200/60 `,
   {
@@ -25,13 +27,15 @@ const containerVariant = cva(
     },
   }
 );
+
+//variant for label
 const labelVariant = cva(
   `absolute text-lg text-gray-500 dark:text-gray-400 px-5 duration-200 transform -translate-y-[58%] scale-75 top-[30%] z-10 origin-[0] start-0 peer-focus:dark:text-gray-200/60 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-[58%] rtl:peer-focus:translate-x-[58%] rtl:peer-focus:left-aut`,
   {
     variants: {
       size: {
         default:
-          "absolute text-lg text-gray-500 dark:text-gray-400 px-5 duration-200 transform -translate-y-[28%] top-[24%] z-10 origin-0 start-0 peer-focus:dark:text-gray-200/60 peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-[28%] rtl:peer-focus:left-auto",
+          "absolute text-md text-gray-500 dark:text-gray-400 px-5 duration-200 transform -translate-y-[28%] top-[28%] z-10 origin-0 start-0 peer-focus:dark:text-gray-200/60 peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-[28%] rtl:peer-focus:left-auto",
         medium:
           "absolute text-xl text-gray-500 dark:text-gray-400 px-5 duration-200 transform -translate-y-[30%] top-[30%] z-10 origin-0 start-0 peer-focus:dark:text-gray-200/60 peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-[30%] rtl:peer-focus:left-auto",
         small:
@@ -49,6 +53,7 @@ const labelVariant = cva(
   }
 );
 
+//variant for input
 const inputVariant = cva(
   `border-b bg-transparent  w-full h-full focus:outline-none focus:border-[0px] border-[0px] focus:border-b-2 transition-colors peer`,
   {
@@ -59,10 +64,10 @@ const inputVariant = cva(
       },
       font: {
         default: "font-normal",
-        medium: " font-medium",
+        medium: " font-semibold",
       },
       size: {
-        default: "text-sm  pt-5",
+        default: "text-md  pt-5",
         medium: " pt-7 text-lg",
         small: "pt-4 text-sm ",
       },
@@ -74,6 +79,24 @@ const inputVariant = cva(
     },
   }
 );
+
+//variant for icon container
+const iconContainerVariant = cva(
+  `group cursor-pointer hover:bg-red-100 absolute right-[1px] p-2 mt-auto rounded-full flex justify-center items-center`,
+  {
+    variants: {
+      size: {
+        default: "h-12 w-12 ",
+        medium: "h-16 w-16",
+        small: "h-10 w-10",
+      },
+    },
+    defaultVariants: {
+      size: "default",
+    },
+  }
+);
+
 const CustomInputContainer = ({
   type = "text",
   className,
@@ -82,6 +105,8 @@ const CustomInputContainer = ({
   label,
   font,
   size,
+  readOnly,
+  required,
 }: {
   type: string;
   className?: string;
@@ -90,11 +115,15 @@ const CustomInputContainer = ({
   label: string;
   font: "default" | "medium" | null | undefined;
   size: "default" | "medium" | "small" | null | undefined;
+  readOnly?: boolean;
+  required?: boolean;
 }) => {
   return (
     <div className={cn(containerVariant({ containerStyle, className, size }))}>
-      <div className="relative w-full h-full">
+      <div className="relative w-full h-full flex justify-start items-center">
         <Input
+          required={true}
+          readOnly={readOnly}
           type={type}
           id={type}
           className={cn(inputVariant({ inputBorder, font, className, size }))}
@@ -103,11 +132,15 @@ const CustomInputContainer = ({
         <Label htmlFor={type} className={cn(labelVariant({ size, className }))}>
           {label}
         </Label>
-        <p
+
+        <span className={cn(iconContainerVariant({ size, className }))}>
+          <HiEye />
+        </span>
+        {/* <p
           id="filled_success_help"
-          className="mt-2 text-sm text-green-600 dark:text-green-400">
+          className="mt-2 text-sm text-green-600 dark:text-green-400 ">
           <span className="font-medium">Well done!</span> Some success message.
-        </p>
+        </p> */}
       </div>
     </div>
   );
