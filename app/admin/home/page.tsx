@@ -11,7 +11,7 @@ function AdminPage() {
         <CustomInputContainer
           size={"default"}
           font={"medium"}
-          type="text"
+          type="password"
           inputBorder={"none"}
           containerStyle={"border"}
           label={"User Name"}

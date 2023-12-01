@@ -2,11 +2,12 @@
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Label } from "@radix-ui/react-label";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { colorPallette } from "@/Helpers/Constants/ColourConstants";
 import { HiEye } from "react-icons/hi";
 import { HiEyeOff } from "react-icons/hi";
+import { AiFillEye } from "react-icons/ai";
 //variants
 const containerVariant = cva(
   `border-2 group rounded-[8px] p-0 pb-0 gap-0 border-gray-300 h-[50px] w-full flex flex-col justify-end items-start focus-within:ring-black/60 dark:focus-within:ring-gray-200/60 `,
@@ -119,23 +120,57 @@ const CustomInputContainer = ({
   readOnly?: boolean;
   required?: boolean;
 }) => {
+  const [viewPassword, setViewPassword] = useState(false);
+  const [togglePassword, setTogglePassword] = useState("password");
+  const [isPassword, setIsPassword] = useState(
+    type.toLowerCase() === "password"
+  );
+  const handleToggle = () => {
+    setViewPassword(!viewPassword);
+  };
+  // to toggle password
+  useEffect(() => {
+    setTogglePassword(viewPassword ? "text" : "password");
+  }, [viewPassword]);
+
+  // useEffect(() => {
+  //   if (type.toLowerCase() === "password") setIsPassword(true);
+  // }, [type]);
+  console.log(viewPassword);
   return (
     <div className={cn(containerVariant({ containerStyle, className, size }))}>
       <div className="relative w-full h-full flex justify-start items-center">
         <Input
           required={true}
           readOnly={readOnly}
-          type={type}
+          type={viewPassword ? togglePassword : type}
           id={type}
-          className={cn(inputVariant({ inputBorder, font, className, size }))}
+          className={cn(
+            inputVariant({ inputBorder, font, className, size }),
+            `${type.toLowerCase() === "password" ? "pr-14" : " "}`
+          )}
           placeholder=" "
         />
         <Label htmlFor={type} className={cn(labelVariant({ size, className }))}>
           {label}
         </Label>
 
-        <span className={cn(iconContainerVariant({ size, className }))}>
-          <HiEye size={25} />
+        <span
+          className={cn(iconContainerVariant({ size, className }))}
+          onClick={handleToggle}>
+          {viewPassword ? (
+            <HiEye
+              size={25}
+              className="cursor-pointer hover:text-blue-purple"
+              onClick={handleToggle}
+            />
+          ) : (
+            <HiEyeOff
+              size={25}
+              className="cursor-pointer hover:text-blue-purple"
+              onClick={handleToggle}
+            />
+          )}
         </span>
         {/* <p
           id="filled_success_help"
