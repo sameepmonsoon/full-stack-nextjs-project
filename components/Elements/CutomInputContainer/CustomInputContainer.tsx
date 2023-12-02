@@ -132,10 +132,6 @@ const CustomInputContainer = ({
   useEffect(() => {
     setTogglePassword(viewPassword ? "text" : "password");
   }, [viewPassword]);
-
-  // useEffect(() => {
-  //   if (type.toLowerCase() === "password") setIsPassword(true);
-  // }, [type]);
   console.log(viewPassword);
   return (
     <div className={cn(containerVariant({ containerStyle, className, size }))}>
