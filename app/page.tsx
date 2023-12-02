@@ -1,6 +1,7 @@
 import { Button, buttonVariants } from "@/components/ui/button";
 import { ArrowDownToLine, CheckCircle, Leaf } from "lucide-react";
 import Link from "next/link";
+import "../globals.css";
 
 const perks = [
   {
