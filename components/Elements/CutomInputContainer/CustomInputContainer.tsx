@@ -31,16 +31,16 @@ const containerVariant = cva(
 
 //variant for label
 const labelVariant = cva(
-  `absolute text-lg text-gray-500 dark:text-gray-400 px-5 duration-200 transform -translate-y-[58%] scale-75 top-[30%] z-10 origin-[0] start-0 peer-focus:dark:text-gray-200/60 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-[58%] rtl:peer-focus:translate-x-[58%] rtl:peer-focus:left-aut`,
+  `absolute text-lg text-gray-500 dark:text-gray-400 px-5 duration-200 transform -translate-y-[58%] scale-75 top-[30%] z-1 origin-[0] start-0 peer-focus:dark:text-gray-200/60 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-[58%] rtl:peer-focus:translate-x-[58%] rtl:peer-focus:left-aut`,
   {
     variants: {
       size: {
         default:
-          "absolute text-md  text-gray-500 dark:text-gray-400 px-5 duration-200 transform -translate-y-[28%] top-[28%] z-10 origin-0 start-0 peer-focus:dark:text-gray-200/60 peer-focus:cursor-pointer cursor-text peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-[28%] rtl:peer-focus:left-auto",
+          "absolute text-md  text-gray-500 dark:text-gray-400 px-5 duration-200 transform -translate-y-[28%] top-[28%] z-1 origin-0 start-0 peer-focus:dark:text-gray-200/60 peer-focus:cursor-pointer cursor-text peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-[28%] rtl:peer-focus:left-auto",
         medium:
-          "absolute text-xl text-gray-500 dark:text-gray-400 px-5 duration-200 transform -translate-y-[30%] top-[30%] z-10 origin-0 start-0 peer-focus:dark:text-gray-200/60  peer-focus:cursor-pointer cursor-text peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-[30%] rtl:peer-focus:left-auto",
+          "absolute text-xl text-gray-500 dark:text-gray-400 px-5 duration-200 transform -translate-y-[30%] top-[30%] z-1 origin-0 start-0 peer-focus:dark:text-gray-200/60  peer-focus:cursor-pointer cursor-text peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-[30%] rtl:peer-focus:left-auto",
         small:
-          "absolute text-md text-gray-500 dark:text-gray-400 px-5 duration-200 transform -translate-y-[22%] top-[22%] z-10 origin-0 start-0 peer-focus:dark:text-gray-200/60  peer-focus:cursor-pointer cursor-text peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-[22%] rtl:peer-focus:left-auto",
+          "absolute text-md text-gray-500 dark:text-gray-400 px-5 duration-200 transform -translate-y-[22%] top-[22%] z-1 origin-0 start-0 peer-focus:dark:text-gray-200/60  peer-focus:cursor-pointer cursor-text peer-placeholder-shown:translate-y-0 peer-focus:-translate-y-[22%] rtl:peer-focus:left-auto",
       },
       font: {
         default: "font-normal",
@@ -83,7 +83,7 @@ const inputVariant = cva(
 
 //variant for icon container
 const iconContainerVariant = cva(
-  `group cursor-text text-gray-400 hover:bg-gray-400/10 dark:hover:bg-gray-600/40 transition-all duration-300 ease-in-out absolute right-[1px] p-2 mt-auto rounded-full flex justify-center items-center`,
+  `group cursor-text text-gray-400  hover:bg-gray-400/10 dark:hover:bg-gray-600/40 transition-all duration-300 ease-in-out absolute right-[1px] p-2 mt-auto rounded-full flex justify-center items-center`,
   {
     variants: {
       size: {
@@ -108,7 +108,9 @@ const CustomInputContainer = ({
   size,
   readOnly,
   required,
+  id,
 }: {
+  id: string;
   type: string;
   className?: string;
   inputBorder: any;
@@ -141,11 +143,12 @@ const CustomInputContainer = ({
           required={true}
           readOnly={readOnly}
           type={viewPassword ? togglePassword : type}
-          id={type}
+          id={id}
           className={cn(
             inputVariant({ inputBorder, font, className, size }),
             `${type.toLowerCase() === "password" ? "pr-14" : " "}`
           )}
+          style={{ zIndex: "2" }}
           placeholder=" "
         />
         <Label htmlFor={type} className={cn(labelVariant({ size, className }))}>
@@ -154,7 +157,8 @@ const CustomInputContainer = ({
 
         {isPassword && (
           <span
-            className={cn(iconContainerVariant({ size, className }))}
+          style={{zIndex:'5'}}
+            className={cn(iconContainerVariant({ size, className ,}))}
             onClick={handleToggle}>
             {viewPassword ? (
               <HiEye

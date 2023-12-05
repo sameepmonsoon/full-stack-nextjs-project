@@ -29,6 +29,7 @@ const LoginPage = () => {
               inputBorder={"none"}
               containerStyle={"border"}
               label={"First Name"}
+              id="firstName"
             />
             <CustomInputContainer
               size={"default"}
@@ -37,6 +38,7 @@ const LoginPage = () => {
               inputBorder={"none"}
               containerStyle={"border"}
               label={"Last Name"}
+              id="lastName"
             />
           </div>
           <CustomInputContainer
@@ -45,6 +47,7 @@ const LoginPage = () => {
             type="email"
             inputBorder={"none"}
             containerStyle={"border"}
+            id="emailAddress"
             label={"Email Address"}
           />
           <CustomInputContainer
@@ -54,8 +57,11 @@ const LoginPage = () => {
             inputBorder={"none"}
             containerStyle={"border"}
             label={"Password"}
+            id="password"
           />
-          <CustomProgressBar />
+          <div className="w-full flex justify-start">
+            <CustomProgressBar />
+          </div>
           <div
             className={`flex justify-between items-center w-full text-darkBg`}>
             <span className="text-center flex-1  font-medium  dark:text-white text-md flex justify-start items-center leading-[1.75] text-[#3F444F]">

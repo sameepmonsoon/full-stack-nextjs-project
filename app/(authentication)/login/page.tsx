@@ -27,6 +27,7 @@ const LoginPage = () => {
             inputBorder={"none"}
             containerStyle={"border"}
             label={"Email Address"}
+            id="emailAddress"
           />
           <CustomInputContainer
             size={"default"}
@@ -35,6 +36,7 @@ const LoginPage = () => {
             inputBorder={"none"}
             containerStyle={"border"}
             label={"Password"}
+            id="password"
           />
 
           <div
