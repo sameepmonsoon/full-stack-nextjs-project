@@ -46,6 +46,7 @@ const page = () => {
             <Link
               href={"/admin/home"}
               className={`text-center dark:text-white text-darkBg font-semibold text-md flex justify-center items-end leading-[1.75]`}>
+              <input type="checkbox" id="check" />
               Forgot Password?
             </Link>
           </div>

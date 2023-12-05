@@ -1,7 +1,6 @@
 import Image from "next/image";
 import React from "react";
 import image from "../../../public/next.svg";
-import { colorPallette } from "@/Helpers/Constants/ColourConstants";
 import { cn } from "@/lib/utils";
 const UserIconContainer = ({
   userIconTitle,
@@ -13,7 +12,7 @@ const UserIconContainer = ({
   return (
     <div
       className={cn(
-        `group flex gap-2 h-[2.8rem] transition-colors bg-transparent dark:text-[${colorPallette.darkText}] ease-linear duration-100 group items-center rounded-full flex-1 overflow-hidden px-[5px] justify-center max-w-[6rem] hover:bg-accent dark:hover:bg-accent hover:cursor-pointer`,
+        `group flex gap-2 h-[2.8rem] transition-colors bg-transparent dark:text-darkText ease-linear duration-100 group items-center rounded-full flex-1 overflow-hidden px-[5px] justify-center max-w-[6rem] hover:bg-accent dark:hover:bg-accent hover:cursor-pointer`,
         className
       )}>
       <Image

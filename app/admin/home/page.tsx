@@ -1,4 +1,3 @@
-import { colorPallette } from "@/Helpers/Constants/ColourConstants";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import React from "react";
 
