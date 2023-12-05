@@ -12,5 +12,5 @@ export function CustomProgressBar() {
     return () => clearTimeout(timer);
   }, []);
 
-  return <Progress value={progress} className="w-[60%]" />;
+  return <Progress value={40} className=" h-[8px]" />;
 }
