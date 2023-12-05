@@ -24,10 +24,10 @@ const page = () => {
           <CustomInputContainer
             size={"default"}
             font={"medium"}
-            type="password"
+            type="email"
             inputBorder={"none"}
             containerStyle={"border"}
-            label={"User Name"}
+            label={"Email Address"}
           />
           <CustomInputContainer
             size={"default"}
@@ -35,18 +35,24 @@ const page = () => {
             type="password"
             inputBorder={"none"}
             containerStyle={"border"}
-            label={"User Name"}
+            label={"Password"}
           />
 
           <div
             className={`flex justify-between items-center w-full text-darkBg`}>
-            <span className="text-center font-medium text-md flex justify-center gap-2 items-center leading-[1.75] text-[#3F444F]">
+            <span className="text-center  font-medium text-md flex justify-center items-center leading-[1.75] text-[#3F444F]">
+              <span className=" group cursor-pointer text-gray-400 hover:bg-darkBg/10 dark:hover:bg-white/10 transition-all duration-300 ease-in-out p-2 h-10 w-10 mt-auto rounded-full flex justify-center items-center">
+                <input
+                  type="checkbox"
+                  id="check"
+                  className="cursor-pointer p-4"
+                />
+              </span>
               Keep Me logged in
             </span>
             <Link
               href={"/admin/home"}
               className={`text-center dark:text-white text-darkBg font-semibold text-md flex justify-center items-end leading-[1.75]`}>
-              <input type="checkbox" id="check" />
               Forgot Password?
             </Link>
           </div>
@@ -64,7 +70,7 @@ const page = () => {
         </Link>
       </div>
 
-      <div className="absolute right-1 top-[40%] mb-auto h-10 w-10 bg-accent flex justify-center items-center rounded-lg">
+      <div className="cursor-pointer absolute right-1 top-[40%] mb-auto h-10 w-10 bg-accent flex justify-center items-center rounded-lg">
         <ThemeButton />
       </div>
     </div>

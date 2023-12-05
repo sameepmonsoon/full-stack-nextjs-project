@@ -13,8 +13,8 @@ const containerVariant = cva(
   {
     variants: {
       containerStyle: {
-        default: `focus-within:border-black overflow-hidden focus-within:ring-[1px] focus-within:ring-black/60 dark:focus-within:ring-gray-200/60 dark:focus-within:border-gray-200 border-[1px] dark:border-gray-200 border-[1px] group rounded-[8px] p-0 pb-0 gap-0 border-gray-300 h-20  w-full flex flex-col justify-end items-start`,
-        border: `focus-within:border-black overflow-hidden focus-within:ring-[1px] focus-within:ring-black/60 dark:focus-within:ring-gray-200/60  border-[1px] dark:focus-within:border-gray-200 dark:border-gray-200 hover:border-black border-[1px] cursor-text group rounded-[8px] p-0 pb-0 gap-0 border-gray-300 h-20  w-full flex flex-col justify-end items-start`,
+        default: `focus-within:border-black overflow-hidden focus-within:ring-[1px] focus-within:ring-black/60 dark:focus-within:ring-gray-200/60 dark:focus-within:border-gray-200 border-[1px] dark:border-gray-600 dark:hover:border-white hover:border-black border-[1px] group rounded-[8px] p-0 pb-0 gap-0 border-gray-300 h-20  w-full flex flex-col justify-end items-start`,
+        border: `focus-within:border-black overflow-hidden focus-within:ring-[1px] focus-within:ring-black/60 dark:focus-within:ring-gray-200/60  border-[1px] dark:focus-within:border-gray-200 dark:border-gray-600 dark:hover:border-white hover:border-black border-[1px] cursor-text group rounded-[8px] p-0 pb-0 gap-0 border-gray-300 h-20  w-full flex flex-col justify-end items-start`,
       },
       size: {
         default: "h-[60px]",
@@ -124,6 +124,9 @@ const CustomInputContainer = ({
   const [isPassword, setIsPassword] = useState(
     type.toLowerCase() === "password"
   );
+  useEffect(() => {
+    setIsPassword(type.toLowerCase() === "password");
+  }, [type]);
   const handleToggle = () => {
     setViewPassword(!viewPassword);
   };
@@ -131,7 +134,6 @@ const CustomInputContainer = ({
   useEffect(() => {
     setTogglePassword(viewPassword ? "text" : "password");
   }, [viewPassword]);
-  console.log(viewPassword);
   return (
     <div className={cn(containerVariant({ containerStyle, className, size }))}>
       <div className="relative w-full h-full flex justify-start items-center">
@@ -150,23 +152,25 @@ const CustomInputContainer = ({
           {label}
         </Label>
 
-        <span
-          className={cn(iconContainerVariant({ size, className }))}
-          onClick={handleToggle}>
-          {viewPassword ? (
-            <HiEye
-              size={25}
-              className="cursor-pointer hover:text-blue-purple"
-              onClick={handleToggle}
-            />
-          ) : (
-            <HiEyeOff
-              size={25}
-              className="cursor-pointer hover:text-blue-purple"
-              onClick={handleToggle}
-            />
-          )}
-        </span>
+        {isPassword && (
+          <span
+            className={cn(iconContainerVariant({ size, className }))}
+            onClick={handleToggle}>
+            {viewPassword ? (
+              <HiEye
+                size={25}
+                className="cursor-pointer hover:text-blue-purple"
+                onClick={handleToggle}
+              />
+            ) : (
+              <HiEyeOff
+                size={25}
+                className="cursor-pointer hover:text-blue-purple"
+                onClick={handleToggle}
+              />
+            )}
+          </span>
+        )}
         {/* <p
           id="filled_success_help"
           className="mt-2 text-sm text-green-600 dark:text-green-400 ">

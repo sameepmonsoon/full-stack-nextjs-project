@@ -6,8 +6,8 @@ import { lightModeToggleConstants } from "@/Helpers/Constants/NavBarConstants";
 import { SetStateAction, useEffect, useRef, useState } from "react";
 import { useSystemThemeDetector } from "@/Hooks/useSystemThemeDetector";
 import localThemeChecker from "@/Helpers/localThemeChecker";
-
-const ThemeButton = () => {
+interface ThemeButtonProps {}
+const ThemeButton: React.FC<ThemeButtonProps> = () => {
   const isBrowser = typeof window !== "undefined";
   const isDarkTheme = useSystemThemeDetector();
   const [theme, setTheme] = useState("L");
