@@ -3,13 +3,19 @@ import mongoose from "mongoose";
 const { Document, Schema } = mongoose;
 interface userAuthDoc extends Document {
   email: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   password: string;
   role: "admin" | "super-admin" | "user";
 }
 const userAuthSchema = new Schema<userAuthDoc>(
   {
-    name: {
+    firstName: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    lastName: {
       type: String,
       unique: true,
       required: true,

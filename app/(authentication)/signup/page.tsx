@@ -20,7 +20,7 @@ const LoginPage = () => {
           </div>
         </div>
         <div className="flex flex-col justify-start items-center gap-5 w-full border-b-[1px] border-b-gray-300 py-5">
-          <div className="w-full flex justify-between items-center gap-7">
+          <div className="w-full flex justify-between items-center gap-10 flex-wrap md:flex-nowrap">
             <CustomInputContainer
               size={"default"}
               font={"medium"}
@@ -32,10 +32,10 @@ const LoginPage = () => {
             <CustomInputContainer
               size={"default"}
               font={"medium"}
-              type="email"
+              type="text"
               inputBorder={"none"}
               containerStyle={"border"}
-              label={"Email Address"}
+              label={"Last Name"}
             />
           </div>
           <CustomInputContainer
