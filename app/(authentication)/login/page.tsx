@@ -39,8 +39,8 @@ const LoginPage = () => {
 
           <div
             className={`flex justify-between items-center w-full text-darkBg`}>
-            <span className="text-center  font-medium text-md flex justify-center items-center leading-[1.75] text-[#3F444F]">
-              <span className=" group cursor-pointer dark:text-white text-gray-400 hover:bg-darkBg/10 dark:hover:bg-white/10 transition-all duration-300 ease-in-out p-2 h-10 w-10 mt-auto rounded-full flex justify-center items-center">
+            <span className="text-center  font-medium text-md dark:text-white flex justify-center items-center leading-[1.75] text-[#3F444F]">
+              <span className=" group cursor-pointer  text-gray-400 hover:bg-darkBg/10 dark:hover:bg-white/10 transition-all duration-300 ease-in-out p-1 h-10 w-10 mt-auto rounded-full flex justify-center items-center">
                 <input
                   type="checkbox"
                   id="check"

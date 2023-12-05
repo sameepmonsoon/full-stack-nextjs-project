@@ -1,3 +1,4 @@
+import { CustomProgressBar } from "@/components/Elements/CustomProgressBar/CustomProgressBar";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import Logo from "@/components/Elements/Logo/Logo";
 import ThemeButton from "@/components/Elements/ThemeButton/ThemeButton";
@@ -54,11 +55,11 @@ const LoginPage = () => {
             containerStyle={"border"}
             label={"Password"}
           />
-
+          <CustomProgressBar />
           <div
             className={`flex justify-between items-center w-full text-darkBg`}>
-            <span className="text-center flex-1  font-medium text-md flex justify-start items-center leading-[1.75] text-[#3F444F]">
-              <span className=" group cursor-pointer text-gray-400 dark:text-white hover:bg-darkBg/10 dark:hover:bg-white/10 transition-all duration-300 ease-in-out p-2 h-10 w-10 mt-auto rounded-full flex justify-center items-center">
+            <span className="text-center flex-1  font-medium  dark:text-white text-md flex justify-start items-center leading-[1.75] text-[#3F444F]">
+              <span className=" group cursor-pointer text-gray-400  hover:bg-darkBg/10 dark:hover:bg-white/10 transition-all duration-300 ease-in-out p-1 h-10 w-10 mt-auto rounded-full flex justify-center items-center">
                 <input
                   type="checkbox"
                   id="check"
