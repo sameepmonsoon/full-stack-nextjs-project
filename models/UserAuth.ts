@@ -1,8 +1,13 @@
 import mongoose from "mongoose";
 
-const { Schema } = mongoose;
-
-const userAuthSchema = new Schema(
+const { Document, Schema } = mongoose;
+interface userAuthDoc extends Document {
+  email: string;
+  name: string;
+  password: string;
+  role: "admin" | "super-admin" | "user";
+}
+const userAuthSchema = new Schema<userAuthDoc>(
   {
     name: {
       type: String,
@@ -17,6 +22,12 @@ const userAuthSchema = new Schema(
     password: {
       type: String,
       required: true,
+    },
+    role: {
+      type: String,
+      required: true,
+      enum: ["admin" || "super-admin" || "user"],
+      default: "user",
     },
   },
   { timestamps: true }
