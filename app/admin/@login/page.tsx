@@ -2,10 +2,9 @@ import CustomInputContainer from "@/components/Elements/CutomInputContainer/Cust
 import Logo from "@/components/Elements/Logo/Logo";
 import ThemeButton from "@/components/Elements/ThemeButton/ThemeButton";
 import { Button } from "@/components/ui/button";
-
 import Link from "next/link";
 import React from "react";
-const page = () => {
+const LoginPage = () => {
   return (
     <div className="w-full  h-screen flex justify-center items-center p-5 bg-accent  dark:bg-darkBg">
       <div className="w-[29.5rem] h-auto p-10 flex flex-col justify-start items-center dark:text-white bg-white dark:bg-darkBg rounded-lg gap-2">
@@ -77,4 +76,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default LoginPage;
