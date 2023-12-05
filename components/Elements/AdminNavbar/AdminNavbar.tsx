@@ -62,7 +62,7 @@ function AdminNav() {
               type="text"
               placeholder="Search"
               width={90}
-              className=" pl-10 w-[20rem]  h-[2.8rem] rounded-[0.4rem] border-gray-500/30 focus:border-transparent focus:ring-0 text-black"
+              className=" pl-10 w-[20rem] h-[2.8rem] rounded-[0.4rem]  dark:border-gray-600 dark:hover:border-white hover:border-black border-[1px] bg-transparent focus:border-transparent focus:ring-0 text-black"
             />
           </div>
           <div className="h-full w-full flex justify-end items-center l gap-2">
