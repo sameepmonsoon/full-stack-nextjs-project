@@ -1,7 +1,8 @@
 import { colorPallette } from "@/Helpers/Constants/ColourConstants";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import Logo from "@/components/Elements/Logo/Logo";
-import { Checkbox } from "@/components/ui/checkbox";
+
+import Link from "next/link";
 import React from "react";
 const page = () => {
   return (
@@ -39,16 +40,17 @@ const page = () => {
           <div
             className={`flex justify-between items-center w-full text-[${colorPallette.darkBg}]`}>
             <span className="text-center font-medium text-md flex justify-center gap-2 items-center leading-[1.75] text-[#3F444F]">
-              <Checkbox />
               Keep Me logged in
             </span>
-            <span
+            <Link
+              href={"/admin/home"}
               className={` text-[${colorPallette.darkBg}] text-center font-semibold text-md flex justify-center items-end leading-[1.75]`}>
               Forgot Password?
-            </span>
+            </Link>
           </div>
 
-          <div className="w-full h-10 rounded-md flex justify-center items-center bg-emerald-900 text-md font-medium capitalize">
+          <div
+            className={`w-full h-10 rounded-md flex justify-center items-center bg-[${colorPallette.darkBg}] text-md font-medium capitalize`}>
             Sign In
           </div>
         </div>

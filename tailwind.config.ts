@@ -17,6 +17,11 @@ const config: Config = {
     },
     extend: {
       colors: {
+        darkBg: "#051114",
+        darkText: "#ffffff",
+        darkBorderColor: "#C2D9FF",
+        darkAdminSiderBg: "#292929",
+        darkBgBlur: "#14272b",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
