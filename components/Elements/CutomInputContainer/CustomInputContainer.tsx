@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import { Label } from "@radix-ui/react-label";
 import React, { useEffect, useState } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { colorPallette } from "@/Helpers/Constants/ColourConstants";
 import { HiEye } from "react-icons/hi";
 import { HiEyeOff } from "react-icons/hi";
 import { AiFillEye } from "react-icons/ai";
@@ -61,7 +60,7 @@ const inputVariant = cva(
   {
     variants: {
       inputBorder: {
-        default: `flex dark:text-white hover:border-gray-400 dark:focus-visible:ring-gray-400 dark:border-gray-400 bg-transparent dark:placeholder:text-red-100 h-full w-full dark:focus:border-[${colorPallette.darkBorderColor}] z-1 dark:text-[${colorPallette.darkText}] rounded-md border border-input  px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm transition-border ease-linear duration-100  file:font-medium placeholder:text-muted-foreground focus-visible:outline-none outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50`,
+        default: `flex dark:text-white hover:border-gray-400 dark:focus-visible:ring-gray-400 dark:border-gray-400 bg-transparent dark:placeholder:text-red-100 h-full w-full dark:focus:border-darkBorderColor z-1 dark:text-darkText rounded-md border border-input  px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm transition-border ease-linear duration-100  file:font-medium placeholder:text-muted-foreground focus-visible:outline-none outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50`,
         none: "border-b px-[16px]  dark:text-white w-full h-full focus:outline-none border-none focus:border-nonetransition-colors peer",
       },
       font: {

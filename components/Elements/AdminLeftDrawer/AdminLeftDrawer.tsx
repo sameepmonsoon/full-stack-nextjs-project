@@ -6,7 +6,6 @@ import { adminLeftDrawerList } from "./AdminLeftDrawerList";
 import { usePathname } from "next/navigation";
 import CustomToolTip from "../CustomToolTip/CustomToolTip";
 import "../../../Styles/Admin/AdminLeftSider.scss";
-import { colorPallette } from "@/Helpers/Constants/ColourConstants";
 import Logo from "../Logo/Logo";
 
 const AdminLeftDrawer = () => {
@@ -27,7 +26,7 @@ const AdminLeftDrawer = () => {
       />
       <nav
         id="adminLeftDrawer"
-        className={`adminLeftDrawer fixed bg-white dark:bg-[#051114] dark:text-white px-5 overflow-y-scroll h-screen visible transition-width duration-300 ease-in-out ${
+        className={`adminLeftDrawer fixed bg-white dark:bg-darkBg dark:text-white px-5 overflow-y-scroll h-screen visible transition-width duration-300 ease-in-out ${
           siderState == 0
             ? "w-[19rem] left-0 transition-left duration-400 ease-in-out l"
             : siderState == 1
@@ -42,9 +41,7 @@ const AdminLeftDrawer = () => {
           <>
             <ul
               key={index}
-              className={`w-full flex flex-col items-start justify-start gap-2 dark:bg-[${
-                colorPallette.darkBg
-              }] dark:text-gray-300 dark:border-b-gray-400/40  ${
+              className={`w-full flex flex-col items-start justify-start gap-2 dark:bg-darkBg dark:text-gray-300 dark:border-b-gray-400/40  ${
                 hideSiderDetail
                   ? "lg:border-b-0 lg:py-1 border-b-[1px] py-3"
                   : "border-b-[1px] py-3"

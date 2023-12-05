@@ -1,25 +1,26 @@
-import { colorPallette } from "@/Helpers/Constants/ColourConstants";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import Logo from "@/components/Elements/Logo/Logo";
+import ThemeButton from "@/components/Elements/ThemeButton/ThemeButton";
+import { Button } from "@/components/ui/button";
 
 import Link from "next/link";
 import React from "react";
 const page = () => {
   return (
-    <div className="w-full  h-screen flex justify-center items-center p-5  dark:bg-gray-200">
-      <div className="w-[29.5rem] h-auto p-10 flex flex-col justify-start items-center bg-white rounded-lg gap-2">
+    <div className="w-full  h-screen flex justify-center items-center p-5 bg-accent  dark:bg-darkBg">
+      <div className="w-[29.5rem] h-auto p-10 flex flex-col justify-start items-center dark:text-white bg-white dark:bg-darkBg rounded-lg gap-2">
         <div className="h-[25%] flex justify-start items-center flex-col gap-2">
           <Logo to="/admin" title="MARIO" />
           <div className="flex justify-center items-cente flex-col gap-4">
-            <p className="text-center capitalize font-bold text-2xl">
+            <p className="text-center dark:text-white capitalize font-bold text-2xl">
               Hi, Welcome Back
             </p>
-            <p className="text-center text-md leading-3 font-normal text-gray-400">
+            <p className="text-center text-md leading-3 font-normal text-gray-400  ">
               Enter Your credentials to Continue
             </p>
           </div>
         </div>
-        <div className="flex flex-col justify-start items-center gap-5 w-full border-b-[1px] border-b-red-600 py-5">
+        <div className="flex flex-col justify-start items-center gap-5 w-full border-b-[1px] border-b-gray-300 py-5">
           <CustomInputContainer
             size={"default"}
             font={"medium"}
@@ -38,26 +39,32 @@ const page = () => {
           />
 
           <div
-            className={`flex justify-between items-center w-full text-[${colorPallette.darkBg}]`}>
+            className={`flex justify-between items-center w-full text-darkBg`}>
             <span className="text-center font-medium text-md flex justify-center gap-2 items-center leading-[1.75] text-[#3F444F]">
               Keep Me logged in
             </span>
             <Link
               href={"/admin/home"}
-              className={` text-[${colorPallette.darkBg}] text-center font-semibold text-md flex justify-center items-end leading-[1.75]`}>
+              className={`text-center dark:text-white text-darkBg font-semibold text-md flex justify-center items-end leading-[1.75]`}>
               Forgot Password?
             </Link>
           </div>
 
-          <div
-            className={`w-full h-10 rounded-md flex justify-center items-center bg-[${colorPallette.darkBg}] text-md font-medium capitalize`}>
+          <Button
+            className={`w-full bg-darkBg dark:bg-white hover:bg-darkBg dark:hover:bg-white text-white dark:text-darkBg h-10 rounded-md flex justify-center items-center  text-md font-medium capitalize`}>
             Sign In
-          </div>
+          </Button>
         </div>
 
-        <span className="text-center font-medium text-md flex justify-center items-end leading-[1.75] text-[#3F444F]">
+        <Link
+          href={"/admin/home"}
+          className="text-center dark:text-white font-medium text-md flex justify-center items-end leading-[1.75] text-[#3F444F]">
           Dont have an account ?
-        </span>
+        </Link>
+      </div>
+
+      <div className="absolute right-1 top-[40%] mb-auto h-10 w-10 bg-accent flex justify-center items-center rounded-lg">
+        <ThemeButton />
       </div>
     </div>
   );
