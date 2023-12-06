@@ -60,7 +60,7 @@ const LoginPage = () => {
             id="password"
           />
           <div className="w-full flex justify-start gap-3 items-end text-xs font-bold">
-            <CustomProgressBar />
+            <CustomProgressBar type={"good"} value={30} />
             <span className="h-full flex justify-center items-end relative -bottom-[3px]">
               Weak
             </span>
