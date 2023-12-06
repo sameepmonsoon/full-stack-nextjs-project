@@ -77,7 +77,9 @@ const LoginPage = () => {
           </div>
 
           <Button
-            className={`w-full bg-darkBg dark:bg-white hover:bg-darkBg dark:hover:bg-white text-white dark:text-darkBg h-10 rounded-md flex justify-center items-center  text-md font-medium capitalize`}>
+            asChild={false}
+            type="button"
+            className={`w-full transform active:scale-75 transition-transform bg-darkBg dark:bg-white hover:bg-darkBg dark:hover:bg-white text-white dark:text-darkBg h-10 rounded-md flex justify-center items-center  text-md font-medium capitalize`}>
             Sign Up
           </Button>
         </div>
