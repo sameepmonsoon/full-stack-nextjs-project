@@ -31,10 +31,15 @@ const buttonVariants = cva(
         icon: "h-10 w-10",
         iconWithText: "h-[2.5rem] w-full",
       },
+      effect: {
+        default: "",
+        press: "transform active:scale-[0.92] transition-transform",
+      },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
+      effect: "default",
     },
   }
 );
@@ -45,12 +50,15 @@ export interface ButtonProps
   asChild?: boolean;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+interface extraButtonProps extends ButtonProps {
+  effect: "default" | "press" | null | undefined;
+}
+const Button = React.forwardRef<HTMLButtonElement, extraButtonProps>(
+  ({ className, variant, effect, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ variant, size, effect, className }))}
         ref={ref}
         {...props}
       />

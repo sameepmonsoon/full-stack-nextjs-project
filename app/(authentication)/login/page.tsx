@@ -59,6 +59,8 @@ const LoginPage = () => {
           </div>
 
           <Button
+            asChild={false}
+            type="submit"
             className={`w-full bg-darkBg dark:bg-white hover:bg-darkBg dark:hover:bg-white text-white dark:text-darkBg h-10 rounded-md flex justify-center items-center  text-md font-medium capitalize`}>
             Sign In
           </Button>
