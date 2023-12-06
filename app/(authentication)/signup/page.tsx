@@ -8,7 +8,7 @@ import Link from "next/link";
 import React, { useRef, useState } from "react";
 const LoginPage = () => {
   const [formValues, setFormValues] = useState({});
-  const [formErrors, setFormErrors] = useState({});
+  const [formErrors, setFormErrors] = useState<any>({});
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -93,7 +93,7 @@ const LoginPage = () => {
             label={"Password"}
             id="password"
             required
-            valid={false}
+            valid={formErrors?.password}
             ref={ref}
             onChange={handleChange}
           />

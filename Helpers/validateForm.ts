@@ -33,7 +33,7 @@ const validate = (values: any) => {
     }
   }
   if (!values.password) {
-    errors.password = "Password is valid";
+    errors.password = "Password is required";
     // setIsSubmitting(false);
   } else {
     let passwordRegEx = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
@@ -47,4 +47,27 @@ const validate = (values: any) => {
   }
 
   return errors;
+};
+
+const checkPasswordStrength = (password: string) => {
+  const errors: any = {};
+  let passwordRegEx = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+  if (!password) {
+    errors.password = "Password is valid";
+    // setIsSubmitting(false);
+  } else {
+    if (password.length <= 7 && !passwordRegEx.test(password)) {
+      errors.poor = true;
+    }
+    if (password.length > 7) {
+      errors.weak = true;
+    }
+
+    if (!passwordRegEx.test(password)) {
+      //   setIsSubmitting(false);
+
+      errors.password =
+        "Password must contain atleast 6 characters, one uppercase, one lowercase, one special-character and one number ";
+    }
+  }
 };
