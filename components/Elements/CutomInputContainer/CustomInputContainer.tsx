@@ -115,7 +115,7 @@ const CustomInputContainer = forwardRef(function CustomInputContainer(
     valid = true,
     onChange,
     onClick,
-   
+    maxlength,
   }: {
     id: string;
     type: string;
@@ -131,7 +131,7 @@ const CustomInputContainer = forwardRef(function CustomInputContainer(
     valid?: boolean;
     onChange?: (e: any) => void;
     onClick?: (e: any) => void;
- 
+    maxlength?: number;
   },
   ref: any
 ) {
@@ -162,6 +162,7 @@ const CustomInputContainer = forwardRef(function CustomInputContainer(
         )}>
         <div className="relative w-full h-full flex justify-start items-center">
           <Input
+            maxLength={maxlength}
             onChange={onChange}
             ref={ref}
             disabled={disabled}

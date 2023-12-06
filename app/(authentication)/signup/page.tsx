@@ -64,6 +64,18 @@ const LoginPage = () => {
           <CustomInputContainer
             size={"default"}
             font={"medium"}
+            type="number"
+            inputBorder={"none"}
+            containerStyle={"border"}
+            id="phone"
+            label={"Phone Number"}
+            required
+            onChange={handleChange}
+            maxlength={10}
+          />
+          <CustomInputContainer
+            size={"default"}
+            font={"medium"}
             type="email"
             inputBorder={"none"}
             containerStyle={"border"}
