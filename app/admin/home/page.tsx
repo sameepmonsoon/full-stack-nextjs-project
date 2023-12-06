@@ -1,3 +1,4 @@
+
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import React from "react";
 
@@ -14,6 +15,7 @@ function AdminPage() {
           inputBorder={"none"}
           containerStyle={"border"}
           label={"User Name"}
+          id="userName"
         />
       </div>
     </div>
