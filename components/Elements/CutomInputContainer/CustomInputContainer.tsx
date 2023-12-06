@@ -7,6 +7,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { HiEye } from "react-icons/hi";
 import { HiEyeOff } from "react-icons/hi";
 import { AiFillEye } from "react-icons/ai";
+import { forwardRef } from "react";
 //variants
 const containerVariant = cva(
   `border-2 relative  group rounded-[8px] p-0 pb-0 gap-0 border-gray-300 h-[50px] w-full flex flex-col justify-end items-start focus-within:ring-black/60 dark:focus-within:ring-gray-200/60 `,
@@ -98,33 +99,42 @@ const iconContainerVariant = cva(
   }
 );
 
-const CustomInputContainer = ({
-  type = "text",
-  className,
-  inputBorder,
-  containerStyle,
-  label,
-  font,
-  size,
-  readOnly,
-  required,
-  id,
-  disabled,
-  valid = true,
-}: {
-  id: string;
-  type: string;
-  className?: string;
-  inputBorder: any;
-  containerStyle: any;
-  label: string;
-  font: "default" | "medium" | null | undefined;
-  size: "default" | "medium" | "small" | null | undefined;
-  readOnly?: boolean;
-  required?: boolean;
-  disabled?: boolean;
-  valid?: boolean;
-}) => {
+const CustomInputContainer = forwardRef(function CustomInputContainer(
+  {
+    type = "text",
+    className,
+    inputBorder,
+    containerStyle,
+    label,
+    font,
+    size,
+    readOnly,
+    required,
+    id,
+    disabled,
+    valid = true,
+    onChange,
+    onClick,
+   
+  }: {
+    id: string;
+    type: string;
+    className?: string;
+    inputBorder: any;
+    containerStyle: any;
+    label: string;
+    font: "default" | "medium" | null | undefined;
+    size: "default" | "medium" | "small" | null | undefined;
+    readOnly?: boolean;
+    required?: boolean;
+    disabled?: boolean;
+    valid?: boolean;
+    onChange?: (e: any) => void;
+    onClick?: (e: any) => void;
+ 
+  },
+  ref: any
+) {
   const [viewPassword, setViewPassword] = useState(false);
   const [togglePassword, setTogglePassword] = useState("password");
   const [isPassword, setIsPassword] = useState(
@@ -152,11 +162,14 @@ const CustomInputContainer = ({
         )}>
         <div className="relative w-full h-full flex justify-start items-center">
           <Input
+            onChange={onChange}
+            ref={ref}
             disabled={disabled}
             required={required}
             readOnly={readOnly}
             type={viewPassword ? togglePassword : type}
             id={id}
+            name={id}
             className={cn(
               inputVariant({ inputBorder, font, className, size }),
               `${type.toLowerCase() === "password" ? "pr-14" : " "}`,
@@ -208,6 +221,6 @@ const CustomInputContainer = ({
       )}
     </div>
   );
-};
+});
 
 export default CustomInputContainer;

@@ -1,13 +1,33 @@
+"use client";
 import { CustomProgressBar } from "@/components/Elements/CustomProgressBar/CustomProgressBar";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import Logo from "@/components/Elements/Logo/Logo";
 import ThemeButton from "@/components/Elements/ThemeButton/ThemeButton";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import React from "react";
+import React, { useRef, useState } from "react";
 const LoginPage = () => {
+  const [formValues, setFormValues] = useState({});
+  const [formErrors, setFormErrors] = useState({});
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+  const ref = useRef<any>(null);
+
+  function handleClick() {
+    console.log(ref?.current.value);
+  }
+  function handleSubmit(e: any) {
+    e.preventDefault();
+    console.log(e.target.value);
+  }
   return (
-    <form className="w-full  h-screen flex justify-center items-center p-5 bg-accent  dark:bg-darkBg">
+    <form
+      onSubmit={handleSubmit}
+      className="w-full  h-screen flex justify-center items-center p-5 bg-accent  dark:bg-darkBg">
       <div className="w-[29.5rem] h-auto p-10 flex flex-col justify-start items-center dark:text-white bg-white dark:bg-darkBg rounded-lg gap-2">
         <div className="h-[25%] flex justify-start items-center flex-col gap-2">
           <Logo to="/admin" title="MARIO" />
@@ -31,6 +51,7 @@ const LoginPage = () => {
               label={"First Name"}
               id="firstName"
               required
+              onChange={handleChange}
             />
             <CustomInputContainer
               size={"default"}
@@ -41,6 +62,7 @@ const LoginPage = () => {
               label={"Last Name"}
               id="lastName"
               required
+              onChange={handleChange}
             />
           </div>
           <CustomInputContainer
@@ -52,7 +74,7 @@ const LoginPage = () => {
             id="emailAddress"
             label={"Email Address"}
             required
-       
+            onChange={handleChange}
           />
           <CustomInputContainer
             size={"default"}
@@ -64,8 +86,12 @@ const LoginPage = () => {
             id="password"
             required
             valid={false}
+            ref={ref}
+            onChange={handleChange}
           />
-          <div className="w-full flex justify-start gap-3 items-end text-xs font-bold">
+          <div
+            onClick={handleClick}
+            className="w-full flex justify-start gap-3 items-end text-xs font-bold">
             <CustomProgressBar type={"good"} value={30} />
             <span className="h-full flex justify-center items-end relative -bottom-[3px]">
               Weak
