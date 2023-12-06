@@ -17,12 +17,8 @@ const LoginPage = () => {
 
   const ref = useRef<any>(null);
 
-  function handleClick() {
-    console.log(ref?.current.value);
-  }
   function handleSubmit(e: any) {
     e.preventDefault();
-    console.log(e.target.value);
   }
   return (
     <form
@@ -89,9 +85,7 @@ const LoginPage = () => {
             ref={ref}
             onChange={handleChange}
           />
-          <div
-            onClick={handleClick}
-            className="w-full flex justify-start gap-3 items-end text-xs font-bold">
+          <div className="w-full flex justify-start gap-3 items-end text-xs font-bold">
             <CustomProgressBar type={"good"} value={30} />
             <span className="h-full flex justify-center items-end relative -bottom-[3px]">
               Weak
