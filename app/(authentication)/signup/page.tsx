@@ -59,8 +59,11 @@ const LoginPage = () => {
             label={"Password"}
             id="password"
           />
-          <div className="w-full flex justify-start">
+          <div className="w-full flex justify-start gap-3 items-end text-xs font-bold">
             <CustomProgressBar />
+            <span className="h-full flex justify-center items-end relative -bottom-[3px]">
+              Weak
+            </span>
           </div>
           <div
             className={`flex justify-between items-center w-full text-darkBg`}>
