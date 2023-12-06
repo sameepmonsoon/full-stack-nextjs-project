@@ -7,6 +7,7 @@ interface userAuthDoc extends Document {
   lastName: string;
   password: string;
   role: "admin" | "super-admin" | "user";
+  phone: number;
 }
 const userAuthSchema = new Schema<userAuthDoc>(
   {
@@ -20,6 +21,7 @@ const userAuthSchema = new Schema<userAuthDoc>(
       unique: true,
       required: true,
     },
+    phone: { type: Number, required: true, unique: true },
     email: {
       type: String,
       unique: true,
