@@ -32,14 +32,14 @@ const buttonVariants = cva(
         iconWithText: "h-[2.5rem] w-full",
       },
       effect: {
-        default: "",
+        none: "",
         press: "transform active:scale-[0.92] transition-transform",
       },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
-      effect: "default",
+      effect: "none",
     },
   }
 );
@@ -51,7 +51,7 @@ export interface ButtonProps
 }
 
 interface extraButtonProps extends ButtonProps {
-  effect: "default" | "press" | null | undefined;
+  effect?: "none" | "press" | null | undefined;
 }
 const Button = React.forwardRef<HTMLButtonElement, extraButtonProps>(
   ({ className, variant, effect, size, asChild = false, ...props }, ref) => {
