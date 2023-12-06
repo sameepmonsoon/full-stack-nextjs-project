@@ -157,8 +157,8 @@ const CustomInputContainer = ({
 
         {isPassword && (
           <span
-          style={{zIndex:'5'}}
-            className={cn(iconContainerVariant({ size, className ,}))}
+            style={{ zIndex: "15" }}
+            className={cn(iconContainerVariant({ size, className }))}
             onClick={handleToggle}>
             {viewPassword ? (
               <HiEye
