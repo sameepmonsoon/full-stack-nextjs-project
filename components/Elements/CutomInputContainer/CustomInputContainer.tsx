@@ -9,7 +9,7 @@ import { HiEyeOff } from "react-icons/hi";
 import { AiFillEye } from "react-icons/ai";
 //variants
 const containerVariant = cva(
-  `border-2 group rounded-[8px] p-0 pb-0 gap-0 border-gray-300 h-[50px] w-full flex flex-col justify-end items-start focus-within:ring-black/60 dark:focus-within:ring-gray-200/60 `,
+  `border-2 relative  group rounded-[8px] p-0 pb-0 gap-0 border-gray-300 h-[50px] w-full flex flex-col justify-end items-start focus-within:ring-black/60 dark:focus-within:ring-gray-200/60 `,
   {
     variants: {
       containerStyle: {
@@ -61,7 +61,7 @@ const inputVariant = cva(
     variants: {
       inputBorder: {
         default: `flex dark:text-white hover:border-gray-400 dark:focus-visible:ring-gray-400 dark:border-gray-400 bg-transparent dark:placeholder:text-red-100 h-full w-full dark:focus:border-darkBorderColor z-1 dark:text-darkText rounded-md border border-input  px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm transition-border ease-linear duration-100  file:font-medium placeholder:text-muted-foreground focus-visible:outline-none outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50`,
-        none: "border-b px-[16px]  dark:text-white w-full h-full focus:outline-none border-none focus:border-nonetransition-colors peer",
+        none: "border-b px-[16px]  dark:text-white w-full h-full focus:outline-none border-none focus:border-none transition-colors peer",
       },
       font: {
         default: "font-normal",
@@ -109,6 +109,8 @@ const CustomInputContainer = ({
   readOnly,
   required,
   id,
+  disabled,
+  valid = true,
 }: {
   id: string;
   type: string;
@@ -120,6 +122,8 @@ const CustomInputContainer = ({
   size: "default" | "medium" | "small" | null | undefined;
   readOnly?: boolean;
   required?: boolean;
+  disabled?: boolean;
+  valid?: boolean;
 }) => {
   const [viewPassword, setViewPassword] = useState(false);
   const [togglePassword, setTogglePassword] = useState("password");
@@ -137,50 +141,71 @@ const CustomInputContainer = ({
     setTogglePassword(viewPassword ? "text" : "password");
   }, [viewPassword]);
   return (
-    <div className={cn(containerVariant({ containerStyle, className, size }))}>
-      <div className="relative w-full h-full flex justify-start items-center">
-        <Input
-          required={true}
-          readOnly={readOnly}
-          type={viewPassword ? togglePassword : type}
-          id={id}
-          className={cn(
-            inputVariant({ inputBorder, font, className, size }),
-            `${type.toLowerCase() === "password" ? "pr-14" : " "}`
-          )}
-          style={{ zIndex: "2" }}
-          placeholder=" "
-        />
-        <Label htmlFor={type} className={cn(labelVariant({ size, className }))}>
-          {label}
-        </Label>
-
-        {isPassword && (
-          <span
-            style={{ zIndex: "15" }}
-            className={cn(iconContainerVariant({ size, className }))}
-            onClick={handleToggle}>
-            {viewPassword ? (
-              <HiEye
-                size={25}
-                className="cursor-pointer hover:text-blue-purple"
-                onClick={handleToggle}
-              />
-            ) : (
-              <HiEyeOff
-                size={25}
-                className="cursor-pointer hover:text-blue-purple"
-                onClick={handleToggle}
-              />
+    <div className="flex flex-col w-full gap-1">
+      <div
+        className={cn(
+          containerVariant({ containerStyle, className, size }),
+          `${
+            !valid &&
+            "border-red-700 ring-red-700 text-red-700 outline-red-700 focus-within:ring-red-700 focus-within:border-red-700 focus-within:hover:border-red-700 hover:border-red-700"
+          }`
+        )}>
+        <div className="relative w-full h-full flex justify-start items-center">
+          <Input
+            disabled={disabled}
+            required={required}
+            readOnly={readOnly}
+            type={viewPassword ? togglePassword : type}
+            id={id}
+            className={cn(
+              inputVariant({ inputBorder, font, className, size }),
+              `${type.toLowerCase() === "password" ? "pr-14" : " "}`,
+              `${
+                !valid &&
+                "border-red-800 ring-red-800 outline-red-800 focus:outline-none border-none focus:border-none"
+              }`
             )}
-          </span>
-        )}
-        {/* <p
-          id="filled_success_help"
-          className="mt-2 text-sm text-green-600 dark:text-green-400 ">
-          <span className="font-medium">Well done!</span> Some success message.
-        </p> */}
+            style={{ zIndex: "2" }}
+            placeholder=" "
+          />
+          <Label
+            htmlFor={type}
+            className={cn(
+              labelVariant({ size, className }),
+              `${!valid && " text-red-700"}`
+            )}>
+            {label}
+          </Label>
+
+          {isPassword && (
+            <span
+              style={{ zIndex: "15" }}
+              className={cn(iconContainerVariant({ size, className }))}
+              onClick={handleToggle}>
+              {viewPassword ? (
+                <HiEye
+                  size={25}
+                  className="cursor-pointer hover:text-blue-purple"
+                  onClick={handleToggle}
+                />
+              ) : (
+                <HiEyeOff
+                  size={25}
+                  className="cursor-pointer hover:text-blue-purple"
+                  onClick={handleToggle}
+                />
+              )}
+            </span>
+          )}
+        </div>
       </div>
+      {!valid && (
+        <p
+          id="filled_success_help"
+          className="h-[20px] pl-4 text-start align-middle overflow-hidden text-ellipsis text-sm text-red-800 dark:text-red-800 w-full ">
+          Some success message.
+        </p>
+      )}
     </div>
   );
 };

@@ -7,7 +7,7 @@ import Link from "next/link";
 import React from "react";
 const LoginPage = () => {
   return (
-    <div className="w-full  h-screen flex justify-center items-center p-5 bg-accent  dark:bg-darkBg">
+    <form className="w-full  h-screen flex justify-center items-center p-5 bg-accent  dark:bg-darkBg">
       <div className="w-[29.5rem] h-auto p-10 flex flex-col justify-start items-center dark:text-white bg-white dark:bg-darkBg rounded-lg gap-2">
         <div className="h-[25%] flex justify-start items-center flex-col gap-2">
           <Logo to="/admin" title="MARIO" />
@@ -30,6 +30,7 @@ const LoginPage = () => {
               containerStyle={"border"}
               label={"First Name"}
               id="firstName"
+              required
             />
             <CustomInputContainer
               size={"default"}
@@ -39,6 +40,7 @@ const LoginPage = () => {
               containerStyle={"border"}
               label={"Last Name"}
               id="lastName"
+              required
             />
           </div>
           <CustomInputContainer
@@ -49,6 +51,8 @@ const LoginPage = () => {
             containerStyle={"border"}
             id="emailAddress"
             label={"Email Address"}
+            required
+       
           />
           <CustomInputContainer
             size={"default"}
@@ -58,6 +62,8 @@ const LoginPage = () => {
             containerStyle={"border"}
             label={"Password"}
             id="password"
+            required
+            valid={false}
           />
           <div className="w-full flex justify-start gap-3 items-end text-xs font-bold">
             <CustomProgressBar type={"good"} value={30} />
@@ -81,7 +87,7 @@ const LoginPage = () => {
 
           <Button
             asChild={false}
-            type="button"
+            type="submit"
             className={`w-full transform active:scale-[0.92] transition-transform bg-darkBg dark:bg-white hover:bg-darkBg dark:hover:bg-white text-white dark:text-darkBg h-10 rounded-md flex justify-center items-center  text-md font-medium capitalize`}>
             Sign Up
           </Button>
@@ -97,7 +103,7 @@ const LoginPage = () => {
       <div className="cursor-pointer absolute right-1 top-[40%] mb-auto h-10 w-10 bg-accent flex justify-center items-center rounded-lg">
         <ThemeButton />
       </div>
-    </div>
+    </form>
   );
 };
 
