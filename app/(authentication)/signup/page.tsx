@@ -31,11 +31,13 @@ const LoginPage = () => {
   useEffect(() => {
     const calculatedStrength = calculatePasswordStrength(formValues?.password);
     const calculatedType = passwordStrengthType(calculatedStrength.strength);
+
     setPasswordStrength({
       strength: calculatedStrength.strength,
       type: calculatedType,
     });
   }, [formValues]);
+  console.log(passwordStrength);
   return (
     <form
       onSubmit={handleSubmit}
