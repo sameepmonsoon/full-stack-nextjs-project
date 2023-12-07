@@ -1,5 +1,8 @@
 "use client";
-import { calculatePasswordStrength } from "@/Helpers/validateForm";
+import {
+  calculatePasswordStrength,
+  passwordStrengthType,
+} from "@/Helpers/validateForm";
 import { CustomProgressBar } from "@/components/Elements/CustomProgressBar/CustomProgressBar";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import Logo from "@/components/Elements/Logo/Logo";
@@ -12,7 +15,8 @@ const LoginPage = () => {
   const [formErrors, setFormErrors] = useState<any>({});
   const [passwordStrength, setPasswordStrength] = useState<{
     strength: number;
-  }>({ strength: 0 });
+    type: string;
+  }>({ strength: 0, type: "poor" });
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
@@ -25,9 +29,14 @@ const LoginPage = () => {
   }
 
   useEffect(() => {
-    setPasswordStrength(calculatePasswordStrength(formValues?.password));
-  }, [formValues]);
+    const calculatedStrength = calculatePasswordStrength(formValues?.password);
+    const calculatedType = passwordStrengthType(calculatedStrength.strength);
 
+    setPasswordStrength({
+      strength: calculatedStrength.strength,
+      type: calculatedType,
+    });
+  }, [formValues]);
   console.log(passwordStrength);
   return (
     <form
@@ -107,9 +116,9 @@ const LoginPage = () => {
             onChange={handleChange}
           />
           <div className="w-full flex justify-start gap-3 items-end text-xs font-bold">
-            <CustomProgressBar type={"good"} value={30} />
-            <span className="h-full flex justify-center items-end relative -bottom-[3px]">
-              Weak
+            <CustomProgressBar type={passwordStrength.type} value={30} />
+            <span className="h-full capitalize flex justify-center items-end relative -bottom-[3px]">
+              {passwordStrength.type}
             </span>
           </div>
           <div

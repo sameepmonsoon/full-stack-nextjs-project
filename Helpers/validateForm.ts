@@ -60,6 +60,7 @@ const calculatePasswordStrength = (password: string) => {
   weaknesses.push(repeatCharactersWeakness(password));
 
   let strength = 100;
+
   weaknesses.forEach((weakness) => {
     if (weakness === null) return;
     strength -= weakness.deduction;
@@ -141,4 +142,21 @@ const repeatCharactersWeakness = (password: string) => {
   return null;
 };
 
-export { calculatePasswordStrength };
+const passwordStrengthType = (strength: number) => {
+  let type: string = "poor";
+  if (strength < 20) {
+    type = "poor";
+  } else if (strength >= 20 && strength < 40) {
+    type = "weak";
+  } else if (strength >= 40 && strength < 60) {
+    type = "normal";
+  } else if (strength >= 60 && strength < 80) {
+    type = "good";
+  } else if (strength >= 80) {
+    type = "strong";
+  }
+
+  return type;
+};
+
+export { calculatePasswordStrength, passwordStrengthType };
