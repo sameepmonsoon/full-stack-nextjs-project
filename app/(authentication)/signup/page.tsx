@@ -25,8 +25,28 @@ const LoginPage = () => {
 
   const ref = useRef<any>(null);
 
-  function handleSubmit(e: any) {
+  async function handleSubmit(e: any) {
     e.preventDefault();
+
+    try {
+      const response = await fetch("api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formValues),
+      });
+
+      if (response.ok) {
+        console.log("User created successfully");
+        // Handle success, redirect, or perform any other actions
+      } else {
+        const data = await response.json();
+        console.error("Error:", data.error);
+        // Handle error response
+      }
+    } catch (error: any) {
+      console.error("Error:", error.message);
+      // Handle fetch error
+    }
   }
 
   useEffect(() => {
