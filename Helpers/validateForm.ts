@@ -145,6 +145,7 @@ const repeatCharactersWeakness = (password: string) => {
   return null;
 };
 
+//password strength type
 const passwordStrengthType = (strength: number) => {
   let type: string = "poor";
   if (strength <= 20) {
