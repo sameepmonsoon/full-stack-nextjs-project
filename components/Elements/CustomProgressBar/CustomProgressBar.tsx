@@ -12,9 +12,11 @@ const progressBarVariant = cva(
     variants: {
       type: {
         default: "bg-primary",
-        alert: "bg-yellow-500",
-        danger: "bg-red-800",
-        good: "bg-green-700 w-10",
+        weak: "bg-yellow-500",
+        normal: "bg-green-300",
+        poor: "bg-red-800",
+        good: "bg-green-500",
+        strong: "bg-green-900",
       },
     },
     defaultVariants: {
@@ -27,7 +29,18 @@ export function CustomProgressBar({
   className,
   value,
 }: {
-  type: "good" | "default" | "alert" | "danger" | null | undefined;
+  type:
+    | string
+    | "normal"
+    | "strong"
+    | "good"
+    | "default"
+    | "weak"
+    | "poor"
+    | null
+    | undefined
+    | any;
+
   className?: string;
   value: number;
 }) {
