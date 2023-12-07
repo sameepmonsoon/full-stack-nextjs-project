@@ -1,18 +1,26 @@
 // validation function
-const validate = (values: any) => {
+const validateFormField = (values: any) => {
   const errors: any = {};
 
-  if (!values.username) {
-    errors.username = "User name is required";
+  if (!values.firstName) {
+    errors.firstName = "First name name is required.";
   } else {
-    let userRegEx = /^[a-zA-Z0-9]{4,10}$/;
-    if (!userRegEx.test(values.username)) {
-      errors.username = "Invalid Username";
+    let userRegEx = /^[a-zA-Z0-9]{2,10}$/;
+    if (!userRegEx.test(values.firstName)) {
+      errors.firstName = "Invalid firstName";
+    }
+  }
+  if (!values.lastName) {
+    errors.lastName = "Last name is required.";
+  } else {
+    let userRegEx = /^[a-zA-Z0-9]{2,10}$/;
+    if (!userRegEx.test(values.lastName)) {
+      errors.lastName = "Invalid lastName";
     }
   }
 
   if (!values.email) {
-    errors.email = "Email is required";
+    errors.email = "Email is required.";
     // setIsSubmitting(false);
   } else {
     let emailRegEx = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{3,5}$/i;
@@ -22,7 +30,7 @@ const validate = (values: any) => {
     }
   }
   if (!values.phone) {
-    errors.phone = "Phone number is required";
+    errors.phone = "Phone number is required.";
     // setIsSubmitting(false);
   } else {
     let phoneRegEx = /[9][6-9]\d{8}/;
@@ -49,7 +57,7 @@ const validate = (values: any) => {
   return errors;
 };
 
-///password strength validator
+//password strength validator
 const calculatePasswordStrength = (password: string) => {
   const weaknesses = [];
   let strength = 100;
@@ -163,4 +171,4 @@ const passwordStrengthType = (strength: number) => {
   return type;
 };
 
-export { calculatePasswordStrength, passwordStrengthType };
+export { calculatePasswordStrength, passwordStrengthType, validateFormField };

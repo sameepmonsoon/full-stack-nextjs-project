@@ -2,6 +2,7 @@
 import {
   calculatePasswordStrength,
   passwordStrengthType,
+  validateFormField,
 } from "@/Helpers/validateForm";
 import { CustomProgressBar } from "@/components/Elements/CustomProgressBar/CustomProgressBar";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
@@ -96,7 +97,7 @@ const LoginPage = () => {
             type="email"
             inputBorder={"none"}
             containerStyle={"border"}
-            id="emailAddress"
+            id="email"
             label={"Email Address"}
             required
             onChange={handleChange}
