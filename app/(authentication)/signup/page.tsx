@@ -1,13 +1,14 @@
 "use client";
+import { checkPasswordStrength } from "@/Helpers/validateForm";
 import { CustomProgressBar } from "@/components/Elements/CustomProgressBar/CustomProgressBar";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import Logo from "@/components/Elements/Logo/Logo";
 import ThemeButton from "@/components/Elements/ThemeButton/ThemeButton";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 const LoginPage = () => {
-  const [formValues, setFormValues] = useState({});
+  const [formValues, setFormValues] = useState<any>({});
   const [formErrors, setFormErrors] = useState<any>({});
 
   const handleChange = (e: any) => {
@@ -20,6 +21,10 @@ const LoginPage = () => {
   function handleSubmit(e: any) {
     e.preventDefault();
   }
+
+  useEffect(() => {
+    console.log(checkPasswordStrength(formValues?.password));
+  }, [formValues]);
   return (
     <form
       onSubmit={handleSubmit}
@@ -127,7 +132,7 @@ const LoginPage = () => {
         </div>
 
         <Link
-          href={"/admin/home"}
+          href={"/login"}
           className="text-center dark:text-white font-medium text-md flex justify-center items-end leading-[1.75] text-[#3F444F]">
           Already have an account ?
         </Link>

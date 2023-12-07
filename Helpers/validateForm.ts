@@ -49,25 +49,41 @@ const validate = (values: any) => {
   return errors;
 };
 
-const checkPasswordStrength = (password: string) => {
-  const errors: any = {};
-  let passwordRegEx = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+///password strength validator
+export const checkPasswordStrength = (password: string) => {
+  let errors: any = {};
+  let passwordRegEx = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,20}$/;
+  const poorRegExp = /[a-z]/;
+  const weakRegExp = /(?=.*?[0-9])/;
+  const goodExp = /(?=.*?[#?!@$%^&*-])/;
+  const poorPassword = poorRegExp.test(password);
+  const weakPassword = weakRegExp.test(password);
+  const goodPassword = goodExp.test(password);
+
+  console.log(poorPassword, weakPassword, goodPassword);
   if (!password) {
-    errors.password = "Password is valid";
-    // setIsSubmitting(false);
+    errors.password = "Password is reuired.";
   } else {
-    if (password.length <= 7 && !passwordRegEx.test(password)) {
+    if (
+      password.length <= 5 &&
+      (poorPassword || weakPassword || goodPassword)
+    ) {
       errors.poor = true;
     }
-    if (password.length > 7) {
+    if (
+      password.length <= 7 &&
+      poorPassword &&
+      (weakPassword || goodPassword)
+    ) {
+      errors = {};
       errors.weak = true;
     }
-
-    if (!passwordRegEx.test(password)) {
-      //   setIsSubmitting(false);
-
-      errors.password =
-        "Password must contain atleast 6 characters, one uppercase, one lowercase, one special-character and one number ";
+    if (password.length > 7 && poorPassword && weakPassword && goodPassword) {
+      errors.normal = true;
+    }
+    if (passwordRegEx.test(password)) {
+      errors.good = true;
     }
   }
+  return errors;
 };
