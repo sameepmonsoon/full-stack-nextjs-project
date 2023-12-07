@@ -1,5 +1,5 @@
 "use client";
-import { checkPasswordStrength } from "@/Helpers/validateForm";
+import { calculatePasswordStrength } from "@/Helpers/validateForm";
 import { CustomProgressBar } from "@/components/Elements/CustomProgressBar/CustomProgressBar";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import Logo from "@/components/Elements/Logo/Logo";
@@ -10,7 +10,9 @@ import React, { useEffect, useRef, useState } from "react";
 const LoginPage = () => {
   const [formValues, setFormValues] = useState<any>({});
   const [formErrors, setFormErrors] = useState<any>({});
-
+  const [passwordStrength, setPasswordStrength] = useState<{
+    strength: number;
+  }>({ strength: 0 });
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
@@ -23,8 +25,10 @@ const LoginPage = () => {
   }
 
   useEffect(() => {
-    console.log(checkPasswordStrength(formValues?.password));
+    setPasswordStrength(calculatePasswordStrength(formValues?.password));
   }, [formValues]);
+
+  console.log(passwordStrength);
   return (
     <form
       onSubmit={handleSubmit}
