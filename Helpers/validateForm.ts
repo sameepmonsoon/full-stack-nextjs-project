@@ -53,10 +53,12 @@ const validate = (values: any) => {
 const calculatePasswordStrength = (password: string) => {
   const weaknesses = [];
   let strength = 100;
+
   if (password?.length === 0 || password === undefined) {
     strength = 0;
     return { strength };
   }
+
   weaknesses.push(lengthWeakness(password));
   weaknesses.push(lowercaseWeakness(password));
   weaknesses.push(uppercaseWeakness(password));
@@ -145,6 +147,7 @@ const repeatCharactersWeakness = (password: string) => {
   return null;
 };
 
+//password strength type
 const passwordStrengthType = (strength: number) => {
   let type: string = "poor";
   if (strength <= 20) {
