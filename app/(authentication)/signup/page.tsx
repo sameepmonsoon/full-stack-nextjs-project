@@ -37,7 +37,6 @@ const LoginPage = () => {
       type: calculatedType,
     });
   }, [formValues]);
-  console.log(passwordStrength);
   return (
     <form
       onSubmit={handleSubmit}
