@@ -52,14 +52,17 @@ const validate = (values: any) => {
 ///password strength validator
 const calculatePasswordStrength = (password: string) => {
   const weaknesses = [];
+  let strength = 100;
+  if (password?.length === 0 || password === undefined) {
+    strength = 0;
+    return { strength };
+  }
   weaknesses.push(lengthWeakness(password));
   weaknesses.push(lowercaseWeakness(password));
   weaknesses.push(uppercaseWeakness(password));
   weaknesses.push(numberWeakness(password));
   weaknesses.push(specialCharactersWeakness(password));
   weaknesses.push(repeatCharactersWeakness(password));
-
-  let strength = 100;
 
   weaknesses.forEach((weakness) => {
     if (weakness === null) return;
@@ -144,9 +147,9 @@ const repeatCharactersWeakness = (password: string) => {
 
 const passwordStrengthType = (strength: number) => {
   let type: string = "poor";
-  if (strength < 20) {
+  if (strength <= 20) {
     type = "poor";
-  } else if (strength >= 20 && strength < 40) {
+  } else if (strength > 20 && strength < 40) {
     type = "weak";
   } else if (strength >= 40 && strength < 60) {
     type = "normal";
