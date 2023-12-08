@@ -4,7 +4,6 @@ import {
   passwordStrengthType,
   validateFormField,
 } from "@/Helpers/validateForm";
-import { CustomDropDown } from "@/components/Elements/CustomDropDown/CustomDropDown";
 import { CustomProgressBar } from "@/components/Elements/CustomProgressBar/CustomProgressBar";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import Logo from "@/components/Elements/Logo/Logo";
@@ -22,38 +21,35 @@ import React, { useEffect, useRef, useState } from "react";
 const LoginPage = () => {
   const [formValues, setFormValues] = useState<any>({});
   const [formErrors, setFormErrors] = useState<any>({});
+  const [touched, setTouched] = useState<any>({});
   const [passwordStrength, setPasswordStrength] = useState<{
     strength: number;
     type: string;
   }>({ strength: 0, type: "poor" });
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
-  };
-  const handleSelectChange = (e: any) => {
-    setFormValues({ ...formValues, ["role"]: e });
-  };
-
   const ref = useRef<any>(null);
 
   async function handleSubmit(e: any) {
     e.preventDefault();
+    setFormErrors(validateFormField(formValues));
 
+    const hasErrors = validateFormField(formValues);
     try {
-      const response = await fetch("api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formValues),
-      });
+      if (!hasErrors) {
+        const response = await fetch("api/auth/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formValues),
+        });
 
-      if (response.ok) {
-        console.log("User created successfully");
-        // Handle success, redirect, or perform any other actions
-      } else {
-        const data = await response.json();
-        console.error("Error:", data.error);
-        // Handle error response
+        if (response.ok) {
+          console.log("User created successfully");
+          // Handle success, redirect, or perform any other actions
+        } else {
+          const data = await response.json();
+          console.error("Error:", data.error);
+          // Handle error response
+        }
       }
     } catch (error: any) {
       console.error("Error:", error.message);
@@ -71,11 +67,34 @@ const LoginPage = () => {
     });
   }, [formValues]);
 
-  console.log(formValues);
+  const handleBlur = (e: any) => {
+    const { name, value } = e.target;
+    const capitalName = name.charAt(0).toUpperCase() + name.slice(1);
+    if (value === undefined || value.length === 0) {
+      setFormErrors({ ...formErrors, [name]: `${capitalName} is required.` });
+    }
+  };
+
+  const handleTouched = (e: any) => {
+    const { name } = e.target;
+    setTouched({ [name]: true });
+  };
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+    console.log(Object.keys(touched).filter((item) => item === name));
+    if (name) {
+      setFormErrors(validateFormField(formValues));
+    }
+  };
+  const handleSelectChange = (e: any) => {
+    setFormValues({ ...formValues, ["role"]: e });
+  };
+  console.log(touched, formErrors);
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full  h-screen flex justify-center items-center p-5 bg-accent  dark:bg-darkBg">
+      className="w-full  h-full flex justify-center items-center p-5 bg-accent  dark:bg-darkBg">
       <div className="w-[29.5rem] h-auto p-10 flex flex-col justify-start items-center dark:text-white bg-white dark:bg-darkBg rounded-lg gap-2">
         <div className="h-[25%] flex justify-start items-center flex-col gap-2">
           <Logo to="/admin" title="MARIO" />
@@ -124,8 +143,12 @@ const LoginPage = () => {
             required
             onChange={handleChange}
             maxlength={10}
+            onFocus={handleTouched}
+            onBlur={handleBlur}
+            valid={!formErrors?.phone}
+            errorMessage={formErrors?.phone}
           />
-          <Select onValueChange={handleSelectChange} id="role" name="role">
+          <Select onValueChange={handleSelectChange} name="role">
             <SelectTrigger className="px-3 py-4 bg-transparent  text-gray-500 dark:text-gray-400 focus-within:border-black overflow-hidden focus-within:ring-[1px] h-[60px] ring-offset-0 focus-within:ring-black/80 dark:focus-within:ring-gray-200/80 flex  dark:focus-within:border-gray-200 dark:border-gray-600 dark:hover:border-white hover:border-black border-[1px] cursor-pointer group rounded-[8px] gap-0 border-gray-300  w-full  justify-between items-center">
               <SelectValue placeholder="Select a Role" />
             </SelectTrigger>
@@ -145,7 +168,11 @@ const LoginPage = () => {
             id="email"
             label={"Email Address"}
             required
+            onFocus={handleTouched}
             onChange={handleChange}
+            onBlur={handleBlur}
+            valid={!formErrors?.email}
+            errorMessage={formErrors?.email}
           />
 
           <CustomInputContainer
@@ -157,9 +184,12 @@ const LoginPage = () => {
             label={"Password"}
             id="password"
             required
-            valid={formErrors?.password}
             ref={ref}
             onChange={handleChange}
+            onBlur={handleBlur}
+            errorMessage={formErrors?.password}
+            valid={!formErrors?.password}
+            onFocus={handleTouched}
           />
           <div className="w-full flex justify-start gap-3 items-end text-xs font-bold">
             <CustomProgressBar type={passwordStrength.type} value={30} />
