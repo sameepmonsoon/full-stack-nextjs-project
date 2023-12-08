@@ -38,7 +38,7 @@ const userAuthSchema = new Schema<userAuthDoc>(
     role: {
       type: String,
       required: true,
-      enum: ["admin" || "super-admin" || "user"],
+      enum: ["admin", "super-admin", "user"],
       default: "user",
     },
   },
