@@ -32,9 +32,17 @@ const LoginPage = () => {
   async function handleSubmit(e: any) {
     e.preventDefault();
     setFormErrors(validateFormField(formValues));
+    setFormErrors(validateFormField(formValues));
 
     const hasErrors = validateFormField(formValues);
+    const hasErrors = validateFormField(formValues);
     try {
+      if (!hasErrors) {
+        const response = await fetch("api/auth/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formValues),
+        });
       if (!hasErrors) {
         const response = await fetch("api/auth/signup", {
           method: "POST",
@@ -95,6 +103,7 @@ const LoginPage = () => {
     <form
       onSubmit={handleSubmit}
       className="w-full  h-full flex justify-center items-center p-5 bg-accent  dark:bg-darkBg">
+      className="w-full  h-full flex justify-center items-center p-5 bg-accent  dark:bg-darkBg">
       <div className="w-[29.5rem] h-auto p-10 flex flex-col justify-start items-center dark:text-white bg-white dark:bg-darkBg rounded-lg gap-2">
         <div className="h-[25%] flex justify-start items-center flex-col gap-0 md:gap-2">
           <Logo to="/admin" title="MARIO" />
@@ -147,7 +156,12 @@ const LoginPage = () => {
             onBlur={handleBlur}
             valid={!formErrors?.phone}
             errorMessage={formErrors?.phone}
+            onFocus={handleTouched}
+            onBlur={handleBlur}
+            valid={!formErrors?.phone}
+            errorMessage={formErrors?.phone}
           />
+          <Select onValueChange={handleSelectChange} name="role">
           <Select onValueChange={handleSelectChange} name="role">
             <SelectTrigger className="px-3 py-4 bg-transparent  text-gray-500 dark:text-gray-400 focus-within:border-black overflow-hidden focus-within:ring-[1px] h-[60px] ring-offset-0 focus-within:ring-black/80 dark:focus-within:ring-gray-200/80 flex  dark:focus-within:border-gray-200 dark:border-gray-600 dark:hover:border-white hover:border-black border-[1px] cursor-pointer group rounded-[8px] gap-0 border-gray-300  w-full  justify-between items-center">
               <SelectValue placeholder="Select a Role" />
@@ -169,7 +183,11 @@ const LoginPage = () => {
             label={"Email Address"}
             required
             onFocus={handleTouched}
+            onFocus={handleTouched}
             onChange={handleChange}
+            onBlur={handleBlur}
+            valid={!formErrors?.email}
+            errorMessage={formErrors?.email}
             onBlur={handleBlur}
             valid={!formErrors?.email}
             errorMessage={formErrors?.email}
@@ -186,6 +204,10 @@ const LoginPage = () => {
             required
             ref={ref}
             onChange={handleChange}
+            onBlur={handleBlur}
+            errorMessage={formErrors?.password}
+            valid={!formErrors?.password}
+            onFocus={handleTouched}
             onBlur={handleBlur}
             errorMessage={formErrors?.password}
             valid={!formErrors?.password}
