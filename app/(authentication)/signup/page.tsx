@@ -125,6 +125,17 @@ const LoginPage = () => {
           <CustomInputContainer
             size={"default"}
             font={"medium"}
+            type="role"
+            inputBorder={"none"}
+            containerStyle={"border"}
+            id="role"
+            label={"Role"}
+            required
+            onChange={handleChange}
+          />
+          <CustomInputContainer
+            size={"default"}
+            font={"medium"}
             type="password"
             inputBorder={"none"}
             containerStyle={"border"}
