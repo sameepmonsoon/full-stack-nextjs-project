@@ -10,8 +10,8 @@ export async function POST(request: any, res: NextApiResponse) {
   try {
     await connect();
 
-    const { body, password } = await request.json();
-    const notHashedPassword = password;
+    const body = await request.json();
+    const notHashedPassword = body.password;
     const salt = bcrypt.genSaltSync(10);
     body.password = bcrypt.hashSync(notHashedPassword, salt);
     const createdUser = await UserAuth.create(body);
