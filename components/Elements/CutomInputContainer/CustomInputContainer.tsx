@@ -116,8 +116,12 @@ const CustomInputContainer = forwardRef(function CustomInputContainer(
     onChange,
     onClick,
     maxlength,
+    errorMessage,
+    onBlur,
+    onFocus,
   }: {
     id: string;
+    errorMessage?: string;
     type: string;
     className?: string;
     inputBorder: any;
@@ -131,6 +135,8 @@ const CustomInputContainer = forwardRef(function CustomInputContainer(
     valid?: boolean;
     onChange?: (e: any) => void;
     onClick?: (e: any) => void;
+    onBlur?: (e: any) => any;
+    onFocus?: (e: any) => any;
     maxlength?: number;
   },
   ref: any
@@ -157,11 +163,13 @@ const CustomInputContainer = forwardRef(function CustomInputContainer(
           containerVariant({ containerStyle, className, size }),
           `${
             !valid &&
-            "border-red-700 ring-red-700 text-red-700 outline-red-700 focus-within:ring-red-700 focus-within:border-red-700 focus-within:hover:border-red-700 hover:border-red-700"
+            "dark:border-red-600 dark:focus-within:border-red-600 dark:focus-within:ring-red-600 border-red-600 dark:outline-red-600 dark:text-red-600 ring-red-600 text-red-600 outline-red-600 focus-within:ring-red-700 focus-within:border-red-700 focus-within:hover:border-red-600 hover:border-red-600 focus-within:dark:outline-red-600"
           }`
         )}>
         <div className="relative w-full h-full flex justify-start items-center">
           <Input
+            onFocus={onFocus}
+            onBlur={onBlur}
             maxLength={maxlength}
             onChange={onChange}
             ref={ref}
@@ -176,7 +184,7 @@ const CustomInputContainer = forwardRef(function CustomInputContainer(
               `${type.toLowerCase() === "password" ? "pr-14" : " "}`,
               `${
                 !valid &&
-                "border-red-800 ring-red-800 outline-red-800 focus:outline-none border-none focus:border-none"
+                "border-red-600  ring-red-600 outline-red-600 focus:outline-none border-none focus:border-none"
               }`
             )}
             style={{ zIndex: "2" }}
@@ -186,7 +194,10 @@ const CustomInputContainer = forwardRef(function CustomInputContainer(
             htmlFor={type}
             className={cn(
               labelVariant({ size, className }),
-              `${!valid && " text-red-700"}`
+              `${
+                !valid &&
+                " text-red-600 dark:hover:border-red-600 dark:text-red-600 focus-within:text-red-600 focus-within:dark:text-red-600"
+              }`
             )}>
             {label}
           </Label>
@@ -216,8 +227,8 @@ const CustomInputContainer = forwardRef(function CustomInputContainer(
       {!valid && (
         <p
           id="filled_success_help"
-          className="h-[20px] pl-4 text-start align-middle overflow-hidden text-ellipsis text-sm text-red-800 dark:text-red-800 w-full ">
-          Some success message.
+          className="h-[20px] pl-4 text-start align-middle overflow-hidden text-ellipsis text-sm text-red-600 dark:text-red-600 w-full ">
+          {errorMessage}
         </p>
       )}
     </div>
