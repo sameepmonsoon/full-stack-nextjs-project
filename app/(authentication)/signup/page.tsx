@@ -82,7 +82,7 @@ const LoginPage = () => {
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
-    console.log(Object.keys(touched).filter((item) => item === name));
+    // console.log(Object.keys(touched).filter((item) => item === name));
     if (name) {
       setFormErrors(validateFormField(formValues));
     }
@@ -90,16 +90,16 @@ const LoginPage = () => {
   const handleSelectChange = (e: any) => {
     setFormValues({ ...formValues, ["role"]: e });
   };
-  console.log(touched, formErrors);
+  // console.log(touched, formErrors);
   return (
     <form
       onSubmit={handleSubmit}
       className="w-full  h-full flex justify-center items-center p-5 bg-accent  dark:bg-darkBg">
       <div className="w-[29.5rem] h-auto p-10 flex flex-col justify-start items-center dark:text-white bg-white dark:bg-darkBg rounded-lg gap-2">
-        <div className="h-[25%] flex justify-start items-center flex-col gap-2">
+        <div className="h-[25%] flex justify-start items-center flex-col gap-0 md:gap-2">
           <Logo to="/admin" title="MARIO" />
-          <div className="flex justify-center items-cente flex-col gap-4">
-            <p className="text-center dark:text-white capitalize font-bold text-2xl">
+          <div className="flex justify-center items-cente flex-col gap-4 text-xs md:text-[16px]">
+            <p className="text-center dark:text-white capitalize font-bold text-xl md:text-2xl">
               Sign Up
             </p>
             <p className="text-center text-md leading-3 font-normal text-gray-400  ">
@@ -108,7 +108,7 @@ const LoginPage = () => {
           </div>
         </div>
         <div className="flex flex-col justify-start items-center gap-5 w-full border-b-[1px] border-b-gray-300 py-5">
-          <div className="w-full flex justify-between items-center gap-10 flex-wrap md:flex-nowrap">
+          <div className="w-full flex flex-col md:flex-row justify-between items-center gap-5 md:gap-10 flex-wrap md:flex-nowrap">
             <CustomInputContainer
               size={"default"}
               font={"medium"}
@@ -221,7 +221,7 @@ const LoginPage = () => {
 
         <Link
           href={"/login"}
-          className="text-center dark:text-white font-medium text-md flex justify-center items-end leading-[1.75] text-[#3F444F]">
+          className="text-center text-sm md:text-[16px] dark:text-white font-medium text-md flex justify-center items-end leading-[1.75] text-[#3F444F]">
           Already have an account ?
         </Link>
       </div>
