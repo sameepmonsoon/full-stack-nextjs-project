@@ -77,16 +77,18 @@ const LoginPage = () => {
 
   const handleTouched = (e: any) => {
     const { name } = e.target;
-    setTouched({ [name]: true });
+    setTouched({ [name]: name });
   };
+
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
-    // console.log(Object.keys(touched).filter((item) => item === name));
-    if (name) {
-      setFormErrors(validateFormField(formValues));
-    }
+    // console.log(Object.keys(touched).includes(name));
+    // if (Object.keys(touched).includes(name)) {
+    //   setFormErrors(validateFormField(formValues));
+    // }
   };
+
   const handleSelectChange = (e: any) => {
     setFormValues({ ...formValues, ["role"]: e });
   };
@@ -119,6 +121,7 @@ const LoginPage = () => {
               id="firstName"
               required
               onChange={handleChange}
+              onFocus={handleTouched}
             />
             <CustomInputContainer
               size={"default"}
@@ -130,6 +133,7 @@ const LoginPage = () => {
               id="lastName"
               required
               onChange={handleChange}
+              onFocus={handleTouched}
             />
           </div>
           <CustomInputContainer
@@ -221,7 +225,7 @@ const LoginPage = () => {
 
         <Link
           href={"/login"}
-          className="text-center text-sm md:text-[16px] dark:text-white font-medium text-md flex justify-center items-end leading-[1.75] text-[#3F444F]">
+          className="text-center dark:text-white font-medium text-md flex justify-center items-end leading-[1.75] text-[#3F444F]">
           Already have an account ?
         </Link>
       </div>
