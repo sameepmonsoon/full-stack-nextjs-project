@@ -78,12 +78,13 @@ const LoginPage = () => {
   const handleTouched = (e: any) => {
     const { name } = e.target;
     setTouched({ [name]: true });
+    setFormErrors(validateFormField(formValues));
   };
   const handleChange = (e: any) => {
     const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
+    // setFormValues({ ...formValues, [name]: value });
     // console.log(Object.keys(touched).filter((item) => item === name));
-    if (name) {
+    if (touched === name) {
       setFormErrors(validateFormField(formValues));
     }
   };
