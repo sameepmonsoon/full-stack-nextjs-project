@@ -225,7 +225,7 @@ const LoginPage = () => {
 
         <Link
           href={"/login"}
-          className="text-center dark:text-white font-medium text-md flex justify-center items-end leading-[1.75] text-[#3F444F]">
+          className="text-center hover:underline underline-offset-1 dark:text-white font-medium text-md flex justify-center items-end leading-[1.75] text-[#3F444F]">
           Already have an account ?
         </Link>
       </div>

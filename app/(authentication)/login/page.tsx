@@ -43,9 +43,7 @@ const LoginPage = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="w-full  h-screen flex justify-center items-center p-5 bg-accent  dark:bg-darkBg">
+    <form className="w-full  h-full flex justify-center items-center p-5 bg-accent  dark:bg-darkBg">
       <div className="w-[29.5rem] h-auto p-10 flex flex-col justify-start items-center dark:text-white bg-white dark:bg-darkBg rounded-lg gap-2">
         <div className="h-[25%] flex justify-start items-center flex-col gap-2">
           <Logo to="/admin" title="MARIO" />
@@ -112,7 +110,7 @@ const LoginPage = () => {
 
         <Link
           href={"/signup"}
-          className="text-center dark:text-white font-medium text-md flex justify-center items-end leading-[1.75] text-[#3F444F]">
+          className="text-center hover:underline underline-offset- dark:text-white font-medium text-md flex justify-center items-end leading-[1.75] text-[#3F444F]">
           Dont have an account ?
         </Link>
       </div>

@@ -17,15 +17,25 @@ const ThemeButton: React.FC<ThemeButtonProps> = () => {
 
   //effects
   useEffect(() => {
-    localThemeChecker(theme, isDarkTheme);
+    console.log("Before setting theme", localStorage.getItem("theme"));
+    if (typeof window !== undefined) {
+      console.log("Before setting theme", localStorage.getItem("theme"));
+      localThemeChecker(theme, isDarkTheme);
+    }
   }, [theme, isDarkTheme]);
 
   useEffect(() => {
-    if (typeof window !== undefined) {
-      setTheme(localStorage.getItem("theme") || "L");
-      setToggle(localStorage.getItem("toggle") === "true");
+    console.log("Before setting theme", localStorage.getItem("theme"));
+    const storedTheme = localStorage.getItem("theme") || "L";
+    const storedToggle = localStorage.getItem("toggle") === "true";
+
+    if (isBrowser) {
+      console.log("Setting theme", storedTheme);
+      setTheme(storedTheme);
+      setToggle(storedToggle);
     }
   }, []);
+
   const handleThemeToggle = (themeMode: SetStateAction<string>) => {
     setTimeout(() => {
       setTheme(themeMode);
