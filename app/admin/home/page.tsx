@@ -8,7 +8,7 @@ function AdminPage() {
     <div
       className={`dark:bg-[#030708] dark:text-white bg-accent flex-1 w-auto rounded-xl p-5`}>
       This is admin page.
-      <div className="h-40 p-2 w-[20rem]">
+      <div className="h-40 p-2 w-full">
         <CustomInputContainer
           size={"default"}
           font={"medium"}
@@ -19,7 +19,7 @@ function AdminPage() {
           id="userName"
         />
 
-        <CardLayout />
+        <CardLayout type={"row"} />
       </div>
     </div>
   );

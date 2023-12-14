@@ -2,30 +2,68 @@ import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 import React from "react";
 
-//variant for icon container
+//variant
 const cardLayoutVariant = cva(
-  `w-full flex justify-center items-cemter bg-red-900`,
+  `flex-1 flex justify-start items-cemter bg-gray-500 p-4 rounded-md overflow-hidden`,
   {
     variants: {
-      size: {
-        default: "h-12 w-full",
-        medium: "h-16 w-full",
-        small: "h-10 w-full",
+      type: {
+        default: "h-[5rem]",
+        column: "h-[10rem]",
+        row: "h-[5rem]",
       },
     },
     defaultVariants: {
-      size: "default",
+      type: "default",
     },
   }
 );
 
-const CardLayout = ({ size }: { size?: any }) => {
+const innerCardContainerVariant = cva(`w-full flex  gap-2 overflow-hidden`, {
+  variants: {
+    type: {
+      default: "w-full flex h-full",
+      column: "flex-col",
+      row: "flex-row h-full",
+    },
+  },
+  defaultVariants: {
+    type: "default",
+  },
+});
+const divVariant = cva(`h-auto bg-yellow-200 flex justify-start items-center`, {
+  variants: {
+    type: {
+      default: "h-10 bg-yellow-200 flex justify-start items-center",
+      column: "h-10 bg-yellow-200 flex justify-start items-center",
+      row: "flex-row h-full w-40",
+    },
+  },
+  defaultVariants: {
+    type: "default",
+  },
+});
+
+const CardLayout = ({
+  type,
+}: {
+  type: "default" | "column" | "row" | null | undefined;
+}) => {
   return (
-    <div className={cn(cardLayoutVariant(size))}>
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi esse
-      nesciunt veritatis quos amet necessitatibus reiciendis mollitia numquam?
-      Ullam asperiores dolore vitae impedit, quaerat aliquid dolorum labore
-      repellat expedita voluptas.
+    <div className={cn(cardLayoutVariant({ type }))}>
+      <div className={cn(innerCardContainerVariant({ type }))}>
+        <div className={cn(divVariant({ type }))}>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum
+        </div>
+        <div className="w-full h-auto  flex flex-col gap-2">
+          <p className="h-16 bg-yellow-200 flex justify-start items-center">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum
+          </p>
+          <p className="h-4 bg-yellow-200 flex justify-start items-center">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
