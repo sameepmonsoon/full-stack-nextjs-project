@@ -17,6 +17,7 @@ export function CustomDropDown() {
   const [position, setPosition] = React.useState("bottom");
 
   return (
+    //@ts-ignore
     <DropdownMenu className="w-full">
       <DropdownMenuTrigger asChild className="w-full">
         <Button variant="outline">Role</Button>

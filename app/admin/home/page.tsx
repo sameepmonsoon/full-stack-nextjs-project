@@ -1,4 +1,6 @@
+import CardLayout from "@/components/Elements/CardLayout/CardLayout";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
+
 import React from "react";
 
 function AdminPage() {
@@ -16,6 +18,8 @@ function AdminPage() {
           label={"User Name"}
           id="userName"
         />
+
+        <CardLayout />
       </div>
     </div>
   );
