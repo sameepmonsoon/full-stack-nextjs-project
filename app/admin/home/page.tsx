@@ -20,7 +20,11 @@ function AdminPage() {
             id="userName"
           />
 
-          <CardLayout type={"row"} />
+          <CardLayout
+            type={"column"}
+            title={"$100"}
+            detail="Lorem Ipsum is the earning."
+          />
         </div>
       </div>
     </div>
