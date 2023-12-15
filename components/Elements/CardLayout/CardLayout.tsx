@@ -3,6 +3,7 @@ import { cva } from "class-variance-authority";
 import React from "react";
 import { TbDots } from "react-icons/tb";
 import { FaRegCreditCard } from "react-icons/fa6";
+
 const cardLayoutVariant = cva(
   `flex-1 flex justify-start items-center p-4 rounded-[8px] overflow-hidden bg-darkBg text-white`,
   {
@@ -18,7 +19,6 @@ const cardLayoutVariant = cva(
     },
   }
 );
-
 const innerCardContainerVariant = cva(`w-full flex  gap-0 overflow-hidden`, {
   variants: {
     type: {
@@ -51,6 +51,7 @@ const divVariant = cva(
 const CardLayout = ({
   type,
   children,
+
 }: {
   type: "default" | "column" | "row" | null | undefined;
   children?: React.ReactNode;
