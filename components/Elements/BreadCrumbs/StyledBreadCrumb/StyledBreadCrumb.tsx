@@ -25,7 +25,7 @@ const StyledBreadCrumb: React.FC<StyledBreadCrumbProps> = ({
         <span
           className={`max-w-40 w-auto ${
             Icon ? "px-0 pr-2" : "px-2"
-          } overflow-hidden text-ellipsis whitespace-nowrap text-sm capitalize font-medium`}>
+          } overflow-hidden text-center text-ellipsis whitespace-nowrap text-sm align-middle capitalize font-medium`}>
           {label}
         </span>
       )}

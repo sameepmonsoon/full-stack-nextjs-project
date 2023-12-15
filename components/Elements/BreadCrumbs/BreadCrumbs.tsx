@@ -34,7 +34,7 @@ const BreadCrumbs = ({
       <StyledBreadCrumb
         showBackground={true}
         icon={AiTwotoneHome}
-        label="home is where the house is the nepal"
+        label="home is where the house is."
       />
       <span className="flex justify-center items-center">{separator}</span>
     </div>
