@@ -4,6 +4,7 @@ import React from "react";
 import { TbDots } from "react-icons/tb";
 import { FaRegCreditCard } from "react-icons/fa6";
 import "./CardLayout.scss";
+
 const cardLayoutVariant = cva(
   `flex-1 flex justify-start relative items-center p-4 rounded-[8px] overflow-hidden bg-darkBg text-white`,
   {
@@ -19,6 +20,7 @@ const cardLayoutVariant = cva(
     },
   }
 );
+
 const innerCardContainerVariant = cva(
   `z-10 w-full flex gap-2 overflow-hidden relative`,
   {
@@ -72,13 +74,15 @@ const CardLayout = ({
         <div className={cn(divVariant({ type }))}>
           <span
             className={`bg-accent/10 h-full cursor-pointer relative z-10 ${
-              type?.toLowerCase() === "row" ? "w-[3.3rem]" : "w-[2.5rem]"
+              type?.toLowerCase() === "row" ? "w-[3.3rem]" : "w-[2.6rem]"
             }   rounded-md flex justify-center items-center overflow-hidden`}>
-            <FaRegCreditCard />
+            <FaRegCreditCard size={18} />
           </span>
           <span
-            className={`bg-darkBg/50 h-full relative cursor-pointer z-10 rounded-md justify-center items-center overflow-hidden ${
-              type?.toLowerCase() === "row" ? "w-0 hidden" : "flex w-[2.5rem]"
+            className={`bg-darkBg/50  relative cursor-pointer z-10 rounded-md justify-center items-center overflow-hidden ${
+              type?.toLowerCase() === "row"
+                ? "w-0 hidden h-full"
+                : "flex w-[2.3rem] h-[90%]"
             }`}>
             <TbDots size={20} />
           </span>
