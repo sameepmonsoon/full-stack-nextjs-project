@@ -19,7 +19,7 @@ function AdminPage() {
           id="userName"
         />
 
-        <CardLayout type={"row"} />
+        <CardLayout type={"column"} />
       </div>
     </div>
   );

@@ -2,15 +2,14 @@ import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 import React from "react";
 
-//variant
 const cardLayoutVariant = cva(
-  `flex-1 flex justify-start items-cemter bg-gray-500 p-4 rounded-md overflow-hidden`,
+  `flex-1 flex justify-start items-cemter p-4 py-6 rounded-[8px] overflow-hidden bg-darkBg text-white`,
   {
     variants: {
       type: {
-        default: "h-[5rem]",
+        default: "h-[4.2rem]",
         column: "h-[10rem]",
-        row: "h-[5rem]",
+        row: "h-[4.2rem]",
       },
     },
     defaultVariants: {
@@ -19,7 +18,7 @@ const cardLayoutVariant = cva(
   }
 );
 
-const innerCardContainerVariant = cva(`w-full flex  gap-2 overflow-hidden`, {
+const innerCardContainerVariant = cva(`w-full flex  gap-0 overflow-hidden`, {
   variants: {
     type: {
       default: "w-full flex h-full",
@@ -31,37 +30,54 @@ const innerCardContainerVariant = cva(`w-full flex  gap-2 overflow-hidden`, {
     type: "default",
   },
 });
-const divVariant = cva(`h-auto bg-yellow-200 flex justify-start items-center`, {
-  variants: {
-    type: {
-      default: "h-10 bg-yellow-200 flex justify-start items-center",
-      column: "h-10 bg-yellow-200 flex justify-start items-center",
-      row: "flex-row h-full w-40",
+const divVariant = cva(
+  `h-10 text-white flex justify-between items-center pl-2`,
+  {
+    variants: {
+      type: {
+        default: "flex",
+        column: "flex",
+        row: "flex-row h-full w-40",
+      },
     },
-  },
-  defaultVariants: {
-    type: "default",
-  },
-});
+    defaultVariants: {
+      type: "default",
+    },
+  }
+);
 
 const CardLayout = ({
   type,
+  children,
 }: {
   type: "default" | "column" | "row" | null | undefined;
+  children: React.ReactNode;
 }) => {
   return (
     <div className={cn(cardLayoutVariant({ type }))}>
       <div className={cn(innerCardContainerVariant({ type }))}>
         <div className={cn(divVariant({ type }))}>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum
+          <span className="bg-red-900 w-10 h-full rounded-md flex justify-center items-center overflow-hidden">
+            aaaa
+          </span>
+          <span className="bg-red-900 h-full w-10 rounded-md flex justify-center items-center overflow-hidden">
+            aaaa
+          </span>
         </div>
-        <div className="w-full h-auto  flex flex-col gap-2">
-          <p className="h-16 bg-yellow-200 flex justify-start items-center">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum
-          </p>
-          <p className="h-4 bg-yellow-200 flex justify-start items-center">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum
-          </p>
+        <div className="w-full h-auto  flex flex-col gap-0">
+          {children ? (
+            children
+          ) : (
+            <>
+              <p className="h-14  flex justify-start items-center gap-2 font-medium text-5xl">
+                500
+              </p>
+
+              <p className="h-5 font-semibold text-base overflow-hidden text-ellipsis">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum
+              </p>
+            </>
+          )}
         </div>
       </div>
     </div>
