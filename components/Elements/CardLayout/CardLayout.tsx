@@ -51,7 +51,7 @@ const CardLayout = ({
   children,
 }: {
   type: "default" | "column" | "row" | null | undefined;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }) => {
   return (
     <div className={cn(cardLayoutVariant({ type }))}>
