@@ -17,7 +17,7 @@ const ComponentPage = () => {
         <ThemeButton />
       </div>
       <div>
-        <BreadCrumbs gap={20} />
+        <BreadCrumbs gap={20} separatorType={5} />
       </div>
       <div className="w-full flex gap-1 ">
         <div className="p-2 w-[20rem] h-full flex flex-col gap-5">
@@ -72,7 +72,6 @@ const ComponentPage = () => {
             <div>lorem</div>
           </CardLayout>
           <div className="w-full flex  gap-2">
-           
             <ListContainer title={"User LIst"} showViewAll={true}>
               <div>
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id at,
@@ -82,7 +81,6 @@ const ComponentPage = () => {
               </div>
             </ListContainer>
             <ListContainer title={"User LIst"} showViewAll={true}>
-             
               <div>
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id at,
                 natus sunt hic veritatis quibusdam iure! Dignissimos maxime est
