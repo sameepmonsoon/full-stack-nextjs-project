@@ -7,7 +7,7 @@ const ComponentPage = () => {
   return (
     <div
       className={`dark:bg-[#030708] dark:text-white bg-accent flex-1 rounded-xl p-5 flex h-full w-full flex-col`}>
-      <h1 className="w-full h-40 flex justify-center items-center">
+      <h1 className="w-full h-10 flex justify-center items-center">
         This is Components page
       </h1>
       <div className="w-full flex gap-1 ">
