@@ -4,7 +4,7 @@ import React from "react";
 import { TbDots } from "react-icons/tb";
 import { FaRegCreditCard } from "react-icons/fa6";
 const cardLayoutVariant = cva(
-  `flex-1 flex justify-start items-cemter p-4 rounded-[8px] overflow-hidden bg-darkBg text-white`,
+  `flex-1 flex justify-start items-center p-4 rounded-[8px] overflow-hidden bg-darkBg text-white`,
   {
     variants: {
       type: {
@@ -24,13 +24,14 @@ const innerCardContainerVariant = cva(`w-full flex  gap-0 overflow-hidden`, {
     type: {
       default: "w-full flex h-full",
       column: "flex-col",
-      row: "flex-row h-full",
+      row: "flex-row h-full gap-3",
     },
   },
   defaultVariants: {
     type: "default",
   },
 });
+
 const divVariant = cva(
   `text-white flex justify-between items-center pl-[1px]`,
   {
@@ -38,7 +39,7 @@ const divVariant = cva(
       type: {
         default: "flex",
         column: "flex h-10",
-        row: "flex-row h-full w-40",
+        row: "flex-row h-full w-auto ",
       },
     },
     defaultVariants: {
@@ -65,22 +66,35 @@ const CardLayout = ({
             <FaRegCreditCard />
           </span>
           <span
-            className={`bg-accent/10 h-full cursor-pointer  w-[2.3rem] rounded-md justify-center items-center overflow-hidden ${
-              type?.toLowerCase() === "row" ? "hidden" : "flex"
+            className={`bg-accent/10 h-full cursor-pointer   rounded-md justify-center items-center overflow-hidden ${
+              type?.toLowerCase() === "row" ? "w-0 hidden" : "flex w-[2.3rem]"
             }`}>
             <TbDots size={20} />
           </span>
         </div>
-        <div className="w-full h-auto  flex flex-col gap-0">
+        <div
+          className={`w-full h-auto flex flex-col gap-0  ${
+            type?.toLowerCase() === "row" ? "mb-[5px]" : "mb-0"
+          }`}>
           {children ? (
             children
           ) : (
             <>
-              <p className="h-13 flex justify-start items-center gap-2 font-medium text-5xl">
+              <p
+                className={`flex justify-start items-center gap-2 ${
+                  type?.toLowerCase() === "row"
+                    ? "font-medium text-lg h-7"
+                    : "font-medium text-5xl h-13 "
+                } `}>
                 500
               </p>
 
-              <p className="h-7 font-semibold text-base overflow-hidden text-ellipsis">
+              <p
+                className={`h-7 font-semibold text-start overflow-hidden text-ellipsis  ${
+                  type?.toLowerCase() === "row"
+                    ? "font-medium text-xs h-5"
+                    : "font-medium text-sm h-7"
+                }`}>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum
               </p>
             </>
