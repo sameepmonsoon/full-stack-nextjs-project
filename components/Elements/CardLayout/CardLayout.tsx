@@ -9,9 +9,9 @@ const cardLayoutVariant = cva(
   {
     variants: {
       type: {
-        default: "h-[5rem]",
-        column: "h-[10rem]",
-        row: "h-[5rem]",
+        default: "max-h-[5rem]",
+        column: "max-h-[10rem]",
+        row: "max-h-[5rem]",
       },
     },
     defaultVariants: {
