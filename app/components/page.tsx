@@ -1,3 +1,4 @@
+import BreadCrumbs from "@/components/Elements/BreadCrumbs/BreadCrumbs";
 import CardLayout from "@/components/Elements/CardLayout/CardLayout";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import ListContainer from "@/components/Elements/ListContainer/ListContainer";
@@ -14,6 +15,9 @@ const ComponentPage = () => {
       <div className="w-full h-20 p-2 flex flex-col dark:bg-accent/10 justify-center items-center bg-black/10">
         <h1>Change Theme</h1>
         <ThemeButton />
+      </div>
+      <div>
+        <BreadCrumbs gap={20} />
       </div>
       <div className="w-full flex gap-1 ">
         <div className="p-2 w-[20rem] h-full flex flex-col gap-5">
@@ -68,7 +72,7 @@ const ComponentPage = () => {
             <div>lorem</div>
           </CardLayout>
           <div className="w-full flex  gap-2">
-            {" "}
+           
             <ListContainer title={"User LIst"} showViewAll={true}>
               <div>
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id at,
@@ -78,7 +82,7 @@ const ComponentPage = () => {
               </div>
             </ListContainer>
             <ListContainer title={"User LIst"} showViewAll={true}>
-              {" "}
+             
               <div>
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id at,
                 natus sunt hic veritatis quibusdam iure! Dignissimos maxime est
