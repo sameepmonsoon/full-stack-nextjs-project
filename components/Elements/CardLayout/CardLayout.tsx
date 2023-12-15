@@ -1,15 +1,16 @@
 import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 import React from "react";
-
+import { TbDots } from "react-icons/tb";
+import { FaRegCreditCard } from "react-icons/fa6";
 const cardLayoutVariant = cva(
-  `flex-1 flex justify-start items-cemter p-4 py-6 rounded-[8px] overflow-hidden bg-darkBg text-white`,
+  `flex-1 flex justify-start items-cemter p-4 rounded-[8px] overflow-hidden bg-darkBg text-white`,
   {
     variants: {
       type: {
-        default: "h-[4.2rem]",
+        default: "h-[5rem]",
         column: "h-[10rem]",
-        row: "h-[4.2rem]",
+        row: "h-[5rem]",
       },
     },
     defaultVariants: {
@@ -31,12 +32,12 @@ const innerCardContainerVariant = cva(`w-full flex  gap-0 overflow-hidden`, {
   },
 });
 const divVariant = cva(
-  `h-10 text-white flex justify-between items-center pl-2`,
+  `text-white flex justify-between items-center pl-[1px]`,
   {
     variants: {
       type: {
         default: "flex",
-        column: "flex",
+        column: "flex h-10",
         row: "flex-row h-full w-40",
       },
     },
@@ -57,11 +58,17 @@ const CardLayout = ({
     <div className={cn(cardLayoutVariant({ type }))}>
       <div className={cn(innerCardContainerVariant({ type }))}>
         <div className={cn(divVariant({ type }))}>
-          <span className="bg-red-900 w-10 h-full rounded-md flex justify-center items-center overflow-hidden">
-            aaaa
+          <span
+            className={`bg-accent/10 h-full cursor-pointer ${
+              type?.toLowerCase() === "row" ? "w-[3.3rem]" : "w-[2.3rem]"
+            }   rounded-md flex justify-center items-center overflow-hidden`}>
+            <FaRegCreditCard />
           </span>
-          <span className="bg-red-900 h-full w-10 rounded-md flex justify-center items-center overflow-hidden">
-            aaaa
+          <span
+            className={`bg-accent/10 h-full cursor-pointer  w-[2.3rem] rounded-md justify-center items-center overflow-hidden ${
+              type?.toLowerCase() === "row" ? "hidden" : "flex"
+            }`}>
+            <TbDots size={20} />
           </span>
         </div>
         <div className="w-full h-auto  flex flex-col gap-0">
@@ -69,11 +76,11 @@ const CardLayout = ({
             children
           ) : (
             <>
-              <p className="h-14  flex justify-start items-center gap-2 font-medium text-5xl">
+              <p className="h-13 flex justify-start items-center gap-2 font-medium text-5xl">
                 500
               </p>
 
-              <p className="h-5 font-semibold text-base overflow-hidden text-ellipsis">
+              <p className="h-7 font-semibold text-base overflow-hidden text-ellipsis">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum
               </p>
             </>
