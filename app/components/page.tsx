@@ -72,7 +72,7 @@ const ComponentPage = () => {
             <div>lorem</div>
           </CardLayout>
           <div className="w-full flex  gap-2">
-            {" "}
+           
             <ListContainer title={"User LIst"} showViewAll={true}>
               <div>
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id at,
@@ -82,7 +82,7 @@ const ComponentPage = () => {
               </div>
             </ListContainer>
             <ListContainer title={"User LIst"} showViewAll={true}>
-              {" "}
+             
               <div>
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id at,
                 natus sunt hic veritatis quibusdam iure! Dignissimos maxime est
