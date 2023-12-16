@@ -4,6 +4,9 @@ interface StyledBreadCrumbProps {
   icon?: React.ComponentType<{ size: number }>;
   label?: string;
   showBackground?: boolean;
+  icon?: React.ComponentType<{ size: number }>;
+  label?: string;
+  showBackground?: boolean;
 }
 const StyledBreadCrumb: React.FC<StyledBreadCrumbProps> = ({
   icon: Icon,
@@ -13,6 +16,9 @@ const StyledBreadCrumb: React.FC<StyledBreadCrumbProps> = ({
   return (
     <Link
       href="#"
+      className={`w-auto px-[2px] h-[24px] overflow-hidden ${
+        showBackground && "bg-darkBg/10 dark:bg-accent/10"
+      } flex  rounded-[16px] justify-start items-center  `}>
       className={`w-auto px-[2px] h-[24px] overflow-hidden ${
         showBackground && "bg-darkBg/10 dark:bg-accent/10"
       } flex  rounded-[16px] justify-start items-center  `}>
