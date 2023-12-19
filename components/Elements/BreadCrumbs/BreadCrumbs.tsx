@@ -12,7 +12,6 @@ const BreadCrumbs = ({
   gap: number;
   separatorType?: number;
 }) => {
-  
   let separator;
   if (separatorType === 1) {
     separator = <VscDash size={25} />;
@@ -23,33 +22,32 @@ const BreadCrumbs = ({
   if (separatorType === 3) {
     separator = <CgFormatSlash size={20} />;
   }
-  const routeHistory  = useRouteHistory();
+  const routeHistory = useRouteHistory();
   console.log(routeHistory);
   return (
     <div className={`w-auto flex justify-start gap-[0px]`}>
-      <StyledBreadCrumb icon={AiTwotoneHome} />
+      <StyledBreadCrumb icon={AiTwotoneHome} href={"/admin/home"} />
       <span className="flex justify-center items-center">{separator}</span>
-        <div className={`w-auto flex justify-start gap-[0px]`}>
-          <StyledBreadCrumb icon={AiTwotoneHome} />
-          <span className="flex justify-center items-center">{separator}</span>
-          <StyledBreadCrumb
-            icon={AiTwotoneHome}
-            label="home"
-            showBackground={true}
-          />
-          <span className="flex justify-center items-center">{separator}</span>
-          <StyledBreadCrumb
-            showBackground={true}
-            icon={AiTwotoneHome}
-            label="home is where the house is."
-          />
-          <span className="flex justify-center items-center">{separator}</span>
-          <span className="flex justify-center items-center">{separator}</span>
+      <div className={`w-auto flex justify-start gap-[0px]`}>
+        <StyledBreadCrumb icon={AiTwotoneHome} href={"#"} />
+        <span className="flex justify-center items-center">{separator}</span>
+        <StyledBreadCrumb
+          icon={AiTwotoneHome}
+          href={"#"}
+          label="home"
+          showBackground={true}
+        />
+        <span className="flex justify-center items-center">{separator}</span>
+        <StyledBreadCrumb
+          href={"#"}
+          showBackground={true}
+          icon={AiTwotoneHome}
+          label="home is where the house is."
+        />
+        <span className="flex justify-center items-center">{separator}</span>
+        <span className="flex justify-center items-center">{separator}</span>
       </div>
-   
-      </div>
-   
-  
+    </div>
   );
 };
 
