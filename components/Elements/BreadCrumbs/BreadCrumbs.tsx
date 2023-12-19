@@ -22,6 +22,7 @@ const BreadCrumbs = ({
   if (separatorType === 3) {
     separator = <CgFormatSlash size={20} />;
   }
+  console.log('bread')
   return (
     <div className={`w-auto flex justify-start gap-[0px]`}>
       <StyledBreadCrumb icon={AiTwotoneHome} />
