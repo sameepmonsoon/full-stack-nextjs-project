@@ -5,7 +5,6 @@ import { VscDash } from "react-icons/vsc";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { CgFormatSlash } from "react-icons/cg";
 import useRouteHistory from "@/Hooks/useRouteHistory";
-import useRouteHistory from "@/Hooks/useRouteHistory";
 const BreadCrumbs = ({
   gap,
   separatorType,
