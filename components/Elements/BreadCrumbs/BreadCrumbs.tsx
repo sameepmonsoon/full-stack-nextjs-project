@@ -27,25 +27,27 @@ const BreadCrumbs = ({
     <div className={`w-auto flex justify-start gap-[0px]`}>
       <StyledBreadCrumb icon={AiTwotoneHome} />
       <span className="flex justify-center items-center">{separator}</span>
-      <div className={`w-auto flex justify-start gap-[0px]`}>
-        <StyledBreadCrumb icon={AiTwotoneHome} />
-        <span className="flex justify-center items-center">{separator}</span>
-        <StyledBreadCrumb
-          icon={AiTwotoneHome}
-          label="home"
-          showBackground={true}
-        />
-        <span className="flex justify-center items-center">{separator}</span>
-        <StyledBreadCrumb
-          showBackground={true}
-          icon={AiTwotoneHome}
-          label="home is where the house is."
-        />
-        <span className="flex justify-center items-center">{separator}</span>
-        <span className="flex justify-center items-center">{separator}</span>
+        <div className={`w-auto flex justify-start gap-[0px]`}>
+          <StyledBreadCrumb icon={AiTwotoneHome} />
+          <span className="flex justify-center items-center">{separator}</span>
+          <StyledBreadCrumb
+            icon={AiTwotoneHome}
+            label="home"
+            showBackground={true}
+          />
+          <span className="flex justify-center items-center">{separator}</span>
+          <StyledBreadCrumb
+            showBackground={true}
+            icon={AiTwotoneHome}
+            label="home is where the house is."
+          />
+          <span className="flex justify-center items-center">{separator}</span>
+          <span className="flex justify-center items-center">{separator}</span>
       </div>
    
-    </div>
+      </div>
+   
+  
   );
 };
 
