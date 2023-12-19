@@ -1,11 +1,16 @@
+'use client'
+import useRouteHistory from "@/Hooks/useRouteHistory";
 import BreadCrumbs from "@/components/Elements/BreadCrumbs/BreadCrumbs";
 import CardLayout from "@/components/Elements/CardLayout/CardLayout";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import ListContainer from "@/components/Elements/ListContainer/ListContainer";
 import ThemeButton from "@/components/Elements/ThemeButton/ThemeButton";
 import React from "react";
-
+import  {useRouter} from 'next/navigation'
 const ComponentPage = () => {
+  const routeHistory  = useRouteHistory();
+  console.log(routeHistory);
+  
   return (
     <div
       className={`dark:bg-[#030708] dark:text-white bg-accent flex-1 p-5 flex h-full w-full flex-col gap-4`}>

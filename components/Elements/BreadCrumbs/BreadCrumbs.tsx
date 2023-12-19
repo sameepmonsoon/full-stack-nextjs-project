@@ -4,6 +4,7 @@ import { AiTwotoneHome } from "react-icons/ai";
 import { VscDash } from "react-icons/vsc";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { CgFormatSlash } from "react-icons/cg";
+import useRouteHistory from "@/Hooks/useRouteHistory";
 const BreadCrumbs = ({
   gap,
   separatorType,
@@ -22,7 +23,8 @@ const BreadCrumbs = ({
   if (separatorType === 3) {
     separator = <CgFormatSlash size={20} />;
   }
-  console.log('bread')
+  const routeHistory  = useRouteHistory();
+  console.log(routeHistory);
   return (
     <div className={`w-auto flex justify-start gap-[0px]`}>
       <StyledBreadCrumb icon={AiTwotoneHome} />
