@@ -1,9 +1,13 @@
+'use client'
+import useRouteHistory from "@/Hooks/useRouteHistory";
 import CardLayout from "@/components/Elements/CardLayout/CardLayout";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import ListContainer from "@/components/Elements/ListContainer/ListContainer";
 import React from "react";
 
 function AdminPage() {
+  const routeHistory  = useRouteHistory();
+  console.log(routeHistory);
   return (
     <div
       className={`dark:bg-[#030708] dark:text-white bg-accent flex-1 w-auto rounded-xl p-5 flex `}>

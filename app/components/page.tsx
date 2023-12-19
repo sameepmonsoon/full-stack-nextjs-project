@@ -6,10 +6,7 @@ import CustomInputContainer from "@/components/Elements/CutomInputContainer/Cust
 import ListContainer from "@/components/Elements/ListContainer/ListContainer";
 import ThemeButton from "@/components/Elements/ThemeButton/ThemeButton";
 import React from "react";
-import  {useRouter} from 'next/navigation'
 const ComponentPage = () => {
-  const routeHistory  = useRouteHistory();
-  console.log(routeHistory);
   
   return (
     <div
