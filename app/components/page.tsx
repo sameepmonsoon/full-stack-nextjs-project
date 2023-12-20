@@ -8,8 +8,13 @@ import ThemeButton from "@/components/Elements/ThemeButton/ThemeButton";
 import UserDetailCard from "@/components/Elements/Users/Profile/UserDetailCard/UserDetailCard";
 import React from "react";
 import image from "../../public/next.svg";
+import { ToastAction } from "@radix-ui/react-toast";
+import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
+import DragAndDrop from "@/components/Elements/DragAndDrop/DragAndDrop";
 const ComponentPage = () => {
   const routeHistory = useRouteHistory();
+  const { toast } = useToast();
   return (
     <div
       className={`dark:bg-[#030708] dark:text-white bg-accent flex-1 p-5 flex h-full w-full flex-col gap-4`}
@@ -21,6 +26,7 @@ const ComponentPage = () => {
         <h1>Change Theme</h1>
         <ThemeButton />
       </div>
+      <br />
       <div>
         <UserDetailCard
           image={image}
@@ -28,7 +34,32 @@ const ComponentPage = () => {
           userDetail="UI/UX Designer"
           label="Pro"
         />
+        <br />
+        <BreadCrumbs gap={20} separatorType={1} routeHistory={routeHistory} />
+        <br />
+        <BreadCrumbs gap={20} separatorType={2} routeHistory={routeHistory} />
+        <br />
+        <BreadCrumbs gap={20} separatorType={3} routeHistory={routeHistory} />
+        <br />
         <BreadCrumbs gap={20} separatorType={5} routeHistory={routeHistory} />
+        <br />
+        <Button
+          onClick={() => {
+            toast({
+              title: "Scheduled: Catch up ",
+              description: "Friday, February 10, 2023 at 5:57 PM",
+              action: (
+                <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
+              ),
+            });
+          }}
+        >
+          Toast check
+        </Button>
+        <br />
+        <br />
+        <DragAndDrop />
+        <br />
       </div>
       <div className="w-full flex gap-1 ">
         <div className="p-2 w-[20rem] h-full flex flex-col gap-5">
