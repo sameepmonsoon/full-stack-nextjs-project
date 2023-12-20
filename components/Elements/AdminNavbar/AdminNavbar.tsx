@@ -3,7 +3,7 @@ import Logo from "../Logo/Logo";
 import { PiList } from "react-icons/pi";
 import { Button } from "../../ui/button";
 import { Input } from "@/components/ui/input";
-import UserIconContainer from "../UserIconContainer/UserIconContainer";
+import UserIconContainer from "../Users/UserIconContainer/UserIconContainer";
 import { IoSearchOutline } from "react-icons/io5";
 import { FaBell } from "react-icons/fa";
 import { SiGooglemessages } from "react-icons/si";
