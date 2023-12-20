@@ -1,16 +1,18 @@
-'use client'
+"use client";
 import useRouteHistory from "@/Hooks/useRouteHistory";
+import BreadCrumbs from "@/components/Elements/BreadCrumbs/BreadCrumbs";
 import CardLayout from "@/components/Elements/CardLayout/CardLayout";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import ListContainer from "@/components/Elements/ListContainer/ListContainer";
 import React from "react";
 
 function AdminPage() {
-  const routeHistory  = useRouteHistory();
-  console.log(routeHistory);
+  const routeHistory = useRouteHistory();
+
   return (
     <div
-      className={`dark:bg-[#030708] dark:text-white bg-accent flex-1 w-auto rounded-xl p-5 flex `}>
+      className={`dark:bg-[#030708] dark:text-white bg-accent flex-1 w-auto rounded-xl p-5 flex `}
+    >
       This is admin page.
       <div className="p-2 w-[20rem] h-full flex flex-col gap-5">
         <CustomInputContainer
@@ -22,7 +24,7 @@ function AdminPage() {
           label={"User Name"}
           id="userName"
         />
-
+        <BreadCrumbs gap={20} separatorType={5} routeHistory={routeHistory} />
         <CardLayout
           type={"row"}
           title={"$100"}
@@ -37,7 +39,8 @@ function AdminPage() {
         <CardLayout
           type={"column"}
           title={"$100"}
-          detail="Lorem Ipsum is the earning.">
+          detail="Lorem Ipsum is the earning."
+        >
           <div>lorem</div>
           <div>lorem</div>
           <div>lorem</div>
@@ -58,7 +61,8 @@ function AdminPage() {
         <CardLayout
           type={"column"}
           title={"$100"}
-          detail="Lorem Ipsum is the earning.">
+          detail="Lorem Ipsum is the earning."
+        >
           <div>lorem</div>
           <div>lorem</div>
           <div>lorem</div>

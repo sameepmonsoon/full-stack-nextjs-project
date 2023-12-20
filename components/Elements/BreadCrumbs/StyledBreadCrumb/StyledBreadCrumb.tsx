@@ -16,7 +16,7 @@ const StyledBreadCrumb: React.FC<StyledBreadCrumbProps> = ({
     <Link
       href={href}
       className={`w-auto px-[2px] h-[24px] overflow-hidden ${
-        showBackground && "bg-darkBg/10 dark:bg-accent/10"
+        showBackground && "bg-darkBg/10 hover:bg-darkBg/20 dark:bg-accent/10 hover:dark:bg-accent/20"
       } flex  rounded-[16px] justify-start items-center  `}
     >
       {Icon && (
