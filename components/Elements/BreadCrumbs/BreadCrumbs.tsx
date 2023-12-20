@@ -8,9 +8,11 @@ import useRouteHistory from "@/Hooks/useRouteHistory";
 const BreadCrumbs = ({
   gap,
   separatorType,
+  showBackground,
 }: {
   gap: number;
   separatorType?: number;
+  showBackground?: boolean;
 }) => {
   let separator;
   if (separatorType === 1) {
@@ -22,30 +24,35 @@ const BreadCrumbs = ({
   if (separatorType === 3) {
     separator = <CgFormatSlash size={20} />;
   }
+  if (separatorType && separatorType > 3) {
+    separator = <>&nbsp;</>;
+  }
+
   const routeHistory = useRouteHistory();
-  console.log(routeHistory);
+  console.log(
+    routeHistory?.map((item: any, index: number) => console.log(item))
+  );
   return (
     <div className={`w-auto flex justify-start gap-[0px]`}>
-      <StyledBreadCrumb icon={AiTwotoneHome} href={"/admin/home"} />
-      <span className="flex justify-center items-center">{separator}</span>
+      {/* <StyledBreadCrumb icon={AiTwotoneHome} href={"/admin/home"} />
+      <span className="flex justify-center items-center">{separator}</span> */}
       <div className={`w-auto flex justify-start gap-[0px]`}>
         <StyledBreadCrumb icon={AiTwotoneHome} href={"#"} />
         <span className="flex justify-center items-center">{separator}</span>
-        <StyledBreadCrumb
-          icon={AiTwotoneHome}
-          href={"#"}
-          label="home"
-          showBackground={true}
-        />
-        <span className="flex justify-center items-center">{separator}</span>
-        <StyledBreadCrumb
-          href={"#"}
-          showBackground={true}
-          icon={AiTwotoneHome}
-          label="home is where the house is."
-        />
-        <span className="flex justify-center items-center">{separator}</span>
-        <span className="flex justify-center items-center">{separator}</span>
+
+        {routeHistory?.map((item: any) => {
+          <>
+            <StyledBreadCrumb
+              icon={AiTwotoneHome}
+              href={`/admin/${item}`}
+              label={item}
+              showBackground={true}
+            />
+            <span className="flex justify-center items-center">
+              {separator}
+            </span>
+          </>;
+        })}
       </div>
     </div>
   );

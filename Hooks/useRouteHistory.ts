@@ -1,21 +1,21 @@
-'use client'
-import { useEffect, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+"use client";
+import { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 
 const useRouteHistory = () => {
   const router = useRouter();
-  const pathname= usePathname();
+  const pathname = usePathname();
   const [routeHistory, setRouteHistory] = useState<any>([]);
-const isAdminPage = pathname.includes('admin')
-  console.log(isAdminPage)
+  const isAdminPage = pathname.includes("admin");
+  console.log(isAdminPage);
   useEffect(() => {
-if(true){
+    if (true) {
+      // const formattedRoute = pathname.split('/')[2]
+      const formattedRoute = pathname.split("/")[1];
 
-  // const formattedRoute = pathname.split('/')[2]
-
-    setRouteHistory((prevHistory:any) => [...prevHistory,pathname]);
-  }
-  }, [pathname,isAdminPage]);
+      setRouteHistory((prevHistory: any) => [...prevHistory, formattedRoute]);
+    }
+  }, [pathname, isAdminPage]);
   return routeHistory;
 };
 
