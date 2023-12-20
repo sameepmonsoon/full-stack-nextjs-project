@@ -5,6 +5,7 @@ import CardLayout from "@/components/Elements/CardLayout/CardLayout";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import ListContainer from "@/components/Elements/ListContainer/ListContainer";
 import ThemeButton from "@/components/Elements/ThemeButton/ThemeButton";
+import UserDetailCard from "@/components/Elements/Users/Profile/UserDetailCard/UserDetailCard";
 import React from "react";
 const ComponentPage = () => {
   const routeHistory = useRouteHistory();
@@ -20,7 +21,8 @@ const ComponentPage = () => {
         <ThemeButton />
       </div>
       <div>
-        <BreadCrumbs gap={20} separatorType={5} routeHistory={routeHistory}/>
+        <UserDetailCard />
+        <BreadCrumbs gap={20} separatorType={5} routeHistory={routeHistory} />
       </div>
       <div className="w-full flex gap-1 ">
         <div className="p-2 w-[20rem] h-full flex flex-col gap-5">

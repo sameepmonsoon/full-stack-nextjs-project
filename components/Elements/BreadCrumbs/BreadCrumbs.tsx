@@ -32,10 +32,23 @@ const BreadCrumbs = ({
     <div className={`w-auto flex justify-start gap-0`}>
       <div className={`w-auto flex justify-start gap-0`}>
         <StyledBreadCrumb icon={AiTwotoneHome} href={"/admin/home"} />
-        <span className="flex justify-center items-center">{separator}</span>
-
-        {routeHistory?.map((item: any, index: number) => {
-          if (routeHistory.length - 1 === index) {
+        {routeHistory.length > 0 && (
+          <span className="flex justify-center items-center">{separator}</span>
+        )}
+        {routeHistory.length > 0 &&
+          routeHistory?.map((item: any, index: number) => {
+            if (routeHistory.length - 1 === index) {
+              return (
+                <>
+                  <StyledBreadCrumb
+                    icon={AiTwotoneHome}
+                    href={`/admin/${item}`}
+                    label={item}
+                    showBackground={true}
+                  />
+                </>
+              );
+            }
             return (
               <>
                 <StyledBreadCrumb
@@ -44,23 +57,12 @@ const BreadCrumbs = ({
                   label={item}
                   showBackground={true}
                 />
+                <span className="flex justify-center items-center">
+                  {separator}
+                </span>
               </>
             );
-          }
-          return (
-            <>
-              <StyledBreadCrumb
-                icon={AiTwotoneHome}
-                href={`/admin/${item}`}
-                label={item}
-                showBackground={true}
-              />
-              <span className="flex justify-center items-center">
-                {separator}
-              </span>
-            </>
-          );
-        })}
+          })}
       </div>
     </div>
   );
