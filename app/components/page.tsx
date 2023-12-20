@@ -7,6 +7,7 @@ import ListContainer from "@/components/Elements/ListContainer/ListContainer";
 import ThemeButton from "@/components/Elements/ThemeButton/ThemeButton";
 import React from "react";
 const ComponentPage = () => {
+  const routeHistory = useRouteHistory();
   return (
     <div
       className={`dark:bg-[#030708] dark:text-white bg-accent flex-1 p-5 flex h-full w-full flex-col gap-4`}
@@ -19,7 +20,7 @@ const ComponentPage = () => {
         <ThemeButton />
       </div>
       <div>
-        <BreadCrumbs gap={20} separatorType={5} />
+        <BreadCrumbs gap={20} separatorType={5} routeHistory={routeHistory}/>
       </div>
       <div className="w-full flex gap-1 ">
         <div className="p-2 w-[20rem] h-full flex flex-col gap-5">

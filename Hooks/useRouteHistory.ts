@@ -10,8 +10,8 @@ const useRouteHistory = () => {
   console.log(isAdminPage);
   useEffect(() => {
     if (true) {
-      // const formattedRoute = pathname.split('/')[2]
-      const formattedRoute = pathname.split("/")[1];
+      const formattedRoute = pathname.split("/")[2];
+      // const formattedRoute = pathname.split("/")[1];
 
       setRouteHistory((prevHistory: any) => [...prevHistory, formattedRoute]);
     }

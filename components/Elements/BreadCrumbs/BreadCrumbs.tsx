@@ -4,15 +4,16 @@ import { AiTwotoneHome } from "react-icons/ai";
 import { VscDash } from "react-icons/vsc";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { CgFormatSlash } from "react-icons/cg";
-import useRouteHistory from "@/Hooks/useRouteHistory";
 const BreadCrumbs = ({
   gap,
   separatorType,
   showBackground,
+  routeHistory,
 }: {
   gap: number;
   separatorType?: number;
   showBackground?: boolean;
+  routeHistory: [];
 }) => {
   let separator: React.ReactNode;
   if (separatorType === 1) {
@@ -27,10 +28,9 @@ const BreadCrumbs = ({
   if (separatorType && separatorType > 3) {
     separator = <VscDash size={25} />;
   }
-  const routeHistory = useRouteHistory();
   return (
-    <div className={`w-auto flex justify-start gap-[0px]`}>
-      <div className={`w-auto flex justify-start gap-[0px]`}>
+    <div className={`w-auto flex justify-start gap-0`}>
+      <div className={`w-auto flex justify-start gap-0`}>
         <StyledBreadCrumb icon={AiTwotoneHome} href={"/admin/home"} />
         <span className="flex justify-center items-center">{separator}</span>
 
