@@ -1,5 +1,4 @@
-
-'use client'
+"use client";
 import useRouteHistory from "@/Hooks/useRouteHistory";
 import BreadCrumbs from "@/components/Elements/BreadCrumbs/BreadCrumbs";
 import CardLayout from "@/components/Elements/CardLayout/CardLayout";
@@ -8,10 +7,10 @@ import ListContainer from "@/components/Elements/ListContainer/ListContainer";
 import ThemeButton from "@/components/Elements/ThemeButton/ThemeButton";
 import React from "react";
 const ComponentPage = () => {
-  
   return (
     <div
-      className={`dark:bg-[#030708] dark:text-white bg-accent flex-1 p-5 flex h-full w-full flex-col gap-4`}>
+      className={`dark:bg-[#030708] dark:text-white bg-accent flex-1 p-5 flex h-full w-full flex-col gap-4`}
+    >
       <h1 className="w-full h-10 flex justify-center items-center text-xl font-medium">
         This is Components page
       </h1>
@@ -48,7 +47,8 @@ const ComponentPage = () => {
           <CardLayout
             type={"column"}
             title={"$100"}
-            detail="Lorem Ipsum is the earning.">
+            detail="Lorem Ipsum is the earning."
+          >
             <div>lorem</div>
             <div>lorem</div>
             <div>lorem</div>
@@ -69,7 +69,8 @@ const ComponentPage = () => {
           <CardLayout
             type={"column"}
             title={"$100"}
-            detail="Lorem Ipsum is the earning.">
+            detail="Lorem Ipsum is the earning."
+          >
             <div>lorem</div>
             <div>lorem</div>
             <div>lorem</div>
