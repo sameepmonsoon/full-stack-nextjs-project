@@ -1,5 +1,6 @@
 import React from "react";
 import "./DragAndDrop.scss";
+import "./DragAndDrop.scss";
 
 const DragAndDrop = () => {
   const draggables = document.querySelectorAll(".draggable");
@@ -8,14 +9,20 @@ const DragAndDrop = () => {
 
   draggables.forEach((draggable) => {
     draggable.addEventListener("dragstart", (e: any) => {
+    draggable.addEventListener("dragstart", (e: any) => {
       draggable.classList.add("dragging");
+      setTimeout(() => {
+        e.target.className += " hide";
+      }, 0);
       setTimeout(() => {
         e.target.className += " hide";
       }, 0);
     });
 
     draggable.addEventListener("dragend", (e: any) => {
+    draggable.addEventListener("dragend", (e: any) => {
       draggable.classList.remove("dragging");
+      e.target.classList.remove("hide");
       e.target.classList.remove("hide");
     });
   });
@@ -25,6 +32,8 @@ const DragAndDrop = () => {
       e.preventDefault();
       const afterElement = getDragAfterElement(container, e.clientY);
       const draggable: any = document.querySelector(".dragging");
+
+      console.log(draggable);
 
       console.log(draggable);
       if (afterElement == null) {
@@ -61,6 +70,7 @@ const DragAndDrop = () => {
           Drag me 1
         </p>
         <p draggable="true" className="draggable w-full h-10 bg-green-700">
+        <p draggable="true" className="draggable w-full h-10 bg-green-700">
           Drag me 2
         </p>
       </div>
@@ -68,6 +78,7 @@ const DragAndDrop = () => {
         <p draggable="true" className="draggable w-full h-10 bg-gray-400">
           Drag me 3
         </p>
+        <p draggable="true" className="draggable w-full h-10 bg-yellow-700">
         <p draggable="true" className="draggable w-full h-10 bg-yellow-700">
           Drag me 4
         </p>
