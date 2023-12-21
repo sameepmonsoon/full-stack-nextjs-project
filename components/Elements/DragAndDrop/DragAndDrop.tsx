@@ -56,7 +56,7 @@ const DragAndDrop = () => {
   //   console.log(draggableDiv, draggableContainerDiv);
   return (
     <div className="w-full flex flex-col gap-1">
-      <div className="drag-and-drop-container w-[20rem]  flex flex-col gap-2 bg-red-500 h-auto p-5 transition-all ease-in-out duration-800">
+      <div className="drag-and-drop-container w-[20rem] flex flex-col gap-2 bg-red-500 h-auto p-5 transition-height ease-in-out duration-800">
         <p draggable="true" className="draggable w-full h-10 bg-blue-700">
           Drag me 1
         </p>
@@ -64,7 +64,7 @@ const DragAndDrop = () => {
           Drag me 2
         </p>
       </div>
-      <div className="drag-and-drop-container w-[20rem]   flex flex-col gap-2 bg-red-700 p-5 h-auto">
+      <div className="drag-and-drop-container w-[20rem] flex flex-col gap-2 bg-red-700 p-5 h-auto transition-height ease-in-out duration-800">
         <p draggable="true" className="draggable w-full h-10 bg-gray-400">
           Drag me 3
         </p>

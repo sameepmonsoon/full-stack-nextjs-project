@@ -1,4 +1,18 @@
-.hide {
-  background-color: aqua;
-  display: none;
+.drag-and-drop-container {
+  transition: height 0.5s ease-in-out;
+}
+
+.draggable {
+  transition: all 0.3s ease-in-out;
+  cursor: grab;
+}
+
+.draggable.hide {
+  opacity: 0;
+}
+
+.dragging {
+  opacity: 1;
+  background-color: red;
+  cursor: grabbing;
 }
