@@ -4,7 +4,7 @@ import "./DragAndDrop.scss";
 const DragAndDrop = () => {
   const draggables = document.querySelectorAll(".draggable");
   const containers = document.querySelectorAll(".drag-and-drop-container");
-  const hideClass: any = document.getElementsByClassName("draggable.hide");
+  // const hideClass: any = document.getElementsByClassName("draggable.hide");
 
   draggables.forEach((draggable) => {
     draggable.addEventListener("dragstart", (e: any) => {
