@@ -1,79 +1,350 @@
-import React from "react";
-import "./DragAndDrop.scss";
+import { CiCirclePlus as PlusIcon } from "react-icons/ci";
+import { useMemo, useState } from "react";
+import { Column, Id, Task } from "@/utils/types";
+import ColumnContainer from "./ColumnContainer";
+import {
+  DndContext,
+  DragEndEvent,
+  DragOverEvent,
+  DragOverlay,
+  DragStartEvent,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import { SortableContext, arrayMove } from "@dnd-kit/sortable";
+import { createPortal } from "react-dom";
+import TaskCard from "./TaskCard";
 
-const DragAndDrop = () => {
-  const draggables = document.querySelectorAll(".draggable");
-  const containers = document.querySelectorAll(".drag-and-drop-container");
-  // const hideClass: any = document.getElementsByClassName("draggable.hide");
+const defaultCols: any = [
+  {
+    id: "todo",
+    title: "Todo",
+  },
+  {
+    id: "doing",
+    title: "Work in progress",
+  },
+  {
+    id: "done",
+    title: "Done",
+  },
+];
 
-  draggables.forEach((draggable) => {
-    draggable.addEventListener("dragstart", (e: any) => {
-      draggable.classList.add("dragging");
-      setTimeout(() => {
-        e.target.className += " hide";
-      }, 0);
-    });
+const defaultTasks: any = [
+  {
+    id: "1",
+    columnId: "todo",
+    content: "List admin APIs for dashboard",
+  },
+  {
+    id: "2",
+    columnId: "todo",
+    content:
+      "Develop user registration functionality with OTP delivered on SMS after email confirmation and phone number confirmation",
+  },
+  {
+    id: "3",
+    columnId: "doing",
+    content: "Conduct security testing",
+  },
+  {
+    id: "4",
+    columnId: "doing",
+    content: "Analyze competitors",
+  },
+  {
+    id: "5",
+    columnId: "done",
+    content: "Create UI kit documentation",
+  },
+  {
+    id: "6",
+    columnId: "done",
+    content: "Dev meeting",
+  },
+  {
+    id: "7",
+    columnId: "done",
+    content: "Deliver dashboard prototype",
+  },
+  {
+    id: "8",
+    columnId: "todo",
+    content: "Optimize application performance",
+  },
+  {
+    id: "9",
+    columnId: "todo",
+    content: "Implement data validation",
+  },
+  {
+    id: "10",
+    columnId: "todo",
+    content: "Design database schema",
+  },
+  {
+    id: "11",
+    columnId: "todo",
+    content: "Integrate SSL web certificates into workflow",
+  },
+  {
+    id: "12",
+    columnId: "doing",
+    content: "Implement error logging and monitoring",
+  },
+  {
+    id: "13",
+    columnId: "doing",
+    content: "Design and implement responsive UI",
+  },
+];
 
-    draggable.addEventListener("dragend", (e: any) => {
-      draggable.classList.remove("dragging");
-      e.target.classList.remove("hide");
-    });
-  });
+function DragAndDrop() {
+  const [columns, setColumns] = useState<any>(defaultCols);
+  const columnsId = useMemo(() => columns.map((col: any) => col.id), [columns]);
 
-  containers.forEach((container) => {
-    container.addEventListener("dragover", (e: any) => {
-      e.preventDefault();
-      const afterElement = getDragAfterElement(container, e.clientY);
-      const draggable: any = document.querySelector(".dragging");
+  const [tasks, setTasks] = useState<any>(defaultTasks);
 
-      console.log(draggable);
-      if (afterElement == null) {
-        container.appendChild(draggable);
-      } else {
-        container.insertBefore(draggable, afterElement);
-      }
-    });
-  });
+  const [activeColumn, setActiveColumn] = useState<any | null>(null);
 
-  function getDragAfterElement(container: any, y: any) {
-    const draggableElements = [
-      ...container.querySelectorAll(".draggable:not(.dragging)"),
-    ];
+  const [activeTask, setActiveTask] = useState<any | null>(null);
 
-    return draggableElements.reduce(
-      (closest, child) => {
-        const box = child.getBoundingClientRect();
-        const offset = y - box.top - box.height / 2;
-        if (offset < 0 && offset > closest.offset) {
-          return { offset: offset, element: child };
-        } else {
-          return closest;
-        }
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 10,
       },
-      { offset: Number.NEGATIVE_INFINITY }
-    ).element;
-  }
-  //   console.log(draggableDiv, draggableContainerDiv);
+    })
+  );
+
   return (
-    <div className="w-full flex flex-col gap-1">
-      <div className="drag-and-drop-container w-[20rem]  flex flex-col gap-2 bg-red-500 h-auto p-5 transition-all ease-in-out duration-800">
-        <p draggable="true" className="draggable w-full h-10 bg-blue-700">
-          Drag me 1
-        </p>
-        <p draggable="true" className="draggable w-full h-10 bg-green-700">
-          Drag me 2
-        </p>
-      </div>
-      <div className="drag-and-drop-container w-[20rem]   flex flex-col gap-2 bg-red-700 p-5 h-auto">
-        <p draggable="true" className="draggable w-full h-10 bg-gray-400">
-          Drag me 3
-        </p>
-        <p draggable="true" className="draggable w-full h-10 bg-yellow-700">
-          Drag me 4
-        </p>
-      </div>
+    <div
+      className="
+        m-auto
+        flex
+        w-full
+        items-center
+        overflow-x-auto
+        overflow-y-hidden
+        px-[40px]
+    "
+    >
+      <DndContext
+        sensors={sensors}
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        onDragOver={onDragOver}
+      >
+        <div className="m-auto flex gap-4">
+          <div className="flex gap-4">
+            <SortableContext items={columnsId}>
+              {columns.map((col: any) => (
+                <ColumnContainer
+                  key={col.id}
+                  column={col}
+                  deleteColumn={deleteColumn}
+                  updateColumn={updateColumn}
+                  createTask={createTask}
+                  deleteTask={deleteTask}
+                  updateTask={updateTask}
+                  tasks={tasks.filter((task: any) => task.columnId === col.id)}
+                />
+              ))}
+            </SortableContext>
+          </div>
+          <button
+            onClick={() => {
+              createNewColumn();
+            }}
+            className="
+      w-[350px]
+      min-w-[350px]
+      cursor-pointer
+      rounded-lg
+      bg-mainBackgroundColor
+      border-2
+      border-columnBackgroundColor
+      p-4
+      ring-rose-500
+      hover:ring-2
+      flex
+      gap-2
+      "
+          >
+            <PlusIcon />
+            Add Column
+          </button>
+        </div>
+
+        {createPortal(
+          <DragOverlay>
+            {activeColumn && (
+              <ColumnContainer
+                column={activeColumn}
+                deleteColumn={deleteColumn}
+                updateColumn={updateColumn}
+                createTask={createTask}
+                deleteTask={deleteTask}
+                updateTask={updateTask}
+                tasks={tasks.filter(
+                  (task: any) => task.columnId === activeColumn.id
+                )}
+              />
+            )}
+            {activeTask && (
+              <TaskCard
+                task={activeTask}
+                deleteTask={deleteTask}
+                updateTask={updateTask}
+              />
+            )}
+          </DragOverlay>,
+          document.body
+        )}
+      </DndContext>
     </div>
   );
-};
+
+  function createTask(columnId: Id) {
+    const newTask: Task = {
+      id: generateId(),
+      columnId,
+      content: `Task ${tasks.length + 1}`,
+    };
+
+    setTasks([...tasks, newTask]);
+  }
+
+  function deleteTask(id: Id) {
+    const newTasks = tasks.filter((task: any) => task.id !== id);
+    setTasks(newTasks);
+  }
+
+  function updateTask(id: Id, content: string) {
+    const newTasks = tasks.map((task: any) => {
+      if (task.id !== id) return task;
+      return { ...task, content };
+    });
+
+    setTasks(newTasks);
+  }
+
+  function createNewColumn() {
+    const columnToAdd: Column = {
+      id: generateId(),
+      title: `Column ${columns.length + 1}`,
+    };
+
+    setColumns([...columns, columnToAdd]);
+  }
+
+  function deleteColumn(id: Id) {
+    const filteredColumns = columns.filter((col: any) => col.id !== id);
+    setColumns(filteredColumns);
+
+    const newTasks = tasks.filter((t: any) => t.columnId !== id);
+    setTasks(newTasks);
+  }
+
+  function updateColumn(id: Id, title: string) {
+    const newColumns = columns.map((col: any) => {
+      if (col.id !== id) return col;
+      return { ...col, title };
+    });
+
+    setColumns(newColumns);
+  }
+
+  function onDragStart(event: DragStartEvent) {
+    if (event.active.data.current?.type === "Column") {
+      setActiveColumn(event.active.data.current.column);
+      return;
+    }
+
+    if (event.active.data.current?.type === "Task") {
+      setActiveTask(event.active.data.current.task);
+      return;
+    }
+  }
+
+  function onDragEnd(event: DragEndEvent) {
+    setActiveColumn(null);
+    setActiveTask(null);
+
+    const { active, over } = event;
+    if (!over) return;
+
+    const activeId = active.id;
+    const overId = over.id;
+
+    if (activeId === overId) return;
+
+    const isActiveAColumn = active.data.current?.type === "Column";
+    if (!isActiveAColumn) return;
+
+    console.log("DRAG END");
+
+    setColumns((columns: any) => {
+      const activeColumnIndex = columns.findIndex(
+        (col: any) => col.id === activeId
+      );
+
+      const overColumnIndex = columns.findIndex(
+        (col: any) => col.id === overId
+      );
+
+      return arrayMove(columns, activeColumnIndex, overColumnIndex);
+    });
+  }
+
+  function onDragOver(event: DragOverEvent) {
+    const { active, over } = event;
+    if (!over) return;
+
+    const activeId = active.id;
+    const overId = over.id;
+
+    if (activeId === overId) return;
+
+    const isActiveATask = active.data.current?.type === "Task";
+    const isOverATask = over.data.current?.type === "Task";
+
+    if (!isActiveATask) return;
+
+    // Im dropping a Task over another Task
+    if (isActiveATask && isOverATask) {
+      setTasks((tasks: any) => {
+        const activeIndex = tasks.findIndex((t: any) => t.id === activeId);
+        const overIndex = tasks.findIndex((t: any) => t.id === overId);
+
+        if (tasks[activeIndex].columnId != tasks[overIndex].columnId) {
+          // Fix introduced after video recording
+          tasks[activeIndex].columnId = tasks[overIndex].columnId;
+          return arrayMove(tasks, activeIndex, overIndex - 1);
+        }
+
+        return arrayMove(tasks, activeIndex, overIndex);
+      });
+    }
+
+    const isOverAColumn = over.data.current?.type === "Column";
+
+    if (isActiveATask && isOverAColumn) {
+      setTasks((tasks: any) => {
+        const activeIndex = tasks.findIndex((t: any) => t.id === activeId);
+
+        tasks[activeIndex].columnId = overId;
+        console.log("DROPPING TASK OVER COLUMN", { activeIndex });
+        return arrayMove(tasks, activeIndex, activeIndex);
+      });
+    }
+  }
+}
+
+function generateId() {
+  /* Generate a random number between 0 and 10000 */
+  return Math.floor(Math.random() * 10001);
+}
 
 export default DragAndDrop;
