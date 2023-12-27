@@ -8,13 +8,13 @@ import ThemeButton from "@/components/Elements/ThemeButton/ThemeButton";
 import UserDetailCard from "@/components/Elements/Users/Profile/UserDetailCard/UserDetailCard";
 import React from "react";
 import image from "../../public/next.svg";
-import { ToastAction } from "@radix-ui/react-toast";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
+// import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import DragAndDrop from "@/components/Elements/DragAndDrop/DragAndDrop";
 const ComponentPage = () => {
   const routeHistory = useRouteHistory();
-  const { toast } = useToast();
+  // const { toast } = useToast();
   return (
     <div
       className={`dark:bg-[#030708] dark:text-white bg-accent flex-1 p-5 flex h-full w-full flex-col gap-4`}
@@ -44,15 +44,16 @@ const ComponentPage = () => {
         <BreadCrumbs gap={20} separatorType={5} routeHistory={routeHistory} />
         <br />
         <Button
-          onClick={() => {
-            toast({
-              title: "Scheduled: Catch up ",
-              description: "Friday, February 10, 2023 at 5:57 PM",
-              action: (
-                <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
-              ),
-            });
-          }}
+          variant="outline"
+          onClick={() =>
+            toast("Event has been created", {
+              description: "Sunday, December 03, 2023 at 9:00 AM",
+              action: {
+                label: "Undo",
+                onClick: () => console.log("Undo"),
+              },
+            })
+          }
         >
           Toast check
         </Button>
