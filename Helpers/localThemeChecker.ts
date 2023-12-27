@@ -3,6 +3,7 @@ export default function localThemeChecker(
   themeMode: string,
   systemTheme: boolean | null
 ) {
+  console.log(themeMode);
   if (themeMode === "D") {
     localStorage.setItem("theme", "D");
     document.documentElement.classList.add("dark");
