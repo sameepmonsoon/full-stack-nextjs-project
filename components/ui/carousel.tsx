@@ -117,7 +117,6 @@ const Carousel = React.forwardRef<
         api?.off("select", onSelect);
       };
     }, [api, onSelect]);
-
     useEmblaCarousel.globalOptions = { loop: loop };
     return (
       <CarouselContext.Provider
