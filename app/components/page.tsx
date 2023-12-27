@@ -12,6 +12,7 @@ import { toast } from "sonner";
 // import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import DragAndDrop from "@/components/Elements/DragAndDrop/DragAndDrop";
+import { CarouselSlider } from "@/components/Elements/Carousels/CarouselSlider/CarouselSlider";
 const ComponentPage = () => {
   const routeHistory = useRouteHistory();
   // const { toast } = useToast();
@@ -58,7 +59,9 @@ const ComponentPage = () => {
           Toast check
         </Button>
         <br />
-
+        <div className="p-5 w-full flex justify-center items-center">
+          <CarouselSlider />
+        </div>
         <br />
         <DragAndDrop />
         <br />
