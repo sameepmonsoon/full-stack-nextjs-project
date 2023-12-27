@@ -123,7 +123,6 @@ function DragAndDrop() {
       className="
         m-auto
         flex
-        w-full
         items-center
         overflow-x-auto
         overflow-y-hidden
@@ -158,7 +157,6 @@ function DragAndDrop() {
               createNewColumn();
             }}
             className="
-      w-[350px]
       min-w-[350px]
       cursor-pointer
       rounded-lg

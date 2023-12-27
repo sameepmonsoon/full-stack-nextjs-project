@@ -63,7 +63,7 @@ const ComponentPage = () => {
           <CarouselSlider />
         </div>
         <br />
-        <DragAndDrop />
+        {/* <DragAndDrop /> */}
         <br />
       </div>
       <div className="w-full flex gap-1 ">
