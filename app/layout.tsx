@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import { DndContext } from "@dnd-kit/core";
+import AdminNav from "@/components/Elements/AdminNavbar/AdminNavbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,8 +21,13 @@ export default function RootLayout({
           inter.className
         )}
       >
+        <header className="absolute">
+          <nav>
+            <AdminNav />
+          </nav>
+        </header>
         <main className="relative flex flex-col h-screen">
-          <div className="flex-grow flex-1">{children}</div>
+          <div className="flex-grow flex-1 absolute">{children}</div>
           <Toaster />
         </main>
       </body>
