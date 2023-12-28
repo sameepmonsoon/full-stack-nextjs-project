@@ -25,8 +25,7 @@ function layout({
           </nav>
         </header>
         <section
-          className={`flex w-full h-full lg:pr-5 pl-5 pr-5 lg:pl-0 mt-[5.5rem] dark:bg-darkBg `}
-        >
+          className={`flex w-full h-full lg:pr-5 pl-5 pr-5 lg:pl-0 mt-[5.5rem] dark:bg-darkBg `}>
           <AdminLeftDrawer />
           {children}
         </section>
