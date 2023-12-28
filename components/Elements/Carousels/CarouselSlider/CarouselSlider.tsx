@@ -50,8 +50,14 @@ export function CarouselSlider() {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      <div className="absolute top-10 left-20">
+        <div className="">
+          <CarouselPrevious />
+        </div>
+        <div className="">
+          <CarouselNext />
+        </div>
+      </div>
     </Carousel>
   );
 }
