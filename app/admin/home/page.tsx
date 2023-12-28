@@ -2,6 +2,7 @@
 import useRouteHistory from "@/Hooks/useRouteHistory";
 import BreadCrumbs from "@/components/Elements/BreadCrumbs/BreadCrumbs";
 import CardLayout from "@/components/Elements/CardLayout/CardLayout";
+import { CarouselSlider } from "@/components/Elements/Carousels/CarouselSlider/CarouselSlider";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import ListContainer from "@/components/Elements/ListContainer/ListContainer";
 import React from "react";
@@ -13,7 +14,7 @@ function AdminPage() {
     <div
       className={`dark:bg-[#030708] dark:text-white bg-accent flex-1 w-auto rounded-xl p-5 flex `}
     >
-      This is admin page.
+      {/* <CarouselSlider /> */}
       <div className="p-2 w-[20rem] h-full flex flex-col gap-5">
         <CustomInputContainer
           size={"default"}
