@@ -10,14 +10,14 @@ interface ThemeButtonProps {}
 const ThemeButton: React.FC<ThemeButtonProps> = () => {
   const isBrowser = typeof window !== "undefined";
   const isDarkTheme = useSystemThemeDetector();
-  const [theme, setTheme] = useState("L");
+  const [theme, setTheme] = useState("");
 
   const [toggle, setToggle] = useState(false);
   const prevToggleRef = useRef(toggle);
 
   //effects
   useEffect(() => {
-    if (typeof window !== undefined) {
+    if (typeof window !== undefined && theme) {
       localThemeChecker(theme, isDarkTheme);
     }
   }, [theme, isDarkTheme]);

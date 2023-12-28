@@ -5,6 +5,7 @@ import CardLayout from "@/components/Elements/CardLayout/CardLayout";
 import { CarouselSlider } from "@/components/Elements/Carousels/CarouselSlider/CarouselSlider";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import ListContainer from "@/components/Elements/ListContainer/ListContainer";
+import LoadingDots from "@/components/Elements/Loading/LoadingDots/LoadingDots";
 import React from "react";
 
 function AdminPage() {
@@ -25,6 +26,8 @@ function AdminPage() {
           label={"User Name"}
           id="userName"
         />
+
+        <LoadingDots/>
         <BreadCrumbs gap={20} separatorType={5} routeHistory={routeHistory} />
         <CardLayout
           type={"row"}

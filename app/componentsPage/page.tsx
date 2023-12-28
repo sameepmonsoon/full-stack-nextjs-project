@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import DragAndDrop from "@/components/Elements/DragAndDrop/DragAndDrop";
 import { CarouselSlider } from "@/components/Elements/Carousels/CarouselSlider/CarouselSlider";
+import SkeletonLayout from "@/components/Elements/Skeleton/SkeletonLayout/SkeletonLayout";
 const ComponentPage = () => {
   const routeHistory = useRouteHistory();
   // const { toast } = useToast();
@@ -63,7 +64,7 @@ const ComponentPage = () => {
           <CarouselSlider />
         </div>
         <br />
-        {/* <DragAndDrop /> */}
+        <SkeletonLayout />
         <br />
       </div>
       <div className="w-full flex gap-1 ">
