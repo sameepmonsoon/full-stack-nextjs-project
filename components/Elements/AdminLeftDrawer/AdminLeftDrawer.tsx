@@ -4,9 +4,9 @@ import React from "react";
 import { useLeftSiderState } from "@/store/commonState/globalState";
 import { adminLeftDrawerList } from "./AdminLeftDrawerList";
 import { usePathname } from "next/navigation";
-import CustomToolTip from "../CustomToolTip/CustomToolTip";
-import "../../../Styles/Admin/AdminLeftSider.scss";
-import Logo from "../Logo/Logo";
+import CustomToolTip from "@/components/Elements/CustomToolTip/CustomToolTip";
+import "@/Styles/Admin/AdminLeftSider.scss";
+import Logo from "@/components/Elements/Logo/Logo";
 
 const AdminLeftDrawer = () => {
   const { siderState, setSiderState, closeSider } = useLeftSiderState(

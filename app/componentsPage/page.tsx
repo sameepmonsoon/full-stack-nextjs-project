@@ -13,14 +13,16 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import DragAndDrop from "@/components/Elements/DragAndDrop/DragAndDrop";
 import { CarouselSlider } from "@/components/Elements/Carousels/CarouselSlider/CarouselSlider";
+import SkeletonNavbar from "@/components/Elements/Skeleton/SkeletonNavbar/SkeletonNavbar";
+import SkeletonCard from "@/components/Elements/Skeleton/SkeletonCard/SkeletonCard";
+import SkeletonDrawer from "@/components/Elements/Skeleton/SkeletonDrawer/SkeletonDrawer";
 import SkeletonLayout from "@/components/Elements/Skeleton/SkeletonLayout/SkeletonLayout";
-import SkeletonCard from "@/components/Elements/Skeleton/SkeletonLayout/SkeletonCard";
 const ComponentPage = () => {
   const routeHistory = useRouteHistory();
   // const { toast } = useToast();
   return (
     <div
-      className={`dark:bg-[#030708] dark:text-white bg-accent flex-1 p-5 flex h-full w-full flex-col gap-4`}
+      className={`dark:bg-[#030708] dark:text-white bg-accent flex-1 flex h-full w-full flex-col gap-4`}
     >
       <h1 className="w-full h-10 flex justify-center items-center text-xl font-medium">
         This is Components page
@@ -30,6 +32,8 @@ const ComponentPage = () => {
         <ThemeButton />
       </div>
       <br />
+
+      <SkeletonDrawer />
       <div>
         <UserDetailCard
           image={image}
@@ -65,6 +69,7 @@ const ComponentPage = () => {
           <CarouselSlider />
         </div>
         <br />
+        <SkeletonNavbar />
         <SkeletonLayout />
         <br />
       </div>
@@ -118,7 +123,6 @@ const ComponentPage = () => {
             title={"$100"}
             detail="Lorem Ipsum is the earning."
           >
-            {" "}
             <div>lorem</div>
             <div>lorem</div>
             <div>lorem</div>
