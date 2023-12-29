@@ -1,8 +1,9 @@
+"use client";
 import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 import React from "react";
 import "./CardLayout.scss";
-
+import { motion } from "framer-motion";
 const cardLayoutVariant = cva(
   `flex-1 flex justify-start relative items-center p-4 rounded-[8px] overflow-hidden bg-darkBg text-white`,
   {
@@ -60,10 +61,32 @@ const SkeletonCard = ({
 }) => {
   return (
     <div className={cn(cardLayoutVariant({ type }))}>
-      <div className="first-div absolute  z-4 w-40 bg-accent/10 h-full right-0"></div>
-      <div className="second-div absolute  z-3 w-40 bg-accent/10 h-full right-0"></div>
-      <div className="third-div absolute  z-2 w-40 bg-accent/10 h-full right-0"></div>
-      <div className="fourth-div absolute  z-1 w-40 bg-accent/10 h-full right-0"></div>
+      <motion.div
+        initial={{ x: 5, y: -5 }}
+        animate={{ x: 0, y: 0 }}
+        transition={{ delay: 0.5, type: "spring", restDelta: 0.5 }}
+        className="first-div absolute z-4 w-40 bg-accent/10 h-full right-0"
+      ></motion.div>
+
+      <motion.div
+        initial={{ x: 5, y: -5 }}
+        animate={{ x: 0, y: 0 }}
+        transition={{ delay: 0.6, type: "spring", restDelta: 0.5 }}
+        className="second-div absolute  z-3 w-40 bg-accent/10 h-full right-0"
+      ></motion.div>
+      <motion.div
+        initial={{ x: 5, y: -5 }}
+        animate={{ x: 0, y: 0 }}
+        transition={{ delay: 0.7, type: "spring", restDelta: 0.5 }}
+        className="third-div absolute  z-2 w-40 bg-accent/10 h-full right-0"
+      ></motion.div>
+      <motion.div
+        initial={{ x: 5, y: -5 }}
+        animate={{ x: 0, y: 0 }}
+        transition={{ delay: 0.8, type: "spring", restDelta: 0.5 }}
+        className="fourth-div absolute  z-1 w-40 bg-accent/10 h-full right-0"
+      ></motion.div>
+
       <div className={cn(innerCardContainerVariant({ type }), "z-10")}>
         <div className={cn(divVariant({ type }))}>
           <span
