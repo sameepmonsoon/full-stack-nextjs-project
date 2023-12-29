@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import DragAndDrop from "@/components/Elements/DragAndDrop/DragAndDrop";
 import { CarouselSlider } from "@/components/Elements/Carousels/CarouselSlider/CarouselSlider";
 import SkeletonLayout from "@/components/Elements/Skeleton/SkeletonLayout/SkeletonLayout";
+import SkeletonCard from "@/components/Elements/Skeleton/SkeletonLayout/SkeletonCard";
 const ComponentPage = () => {
   const routeHistory = useRouteHistory();
   // const { toast } = useToast();
@@ -78,7 +79,7 @@ const ComponentPage = () => {
             label={"User Name"}
             id="userName"
           />
-
+          <SkeletonCard type={"column"} />
           <CardLayout
             type={"row"}
             title={"$100"}
@@ -117,10 +118,13 @@ const ComponentPage = () => {
             title={"$100"}
             detail="Lorem Ipsum is the earning."
           >
+            {" "}
             <div>lorem</div>
             <div>lorem</div>
             <div>lorem</div>
           </CardLayout>
+
+          <SkeletonCard type={"row"} />
           <div className="w-full flex  gap-2">
             <ListContainer title={"User LIst"} showViewAll={true}>
               <div>

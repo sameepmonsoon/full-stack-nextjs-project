@@ -6,6 +6,7 @@ import { CarouselSlider } from "@/components/Elements/Carousels/CarouselSlider/C
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import ListContainer from "@/components/Elements/ListContainer/ListContainer";
 import LoadingDots from "@/components/Elements/Loading/LoadingDots/LoadingDots";
+import SkeletonCard from "@/components/Elements/Skeleton/SkeletonLayout/SkeletonCard";
 import React from "react";
 
 function AdminPage() {
@@ -26,8 +27,8 @@ function AdminPage() {
           label={"User Name"}
           id="userName"
         />
-
-        <LoadingDots/>
+        <SkeletonCard type={"column"} />
+        <LoadingDots />
         <BreadCrumbs gap={20} separatorType={5} routeHistory={routeHistory} />
         <CardLayout
           type={"row"}
@@ -51,12 +52,14 @@ function AdminPage() {
         </CardLayout>
       </div>
       <div className="p-2 w-full h-full flex flex-col gap-5">
+        {" "}
+        <SkeletonCard type={"column"} />
+        <SkeletonCard type={"row"} />
         <CardLayout
           type={"row"}
           title={"$100"}
           detail="Lorem Ipsum is the earning."
         />
-
         <CardLayout
           type={"column"}
           title={"$100"}
