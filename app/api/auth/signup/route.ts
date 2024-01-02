@@ -11,6 +11,7 @@ export async function POST(request: any, res: NextApiResponse) {
     await connect();
 
     const body = await request.json();
+    console.log(body);
     const notHashedPassword = body.password;
     const salt = bcrypt.genSaltSync(10);
     body.password = bcrypt.hashSync(notHashedPassword, salt);

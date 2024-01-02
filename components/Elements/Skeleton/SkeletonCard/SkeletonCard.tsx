@@ -1,8 +1,7 @@
+"use client";
 import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 import React from "react";
-import { TbDots } from "react-icons/tb";
-import { FaRegCreditCard } from "react-icons/fa6";
 import "./CardLayout.scss";
 import { motion } from "framer-motion";
 const cardLayoutVariant = cva(
@@ -53,16 +52,12 @@ const divVariant = cva(
   }
 );
 
-const CardLayout = ({
+const SkeletonCard = ({
   type,
   children,
-  title,
-  detail,
 }: {
   type: "default" | "column" | "row" | null | undefined;
   children?: React.ReactNode;
-  title: string;
-  detail: string;
 }) => {
   return (
     <div className={cn(cardLayoutVariant({ type }))}>
@@ -82,7 +77,7 @@ const CardLayout = ({
       <motion.div
         initial={{ x: 5, y: -5 }}
         animate={{ x: 0, y: 0 }}
-        transition={{ delay: 0.7,  type: "spring", restDelta: 0.5 }}
+        transition={{ delay: 0.7, type: "spring", restDelta: 0.5 }}
         className="third-div absolute  z-2 w-40 bg-accent/10 h-full right-0"
       ></motion.div>
       <motion.div
@@ -91,28 +86,29 @@ const CardLayout = ({
         transition={{ delay: 0.8, type: "spring", restDelta: 0.5 }}
         className="fourth-div absolute  z-1 w-40 bg-accent/10 h-full right-0"
       ></motion.div>
+
       <div className={cn(innerCardContainerVariant({ type }), "z-10")}>
         <div className={cn(divVariant({ type }))}>
           <span
-            className={`bg-accent/10 h-full cursor-pointer relative z-10 ${
+            className={`bg-accent/10 animate-pulse duration-900 h-full cursor-pointer relative z-10 ${
               type?.toLowerCase() === "row" ? "w-[3.3rem]" : "w-[2.6rem]"
             }   rounded-md flex justify-center items-center overflow-hidden`}
           >
-            <FaRegCreditCard size={18} />
+            &nbsp;
           </span>
           <span
-            className={`bg-darkBg/50  relative cursor-pointer z-10 rounded-md justify-center items-center overflow-hidden ${
+            className={` bg-accent/10  animate-pulse duration-900  relative cursor-pointer z-10 rounded-md justify-center items-center overflow-hidden ${
               type?.toLowerCase() === "row"
                 ? "w-0 hidden h-full"
                 : "flex w-[2.3rem] h-[90%]"
             }`}
           >
-            <TbDots size={20} />
+            &nbsp;
           </span>
         </div>
         <div
           className={`w-full h-auto flex flex-col z-1  relative ${
-            type?.toLowerCase() === "row" ? "mb-[5px] gap-0" : "mb-0 gap-2 "
+            type?.toLowerCase() === "row" ? "mb-[5px] gap-2" : "mb-0 gap-2 "
           }`}
         >
           {children ? (
@@ -120,23 +116,20 @@ const CardLayout = ({
           ) : (
             <>
               <p
-                className={`flex justify-start items-center  gap-2 ${
-                  type?.toLowerCase() === "row"
-                    ? "font-medium text-lg h-7"
-                    : "font-medium text-5xl h-13 "
+                className={`flex justify-start items-center ${
+                  type?.toLowerCase() === "row" ? "h-5" : "h-8"
+                }  animate-pulse duration-900 bg-accent/10 w-[30%]  gap-2 font-medium text-lg  rounded-sm
+                    
                 } `}
               >
-                {title}
+                &nbsp;
               </p>
 
               <p
-                className={`h-7 font-semibold text-start overflow-hidden text-ellipsis  ${
-                  type?.toLowerCase() === "row"
-                    ? "font-medium text-xs h-5"
-                    : "font-base text-md h-7"
+                className={`rounded-sm animate-pulse duration-900 font-semibold text-start overflow-hidden w-[50%] text-ellipsis  bg-accent/10 font-base text-md h-6
                 }`}
               >
-                {detail}
+                &nbsp;
               </p>
             </>
           )}
@@ -146,4 +139,4 @@ const CardLayout = ({
   );
 };
 
-export default CardLayout;
+export default SkeletonCard;

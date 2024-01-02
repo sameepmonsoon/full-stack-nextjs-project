@@ -10,31 +10,27 @@ interface ThemeButtonProps {}
 const ThemeButton: React.FC<ThemeButtonProps> = () => {
   const isBrowser = typeof window !== "undefined";
   const isDarkTheme = useSystemThemeDetector();
-  const [theme, setTheme] = useState("L");
+  const [theme, setTheme] = useState("");
 
   const [toggle, setToggle] = useState(false);
   const prevToggleRef = useRef(toggle);
 
   //effects
   useEffect(() => {
-    console.log("Before setting theme", localStorage.getItem("theme"));
-    if (typeof window !== undefined) {
-      console.log("Before setting theme", localStorage.getItem("theme"));
+    if (typeof window !== undefined && theme) {
       localThemeChecker(theme, isDarkTheme);
     }
   }, [theme, isDarkTheme]);
 
   useEffect(() => {
-    console.log("Before setting theme", localStorage.getItem("theme"));
     const storedTheme = localStorage.getItem("theme") || "L";
     const storedToggle = localStorage.getItem("toggle") === "true";
 
     if (isBrowser) {
-      console.log("Setting theme", storedTheme);
       setTheme(storedTheme);
       setToggle(storedToggle);
     }
-  }, []);
+  }, [isBrowser]);
 
   const handleThemeToggle = (themeMode: SetStateAction<string>) => {
     setTimeout(() => {
@@ -66,22 +62,26 @@ const ThemeButton: React.FC<ThemeButtonProps> = () => {
                 }}
                 className={`gap-2 overflow-hidden cursor-pointer ${
                   theme === item.mode && "bg-accent"
-                } hover:bg-accent rounded-sm w-full text-sm flex justify-start items-center py-[2px] px-2`}>
+                } hover:bg-accent rounded-sm w-full text-sm flex justify-start items-center py-[2px] px-2`}
+              >
                 <item.icon size={16} key={index} />
                 <Label
                   key={index}
-                  className="text-ellipsis cursor-pointer overflow-hidden max-w-[75%] h-full">
+                  className="text-ellipsis cursor-pointer overflow-hidden max-w-[75%] h-full"
+                >
                   {item.label}
                 </Label>
               </button>
             </>
           ))}
         </>
-      }>
+      }
+    >
       <Button
         onClick={handleToggle}
         variant={"ghost"}
-        className="w-[2rem] h-[2rem] flex justify-center items-center p-1">
+        className="w-[2rem] h-[2rem] flex justify-center items-center p-1"
+      >
         {lightModeToggleConstants
           .filter((item: any) => item.mode === theme)
           .map((item: any, index: number) => (
