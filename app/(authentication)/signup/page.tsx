@@ -34,8 +34,10 @@ const LoginPage = () => {
     setFormErrors(validateFormField(formValues));
 
     const hasErrors = validateFormField(formValues);
+
+    console.log(hasErrors);
     try {
-      if (!hasErrors) {
+      if (hasErrors) {
         const response = await fetch("api/auth/signup", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
