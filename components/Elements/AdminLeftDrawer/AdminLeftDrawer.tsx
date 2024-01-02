@@ -32,9 +32,9 @@ const AdminLeftDrawer = () => {
           siderState == 0
             ? "w-[19rem] left-0 transition-left duration-400 ease-in-out l"
             : siderState == 1
-            ? "lg:w-[6rem] w-0 hidden lg:visible transition-width duration-400 ease-in-out"
-            : " lg:w-[0] w-[19rem] left-[-20rem] pr-0 pl-5   transition-[width, left] duration-400 ease-in-out "
-        } lg:relative  z-[100]  fixed top-0 lg:flex flex-col items-start justify-start`}
+            ? "lg:w-[6rem]  w-0 hidden lg:visible transition-width duration-400 ease-in-out"
+            : " lg:w-[0]  w-[19rem] left-[-20rem] pr-0 pl-5  transition-[width, left] duration-400 ease-in-out "
+        } lg:relative z-[100] lg:z-10  fixed top-0 lg:flex flex-col items-start justify-start`}
       >
         <div
           className={`w-full  pt-3 flex  items-center flex-nowrap lg:hidden justify-between pr-3`}
