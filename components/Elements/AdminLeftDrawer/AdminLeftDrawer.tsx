@@ -4,9 +4,9 @@ import React from "react";
 import { useLeftSiderState } from "@/store/commonState/globalState";
 import { adminLeftDrawerList } from "./AdminLeftDrawerList";
 import { usePathname } from "next/navigation";
-import CustomToolTip from "../CustomToolTip/CustomToolTip";
-import "../../../Styles/Admin/AdminLeftSider.scss";
-import Logo from "../Logo/Logo";
+import CustomToolTip from "@/components/Elements/CustomToolTip/CustomToolTip";
+import "@/Styles/Admin/AdminLeftSider.scss";
+import Logo from "@/components/Elements/Logo/Logo";
 
 const AdminLeftDrawer = () => {
   const { siderState, setSiderState, closeSider } = useLeftSiderState(
@@ -34,7 +34,7 @@ const AdminLeftDrawer = () => {
             : siderState == 1
             ? "lg:w-[6rem] w-0 hidden lg:visible transition-width duration-400 ease-in-out"
             : " lg:w-[0] w-[19rem] left-[-20rem] pr-0 pl-5   transition-[width, left] duration-400 ease-in-out "
-        } lg:relative  z-[100] lg:z-0 fixed top-0 lg:flex flex-col items-start justify-start`}
+        } lg:relative  z-[100]  fixed top-0 lg:flex flex-col items-start justify-start`}
       >
         <div
           className={`w-full  pt-3 flex  items-center flex-nowrap lg:hidden justify-between pr-3`}
