@@ -17,6 +17,7 @@ const config: Config = {
     },
     extend: {
       colors: {
+        darkModeBg: "#030708",
         light: "rgb(75 85 99 / 0.6)",
         darkBg: "#051114",
         darkText: "#ffffff",

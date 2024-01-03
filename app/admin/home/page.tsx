@@ -14,9 +14,7 @@ function AdminPage() {
   const routeHistory = useRouteHistory();
 
   return (
-    <div
-      className={`dark:bg-[#030708] dark:text-white bg-accent flex-1 w-auto rounded-xl p-5 flex `}
-    >
+    <div className="flex flex-1">
       {/* <CarouselSlider /> */}
       <div className="p-2 w-[20rem] h-full flex flex-col gap-5">
         <CustomInputContainer

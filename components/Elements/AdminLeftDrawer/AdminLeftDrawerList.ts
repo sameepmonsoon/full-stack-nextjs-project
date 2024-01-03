@@ -9,7 +9,7 @@ export const adminLeftDrawerList = [
     title: "Dashboard",
     list: [
       { icon: FaHouse, listName: "Home" },
-      { icon: GiSupersonicBullet, listName: "SuperSonic" },
+      { icon: GiSupersonicBullet, listName: "Analytics" },
     ],
   },
   {
