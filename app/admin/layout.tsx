@@ -1,11 +1,9 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "../globals.css";
-import NavBar from "@/components/Elements/NavBar/NavBar";
 import AdminNav from "@/components/Elements/AdminNavbar/AdminNavbar";
 import AdminLeftDrawer from "@/components/Elements/AdminLeftDrawer/AdminLeftDrawer";
 import { Suspense } from "react";
 import Loading from "./loading";
+import ProtectedRoute from "@/components/HOC/ProtectedRoute";
 function layout({
   children,
   home,
@@ -35,4 +33,4 @@ function layout({
   );
 }
 
-export default layout;
+export default ProtectedRoute(layout);

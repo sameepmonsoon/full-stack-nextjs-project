@@ -7,7 +7,6 @@ import CustomInputContainer from "@/components/Elements/CutomInputContainer/Cust
 import ListContainer from "@/components/Elements/ListContainer/ListContainer";
 import LoadingDots from "@/components/Elements/Loading/LoadingDots/LoadingDots";
 import SkeletonCard from "@/components/Elements/Skeleton/SkeletonCard/SkeletonCard";
-import ProtectedRoute from "@/components/HOC/ProtectedRoute";
 import React from "react";
 
 function AdminPage() {
@@ -170,4 +169,4 @@ function AdminPage() {
   );
 }
 
-export default ProtectedRoute(AdminPage);
+export default AdminPage;
