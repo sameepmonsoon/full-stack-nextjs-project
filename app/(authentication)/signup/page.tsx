@@ -1,4 +1,6 @@
 "use client";
+import { getToken, setToken } from "@/utils/token";
+import { redirect, useRouter } from "next/navigation";
 import {
   calculatePasswordStrength,
   passwordStrengthType,
@@ -26,7 +28,8 @@ const LoginPage = () => {
     strength: number;
     type: string;
   }>({ strength: 0, type: "poor" });
-
+  const token = getToken();
+  const router = useRouter();
   const ref = useRef<any>(null);
 
   async function handleSubmit(e: any) {
@@ -35,29 +38,37 @@ const LoginPage = () => {
 
     const hasErrors = validateFormField(formValues);
 
-    console.log(hasErrors);
-    try {
-      if (hasErrors) {
-        const response = await fetch("api/auth/signup", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formValues),
+    if (hasErrors) {
+      fetch("api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formValues),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          if (data?.token) {
+            setToken(data?.token);
+            window.location.href = "/admin/home";
+          } else {
+            console.error("Error:", data.error);
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error.message);
         });
-
-        if (response.ok) {
-          console.log("User created successfully");
-          // Handle success, redirect, or perform any other actions
-        } else {
-          const data = await response.json();
-          console.error("Error:", data.error);
-          // Handle error response
-        }
-      }
-    } catch (error: any) {
-      console.error("Error:", error.message);
-      // Handle fetch error
     }
   }
+
+  useEffect(() => {
+    if (token) {
+      router.replace("/admin/home");
+    }
+  }, [token, router]);
 
   useEffect(() => {
     const calculatedStrength = calculatePasswordStrength(formValues?.password);

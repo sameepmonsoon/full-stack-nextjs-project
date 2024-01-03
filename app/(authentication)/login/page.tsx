@@ -4,13 +4,15 @@ import CustomInputContainer from "@/components/Elements/CutomInputContainer/Cust
 import Logo from "@/components/Elements/Logo/Logo";
 import ThemeButton from "@/components/Elements/ThemeButton/ThemeButton";
 import { Button } from "@/components/ui/button";
+import { getToken, setToken } from "@/utils/token";
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import React, { useRef, useState } from "react";
+import { redirect, useRouter } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
 const LoginPage = () => {
   const [formValues, setFormValues] = useState<any>({});
   const [formErrors, setFormErrors] = useState<any>({});
-
+  const token = getToken();
+  const router = useRouter();
   const ref = useRef<any>(null);
 
   async function handleSubmit(e: any) {
@@ -18,28 +20,30 @@ const LoginPage = () => {
     setFormErrors(validateFormField(formValues));
 
     const hasErrors = validateFormField(formValues);
-    try {
-      if (!hasErrors) {
-        const response = await fetch("api/auth/signin", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formValues),
+
+    if (hasErrors) {
+      fetch("api/auth/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formValues),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          if (data?.token) {
+            setToken(data?.token);
+            window.location.href = "/admin/home";
+          } else {
+            console.error("Error:", data.error);
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error.message);
         });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data?.token) {
-          redirect("/admin/home");
-        } else {
-          console.error("Error:", data.error);
-        }
-      }
-    } catch (error: any) {
-      console.error("Error:", error.message);
     }
   }
 
@@ -48,6 +52,11 @@ const LoginPage = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
+  useEffect(() => {
+    if (token) {
+      router.replace("/admin/home");
+    }
+  }, [token, router]);
   return (
     <form
       className="w-full  h-full flex justify-center items-center p-5 bg-accent  dark:bg-darkBg"

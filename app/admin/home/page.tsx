@@ -170,4 +170,4 @@ function AdminPage() {
   );
 }
 
-export default ProtectedRoute(AdminPage);
+export default AdminPage;
