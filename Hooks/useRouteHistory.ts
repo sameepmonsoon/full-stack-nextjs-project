@@ -7,7 +7,6 @@ const useRouteHistory = () => {
   const pathname = usePathname();
   const [routeHistory, setRouteHistory] = useState<any>([]);
   const isAdminPage = pathname.includes("admin");
-  console.log(isAdminPage);
   useEffect(() => {
     if (true) {
       const formattedRoute = pathname.split("/")[2];
