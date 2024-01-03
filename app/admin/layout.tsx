@@ -26,7 +26,11 @@ function layout({
           className={`flex w-full h-full lg:pr-5 pl-5 pr-5 lg:pl-0 mt-[5.5rem] dark:bg-darkBg `}
         >
           <AdminLeftDrawer />
-          {children}
+          <div
+            className={`dark:bg-darkModeBg dark:text-white bg-accent flex-1 w-auto rounded-xl p-5 flex `}
+          >
+            {children}
+          </div>
         </section>
       </Suspense>
     </>

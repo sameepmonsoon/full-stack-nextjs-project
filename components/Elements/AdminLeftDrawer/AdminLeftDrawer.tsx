@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import { useLeftSiderState } from "@/store/commonState/globalState";
 import { adminLeftDrawerList } from "./AdminLeftDrawerList";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import CustomToolTip from "@/components/Elements/CustomToolTip/CustomToolTip";
 import "@/Styles/Admin/AdminLeftSider.scss";
 import Logo from "@/components/Elements/Logo/Logo";
@@ -14,6 +14,10 @@ const AdminLeftDrawer = () => {
   );
   const hideSiderDetail = siderState === 1 || siderState === 2;
   const pathname = usePathname();
+
+  const router = useRouter();
+
+  console.log(adminLeftDrawerList[0].list[0].listName.toLowerCase());
   return (
     <>
       <div
@@ -60,43 +64,44 @@ const AdminLeftDrawer = () => {
               >
                 {item.title}
               </div>
-              {item.list.map((item: any, index: number) => (
-                <>
-                  <CustomToolTip
-                    showArrow={true}
-                    key={index}
-                    toolTipContent={item.listName}
-                    showToolTip={hideSiderDetail}
-                  >
-                    <Button
-                      variant={
-                        pathname.includes(item.listName.toLowerCase())
-                          ? "selected"
-                          : "icon"
-                      }
-                      size={"iconWithText"}
-                      className={`${
-                        hideSiderDetail &&
-                        "lg:justify-center lg:p-0 justify-start gap-4 lg:gap-0"
-                      } `}
+              {item.list.map((item: any, index: number) => {
+                const url = item.listName.toLowerCase();
+                console.log(url);
+                return (
+                  <>
+                    <CustomToolTip
+                      showArrow={true}
+                      key={index}
+                      toolTipContent={item.listName}
+                      showToolTip={hideSiderDetail}
                     >
-                      <item.icon
-                        key={index}
+                      <Button
+                        onClick={() => router.push(`/admin/${url}`)}
+                        variant={pathname.includes(url) ? "selected" : "icon"}
+                        size={"iconWithText"}
                         className={`${
-                          hideSiderDetail ? "mr-0 " : "mr-2 "
-                        } h-4 w-4`}
-                      />
-                      <h5
-                        className={`${
-                          !hideSiderDetail ? "flex" : "flex lg:hidden"
-                        }`}
+                          hideSiderDetail &&
+                          "lg:justify-center lg:p-0 justify-start gap-4 lg:gap-0"
+                        } `}
                       >
-                        {item.listName}
-                      </h5>
-                    </Button>
-                  </CustomToolTip>
-                </>
-              ))}
+                        <item.icon
+                          key={index}
+                          className={`${
+                            hideSiderDetail ? "mr-0 " : "mr-2 "
+                          } h-4 w-4`}
+                        />
+                        <h5
+                          className={`${
+                            !hideSiderDetail ? "flex" : "flex lg:hidden"
+                          }`}
+                        >
+                          {item.listName}
+                        </h5>
+                      </Button>
+                    </CustomToolTip>
+                  </>
+                );
+              })}
             </ul>
           </>
         ))}
