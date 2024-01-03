@@ -20,7 +20,6 @@ const CheckTokenEffect: React.FC<AuthEffectProps> = ({ children }) => {
 
     checkAuth();
   }, [token]);
-
   if (!token) {
     return <SkeletonLayout />;
   }
