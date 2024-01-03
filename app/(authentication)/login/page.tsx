@@ -5,6 +5,7 @@ import Logo from "@/components/Elements/Logo/Logo";
 import ThemeButton from "@/components/Elements/ThemeButton/ThemeButton";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import React, { useRef, useState } from "react";
 const LoginPage = () => {
   const [formValues, setFormValues] = useState<any>({});
@@ -18,17 +19,22 @@ const LoginPage = () => {
 
     const hasErrors = validateFormField(formValues);
     try {
-      if (hasErrors) {
+      if (!hasErrors) {
         const response = await fetch("api/auth/signin", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formValues),
         });
 
-        if (response.ok) {
-          console.log("User created successfully");
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data?.token) {
+          redirect("/admin/home");
         } else {
-          const data = await response.json();
           console.error("Error:", data.error);
         }
       }
