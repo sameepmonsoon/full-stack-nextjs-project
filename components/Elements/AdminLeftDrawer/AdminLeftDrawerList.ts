@@ -4,18 +4,20 @@ import { IoLogoFoursquare } from "react-icons/io";
 import { IoLogoSass } from "react-icons/io";
 import { IoLogoPython } from "react-icons/io";
 import { IoLogoJavascript } from "react-icons/io";
+import { GoGraph } from "react-icons/go";
+import { LuGoal } from "react-icons/lu";
 export const adminLeftDrawerList = [
   {
     title: "Dashboard",
     list: [
       { icon: FaHouse, listName: "Home" },
-      { icon: GiSupersonicBullet, listName: "Analytics" },
+      { icon: GoGraph, listName: "Analytics" },
     ],
   },
   {
     title: "Widget",
     list: [
-      { icon: IoLogoFoursquare, listName: "Stats" },
+      { icon: LuGoal, listName: "Goals" },
       { icon: IoLogoSass, listName: "Not Stats" },
     ],
   },
