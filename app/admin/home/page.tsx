@@ -15,7 +15,7 @@ function AdminPage() {
 
   return (
     <div className="flex flex-1">
-      {/* <CarouselSlider /> */}
+      <CarouselSlider />
       <div className="p-2 w-[20rem] h-full flex flex-col gap-5">
         <CustomInputContainer
           size={"default"}
