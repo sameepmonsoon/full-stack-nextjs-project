@@ -2,7 +2,10 @@ import React from "react";
 
 const LoadingCircle = () => {
   return (
-    <div role="status">
+    <div
+      role="status"
+      className="flex ju items-center h-full w-full overflow-hidden"
+    >
       <svg
         aria-hidden="true"
         className="w-8 h-8 text-gray-300 animate-spin dark:text-darkBgBlur/50 fill-gray-600"
