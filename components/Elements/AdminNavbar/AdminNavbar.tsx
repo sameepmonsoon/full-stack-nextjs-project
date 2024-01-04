@@ -17,6 +17,7 @@ import CustomToolTip from "../CustomToolTip/CustomToolTip";
 import { PiDotsThreeVertical } from "react-icons/pi";
 import useScreenSize from "@/Hooks/useScreenSize";
 import ThemeButton from "../ThemeButton/ThemeButton";
+import { RiRobot2Line } from "react-icons/ri";
 function AdminNav() {
   const { setSiderState } = useLeftSiderState((state: any) => state);
   const screenSize = useScreenSize();
@@ -80,7 +81,7 @@ function AdminNav() {
               variant={"ghost"}
               className="w-[2rem] h-[2rem] flex justify-center items-center p-1"
             >
-              <SiGooglemessages size={18} />
+              <RiRobot2Line size={20} />
             </Button>
 
             {isFullScreen ? (
