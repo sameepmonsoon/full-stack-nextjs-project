@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import StyledBreadCrumb from "./StyledBreadCrumb/StyledBreadCrumb";
 import { AiTwotoneHome } from "react-icons/ai";
