@@ -1,4 +1,6 @@
 "use client";
+import { getToken, setToken } from "@/utils/token";
+import { redirect, useRouter } from "next/navigation";
 import {
   calculatePasswordStrength,
   passwordStrengthType,
@@ -26,7 +28,8 @@ const LoginPage = () => {
     strength: number;
     type: string;
   }>({ strength: 0, type: "poor" });
-
+  const token = getToken();
+  const router = useRouter();
   const ref = useRef<any>(null);
 
   async function handleSubmit(e: any) {
@@ -34,28 +37,38 @@ const LoginPage = () => {
     setFormErrors(validateFormField(formValues));
 
     const hasErrors = validateFormField(formValues);
-    try {
-      if (!hasErrors) {
-        const response = await fetch("api/auth/signup", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formValues),
-        });
 
-        if (response.ok) {
-          console.log("User created successfully");
-          // Handle success, redirect, or perform any other actions
-        } else {
-          const data = await response.json();
-          console.error("Error:", data.error);
-          // Handle error response
-        }
-      }
-    } catch (error: any) {
-      console.error("Error:", error.message);
-      // Handle fetch error
+    if (hasErrors) {
+      fetch("api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formValues),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          if (data?.token) {
+            setToken(data?.token);
+            window.location.href = "/admin/home";
+          } else {
+            console.error("Error:", data.error);
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error.message);
+        });
     }
   }
+
+  useEffect(() => {
+    if (token) {
+      router.replace("/admin/home");
+    }
+  }, [token, router]);
 
   useEffect(() => {
     const calculatedStrength = calculatePasswordStrength(formValues?.password);
@@ -96,7 +109,8 @@ const LoginPage = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full  h-full flex justify-center items-center p-5 bg-accent  dark:bg-darkBg">
+      className="w-full  h-full flex justify-center items-center p-5 bg-accent  dark:bg-darkBg"
+    >
       <div className="w-[29.5rem] h-auto p-10 flex flex-col justify-start items-center dark:text-white bg-white dark:bg-darkBg rounded-lg gap-2">
         <div className="h-[25%] flex justify-start items-center flex-col gap-0 md:gap-2">
           <Logo to="/admin" title="MARIO" />
@@ -202,7 +216,8 @@ const LoginPage = () => {
             </span>
           </div>
           <div
-            className={`flex justify-between items-center w-full text-darkBg`}>
+            className={`flex justify-between items-center w-full text-darkBg`}
+          >
             <span className="text-center flex-1 relative left-[-13px] font-medium  dark:text-white text-md flex justify-start items-center leading-[1.75] text-[#3F444F]">
               <span className=" group cursor-pointer text-gray-400  hover:bg-darkBg/10 dark:hover:bg-white/10 transition-all duration-300 ease-in-out p-1 h-10 w-10 mt-auto rounded-full flex justify-center items-center">
                 <input
@@ -218,14 +233,16 @@ const LoginPage = () => {
             asChild={false}
             type="submit"
             effect={"press"}
-            className={`w-full bg-darkBg dark:bg-white hover:bg-darkBg dark:hover:bg-white text-white dark:text-darkBg h-10 rounded-md flex justify-center items-center  text-md font-medium capitalize`}>
+            className={`w-full bg-darkBg dark:bg-white hover:bg-darkBg dark:hover:bg-white text-white dark:text-darkBg h-10 rounded-md flex justify-center items-center  text-md font-medium capitalize`}
+          >
             Sign Up
           </Button>
         </div>
 
         <Link
           href={"/login"}
-          className="text-center hover:underline underline-offset-1 dark:text-white font-medium text-md flex justify-center items-end leading-[1.75] text-[#3F444F]">
+          className="text-center hover:underline underline-offset-1 dark:text-white font-medium text-md flex justify-center items-end leading-[1.75] text-[#3F444F]"
+        >
           Already have an account ?
         </Link>
       </div>

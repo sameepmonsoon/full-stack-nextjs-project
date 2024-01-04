@@ -1,64 +1,44 @@
-import { GiSupersonicBullet } from "react-icons/gi";
 import { FaHouse } from "react-icons/fa6";
-import { IoLogoFoursquare } from "react-icons/io";
-import { IoLogoSass } from "react-icons/io";
-import { IoLogoPython } from "react-icons/io";
-import { IoLogoJavascript } from "react-icons/io";
+import { GoGraph } from "react-icons/go";
+import { LuGoal } from "react-icons/lu";
+import { FaSackDollar } from "react-icons/fa6";
+import { RiExchangeDollarFill } from "react-icons/ri";
+import { GiWallet } from "react-icons/gi";
+import { FaMoneyBillTransfer } from "react-icons/fa6";
+import { HiClipboardDocumentList } from "react-icons/hi2";
+import { SlCalculator } from "react-icons/sl";
+import { FaCalendarAlt } from "react-icons/fa";
+import { PiSuitcaseSimpleFill } from "react-icons/pi";
 export const adminLeftDrawerList = [
   {
     title: "Dashboard",
     list: [
       { icon: FaHouse, listName: "Home" },
-      { icon: GiSupersonicBullet, listName: "SuperSonic" },
+      { icon: GoGraph, listName: "Analytics" },
     ],
   },
   {
-    title: "Widget",
+    title: "Finance",
     list: [
-      { icon: IoLogoFoursquare, listName: "Stats" },
-      { icon: IoLogoSass, listName: "Not Stats" },
+      { icon: GiWallet, listName: "Income" },
+      { icon: FaMoneyBillTransfer, listName: "Expenses" },
+      { icon: LuGoal, listName: "Goals" },
+      { icon: FaSackDollar, listName: "Savings" },
+      { icon: SlCalculator, listName: "Budget" },
     ],
   },
   {
-    title: "PL",
+    title: "Investment",
     list: [
-      { icon: IoLogoPython, listName: "Python" },
-      { icon: IoLogoJavascript, listName: "JS" },
+      { icon: RiExchangeDollarFill, listName: "Trancactions" },
+      { icon: PiSuitcaseSimpleFill, listName: "Portfolio" },
     ],
   },
   {
-    title: "PL",
+    title: "Overview",
     list: [
-      { icon: IoLogoPython, listName: "Python" },
-      { icon: IoLogoJavascript, listName: "JS" },
-    ],
-  },
-  {
-    title: "PL",
-    list: [
-      { icon: IoLogoPython, listName: "Python" },
-      { icon: IoLogoJavascript, listName: "JS" },
-    ],
-  },
-  {
-    title: "PL",
-    list: [
-      { icon: IoLogoPython, listName: "Python" },
-      { icon: IoLogoJavascript, listName: "JS" },
-    ],
-  },
-  {
-    title: "PL",
-    list: [
-      { icon: IoLogoPython, listName: "Python" },
-      { icon: IoLogoJavascript, listName: "JS" },
-    ],
-  },
-  {
-    title: "PL",
-    list: [
-      { icon: IoLogoPython, listName: "Python" },
-      { icon: IoLogoJavascript, listName: "JS" },
+      { icon: HiClipboardDocumentList, listName: "Reports" },
+      { icon: FaCalendarAlt, listName: "Calendar" },
     ],
   },
 ];

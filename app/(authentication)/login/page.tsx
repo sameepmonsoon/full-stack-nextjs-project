@@ -4,12 +4,15 @@ import CustomInputContainer from "@/components/Elements/CutomInputContainer/Cust
 import Logo from "@/components/Elements/Logo/Logo";
 import ThemeButton from "@/components/Elements/ThemeButton/ThemeButton";
 import { Button } from "@/components/ui/button";
+import { getToken, setToken } from "@/utils/token";
 import Link from "next/link";
-import React, { useRef, useState } from "react";
+import { redirect, useRouter } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
 const LoginPage = () => {
   const [formValues, setFormValues] = useState<any>({});
   const [formErrors, setFormErrors] = useState<any>({});
-
+  const token = getToken();
+  const router = useRouter();
   const ref = useRef<any>(null);
 
   async function handleSubmit(e: any) {
@@ -17,23 +20,30 @@ const LoginPage = () => {
     setFormErrors(validateFormField(formValues));
 
     const hasErrors = validateFormField(formValues);
-    try {
-      if (!hasErrors) {
-        const response = await fetch("api/auth/signup", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formValues),
-        });
 
-        if (response.ok) {
-          console.log("User created successfully");
-        } else {
-          const data = await response.json();
-          console.error("Error:", data.error);
-        }
-      }
-    } catch (error: any) {
-      console.error("Error:", error.message);
+    if (hasErrors) {
+      fetch("api/auth/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formValues),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          if (data?.token) {
+            setToken(data?.token);
+            window.location.href = "/admin/home";
+          } else {
+            console.error("Error:", data.error);
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error.message);
+        });
     }
   }
 
@@ -42,8 +52,16 @@ const LoginPage = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
+  useEffect(() => {
+    if (token) {
+      router.replace("/admin/home");
+    }
+  }, [token, router]);
   return (
-    <form className="w-full  h-full flex justify-center items-center p-5 bg-accent  dark:bg-darkBg">
+    <form
+      className="w-full  h-full flex justify-center items-center p-5 bg-accent  dark:bg-darkBg"
+      onSubmit={handleSubmit}
+    >
       <div className="w-[29.5rem] h-auto p-10 flex flex-col justify-start items-center dark:text-white bg-white dark:bg-darkBg rounded-lg gap-2">
         <div className="h-[25%] flex justify-start items-center flex-col gap-2">
           <Logo to="/admin" title="MARIO" />
@@ -81,7 +99,8 @@ const LoginPage = () => {
           />
 
           <div
-            className={`flex justify-between items-center w-full text-darkBg`}>
+            className={`flex justify-between items-center w-full text-darkBg`}
+          >
             <span className="text-center  font-medium text-md dark:text-white flex justify-center items-center leading-[1.75] text-[#3F444F]">
               <span className=" group cursor-pointer  text-gray-400 hover:bg-darkBg/10 dark:hover:bg-white/10 transition-all duration-300 ease-in-out p-1 h-10 w-10 mt-auto rounded-full flex justify-center items-center">
                 <input
@@ -94,7 +113,8 @@ const LoginPage = () => {
             </span>
             <Link
               href={"/admin/home"}
-              className={`text-center dark:text-white text-darkBg font-semibold text-md flex justify-center items-end leading-[1.75]`}>
+              className={`text-center dark:text-white text-darkBg font-semibold text-md flex justify-center items-end leading-[1.75]`}
+            >
               Forgot Password?
             </Link>
           </div>
@@ -103,14 +123,16 @@ const LoginPage = () => {
             effect={"press"}
             asChild={false}
             type="submit"
-            className={`w-full bg-darkBg dark:bg-white hover:bg-darkBg dark:hover:bg-white text-white dark:text-darkBg h-10 rounded-md flex justify-center items-center  text-md font-medium capitalize`}>
+            className={`w-full bg-darkBg dark:bg-white hover:bg-darkBg dark:hover:bg-white text-white dark:text-darkBg h-10 rounded-md flex justify-center items-center  text-md font-medium capitalize`}
+          >
             Sign In
           </Button>
         </div>
 
         <Link
           href={"/signup"}
-          className="text-center hover:underline underline-offset- dark:text-white font-medium text-md flex justify-center items-end leading-[1.75] text-[#3F444F]">
+          className="text-center hover:underline underline-offset- dark:text-white font-medium text-md flex justify-center items-end leading-[1.75] text-[#3F444F]"
+        >
           Dont have an account ?
         </Link>
       </div>

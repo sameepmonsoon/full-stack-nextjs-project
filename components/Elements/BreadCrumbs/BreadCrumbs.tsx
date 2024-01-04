@@ -8,12 +8,15 @@ import { CgFormatSlash } from "react-icons/cg";
 const BreadCrumbs = ({
   gap,
   separatorType,
+  showBackground,
+  routeHistory,
 }: {
   gap: number;
   separatorType?: number;
+  showBackground?: boolean;
+  routeHistory: [];
 }) => {
-  
-  let separator;
+  let separator: React.ReactNode;
   if (separatorType === 1) {
     separator = <VscDash size={25} />;
   }
@@ -23,29 +26,45 @@ const BreadCrumbs = ({
   if (separatorType === 3) {
     separator = <CgFormatSlash size={20} />;
   }
-  console.log('bread')
+  if (separatorType && separatorType > 3) {
+    separator = <VscDash size={25} />;
+  }
   return (
-    <div className={`w-auto flex justify-start gap-[0px]`}>
-      <StyledBreadCrumb icon={AiTwotoneHome} />
-      <span className="flex justify-center items-center">{separator}</span>
-      <div className={`w-auto flex justify-start gap-[0px]`}>
-        <StyledBreadCrumb icon={AiTwotoneHome} />
-        <span className="flex justify-center items-center">{separator}</span>
-        <StyledBreadCrumb
-          icon={AiTwotoneHome}
-          label="home"
-          showBackground={true}
-        />
-        <span className="flex justify-center items-center">{separator}</span>
-        <StyledBreadCrumb
-          showBackground={true}
-          icon={AiTwotoneHome}
-          label="home is where the house is."
-        />
-        <span className="flex justify-center items-center">{separator}</span>
-        <span className="flex justify-center items-center">{separator}</span>
+    <div className={`w-auto flex justify-start gap-0`}>
+      <div className={`w-auto flex justify-start gap-0`}>
+        <StyledBreadCrumb icon={AiTwotoneHome} href={"/admin/home"} />
+        {routeHistory.length > 0 && (
+          <span className="flex justify-center items-center">{separator}</span>
+        )}
+        {routeHistory.length > 0 &&
+          routeHistory?.map((item: any, index: number) => {
+            if (routeHistory.length - 1 === index) {
+              return (
+                <>
+                  <StyledBreadCrumb
+                    icon={AiTwotoneHome}
+                    href={`/admin/${item}`}
+                    label={item}
+                    showBackground={true}
+                  />
+                </>
+              );
+            }
+            return (
+              <>
+                <StyledBreadCrumb
+                  icon={AiTwotoneHome}
+                  href={`/admin/${item}`}
+                  label={item}
+                  showBackground={true}
+                />
+                <span className="flex justify-center items-center">
+                  {separator}
+                </span>
+              </>
+            );
+          })}
       </div>
-   
     </div>
   );
 };

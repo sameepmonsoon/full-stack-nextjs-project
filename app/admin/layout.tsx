@@ -1,11 +1,10 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "../globals.css";
-import NavBar from "@/components/Elements/NavBar/NavBar";
 import AdminNav from "@/components/Elements/AdminNavbar/AdminNavbar";
 import AdminLeftDrawer from "@/components/Elements/AdminLeftDrawer/AdminLeftDrawer";
 import { Suspense } from "react";
 import Loading from "./loading";
+import ProtectedRoute from "@/components/HOC/ProtectedRoute";
+import "@/Styles/Admin/AdminBody.scss";
 function layout({
   children,
   home,
@@ -25,13 +24,18 @@ function layout({
           </nav>
         </header>
         <section
-          className={`flex w-full h-full lg:pr-5 pl-5 pr-5 lg:pl-0 mt-[5.5rem] dark:bg-darkBg `}>
+          className={`flex w-screen h-full lg:pr-5 pl-5 pr-5 lg:pl-0 pt-[5.5rem] dark:bg-darkBg`}
+        >
           <AdminLeftDrawer />
-          {children}
+          <div
+            className={`adminBody dark:bg-darkModeBg dark:text-white overflow-x-hidden h-full bg-accent flex-1 flex-grow rounded-xl p-5 flex overflow-y-auto`}
+          >
+            {children}
+          </div>
         </section>
       </Suspense>
     </>
   );
 }
 
-export default layout;
+export default ProtectedRoute(layout);

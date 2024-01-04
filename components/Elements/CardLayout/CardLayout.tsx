@@ -4,7 +4,7 @@ import React from "react";
 import { TbDots } from "react-icons/tb";
 import { FaRegCreditCard } from "react-icons/fa6";
 import "./CardLayout.scss";
-
+import { motion } from "framer-motion";
 const cardLayoutVariant = cva(
   `flex-1 flex justify-start relative items-center p-4 rounded-[8px] overflow-hidden bg-darkBg text-white`,
   {
@@ -66,16 +66,38 @@ const CardLayout = ({
 }) => {
   return (
     <div className={cn(cardLayoutVariant({ type }))}>
-      <div className="first-div absolute  z-4 w-40 bg-accent/10 h-full right-0"></div>
-      <div className="second-div absolute  z-3 w-40 bg-accent/10 h-full right-0"></div>
-      <div className="third-div absolute  z-2 w-40 bg-accent/10 h-full right-0"></div>
-      <div className="fourth-div absolute  z-1 w-40 bg-accent/10 h-full right-0"></div>
+      <motion.div
+        initial={{ x: 5, y: -5 }}
+        animate={{ x: 0, y: 0 }}
+        transition={{ delay: 0.5, type: "spring", restDelta: 0.5 }}
+        className="first-div absolute z-4 w-40 bg-accent/10 h-full right-0"
+      ></motion.div>
+
+      <motion.div
+        initial={{ x: 5, y: -5 }}
+        animate={{ x: 0, y: 0 }}
+        transition={{ delay: 0.6, type: "spring", restDelta: 0.5 }}
+        className="second-div absolute  z-3 w-40 bg-accent/10 h-full right-0"
+      ></motion.div>
+      <motion.div
+        initial={{ x: 5, y: -5 }}
+        animate={{ x: 0, y: 0 }}
+        transition={{ delay: 0.7,  type: "spring", restDelta: 0.5 }}
+        className="third-div absolute  z-2 w-40 bg-accent/10 h-full right-0"
+      ></motion.div>
+      <motion.div
+        initial={{ x: 5, y: -5 }}
+        animate={{ x: 0, y: 0 }}
+        transition={{ delay: 0.8, type: "spring", restDelta: 0.5 }}
+        className="fourth-div absolute  z-1 w-40 bg-accent/10 h-full right-0"
+      ></motion.div>
       <div className={cn(innerCardContainerVariant({ type }), "z-10")}>
         <div className={cn(divVariant({ type }))}>
           <span
             className={`bg-accent/10 h-full cursor-pointer relative z-10 ${
               type?.toLowerCase() === "row" ? "w-[3.3rem]" : "w-[2.6rem]"
-            }   rounded-md flex justify-center items-center overflow-hidden`}>
+            }   rounded-md flex justify-center items-center overflow-hidden`}
+          >
             <FaRegCreditCard size={18} />
           </span>
           <span
@@ -83,14 +105,16 @@ const CardLayout = ({
               type?.toLowerCase() === "row"
                 ? "w-0 hidden h-full"
                 : "flex w-[2.3rem] h-[90%]"
-            }`}>
+            }`}
+          >
             <TbDots size={20} />
           </span>
         </div>
         <div
           className={`w-full h-auto flex flex-col z-1  relative ${
             type?.toLowerCase() === "row" ? "mb-[5px] gap-0" : "mb-0 gap-2 "
-          }`}>
+          }`}
+        >
           {children ? (
             children
           ) : (
@@ -100,7 +124,8 @@ const CardLayout = ({
                   type?.toLowerCase() === "row"
                     ? "font-medium text-lg h-7"
                     : "font-medium text-5xl h-13 "
-                } `}>
+                } `}
+              >
                 {title}
               </p>
 
@@ -109,7 +134,8 @@ const CardLayout = ({
                   type?.toLowerCase() === "row"
                     ? "font-medium text-xs h-5"
                     : "font-base text-md h-7"
-                }`}>
+                }`}
+              >
                 {detail}
               </p>
             </>

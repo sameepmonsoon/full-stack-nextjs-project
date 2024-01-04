@@ -1,0 +1,10 @@
+.adminBody {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 15px;
+    background-color: #d1d5db;
+  }
+}
