@@ -1,5 +1,6 @@
 "use client";
 import useRouteHistory from "@/Hooks/useRouteHistory";
+import Banner from "@/components/Elements/Banners/Banner";
 import CardLayout from "@/components/Elements/CardLayout/CardLayout";
 import { CarouselSlider } from "@/components/Elements/Carousels/CarouselSlider/CarouselSlider";
 import React from "react";
@@ -7,11 +8,8 @@ function AdminPage() {
   const routeHistory = useRouteHistory();
   return (
     <div className="flex flex-1 flex-col gap-2">
-      <div className="p-0 w-full flex gap-5 h-[22rem]">
-        <div className="h-auto w-auto bg-accent flex-1 rounded-[12px] flex justify-center items-center">
-          a
-        </div>
-        <CarouselSlider />
+      <div className="p-0 w-full flex gap-5 h-[18rem]">
+        <Banner /> <CarouselSlider />
       </div>
       <div className="p-2 w-full h-full flex flex-col gap-5">
         <CardLayout

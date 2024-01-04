@@ -8,7 +8,8 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-
+import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack } from "react-icons/io";
 type CarouselProps = {
   loop: boolean;
   opts?: CarouselOptions;
@@ -205,7 +206,7 @@ const CarouselPrevious = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "absolute  h-8 w-8 rounded-full",
+        "absolute group h-8 w-8 bg-transparent hover:bg-darkBg/10 dark:hover:bg-darkBg/10 border-0 flex justify-center items-center rounded-full",
         orientation === "horizontal"
           ? "-left-12 top-1/2 -translate-y-1/2"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -215,7 +216,10 @@ const CarouselPrevious = React.forwardRef<
       onClick={scrollPrev}
       {...props}
     >
-      <ArrowLeft className="h-4 w-4" />
+      <IoIosArrowBack
+        size={18}
+        className="group-hover:text-gray-700 text-gray-500"
+      />
       <span className="sr-only">Previous slide</span>
     </Button>
   );
@@ -234,7 +238,7 @@ const CarouselNext = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "absolute h-8 w-8 rounded-full",
+        "absolute h-8 w-8 group bg-transparent hover:bg-darkBg/10 border-0 flex justify-center items-center rounded-full",
         orientation === "horizontal"
           ? "-right-12 top-1/2 -translate-y-1/2"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -244,7 +248,10 @@ const CarouselNext = React.forwardRef<
       onClick={scrollNext}
       {...props}
     >
-      <ArrowRight className="h-4 w-4" />
+      <IoIosArrowForward
+        size={18}
+        className="group-hover:text-gray-700 text-gray-500"
+      />
       <span className="sr-only">Next slide</span>
     </Button>
   );

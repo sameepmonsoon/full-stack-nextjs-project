@@ -8,7 +8,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-
+import image from "@/public/next.svg";
+import Image from "next/image";
 export function CarouselSlider() {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
@@ -28,28 +29,48 @@ export function CarouselSlider() {
   }, [api]);
   return (
     <Carousel
-      className="w-full max-w-xs "
+      className=" max-w-[30rem] overflow-hidden rounded-lg"
       setApi={setApi}
       loop={true}
       opts={{
         align: "start",
       }}
     >
-      <CarouselContent>
+      <CarouselContent className="h-auto rounded-lg bg-black">
         {Array.from({ length: 10 }).map((_, index) => (
-          <CarouselItem key={index}>
-            <div className="px-1">
-              <Card>
-                <CardContent className="flex aspect-square items-center justify-center p-6">
-                  <span className="text-4xl font-semibold ">{index + 1}</span>
+          <>
+            <CarouselItem key={index} className="h-[20rem] w-[20rem]">
+              <Card className="h-[20rem] overflow-hidden">
+                <CardContent className="flex relative items-center justify-center p-0 overflow-hidden h-full">
+                  <Image
+                    src={image}
+                    alt="none"
+                    className="h-full w-full object-cover"
+                  />
+                  <Carousel
+                    className="h-full w-full  absolute m-auto z-5"
+                    setApi={setApi}
+                    loop={true}
+                    opts={{
+                      align: "start",
+                    }}
+                  >
+                    <CarouselContent className="h-full w-full  m-auto z-5">
+                      <CarouselItem key={index} className="h-[20rem] w-[20rem]">
+                        <span className="text-4xl font-semibold absolute m-auto z-5 text-white transition-opacity duration-200 ">
+                          {index + 1}
+                        </span>
+                      </CarouselItem>
+                    </CarouselContent>
+                  </Carousel>
                 </CardContent>
               </Card>
-            </div>
-          </CarouselItem>
+            </CarouselItem>{" "}
+          </>
         ))}
       </CarouselContent>
-      <div className="absolute top-10 left-20">
-        <div className="">
+      <div className="absolute top-8 right-[3.3rem] flex justify-center items-center gap-1">
+        <div className="relative left-8">
           <CarouselPrevious />
         </div>
         <div className="">
