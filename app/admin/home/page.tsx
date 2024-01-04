@@ -8,9 +8,9 @@ function AdminPage() {
   const routeHistory = useRouteHistory();
   return (
     <div className="flex flex-1 flex-col gap-2">
-      <div className="p-0 w-full flex gap-5 h-[18rem] flex-1">
-        <Banner />{" "}
-        <div className="w-[30%] h-full">
+      <div className="p-0 w-full flex gap-5 h-[22rem] flex-1 justify-evenly items-stretch">
+        <Banner />
+        <div className="max-w-[35%] h-full">
           <CarouselSlider />
         </div>
       </div>

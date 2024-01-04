@@ -8,6 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { motion } from "framer-motion";
 import image from "@/public/image-one.jpg";
 import Image from "next/image";
 export function CarouselSlider() {
@@ -39,7 +40,7 @@ export function CarouselSlider() {
       <CarouselContent className="h-auto rounded-[12px] bg-transparent border-none">
         {Array.from({ length: 10 }).map((_, index) => (
           <>
-            <CarouselItem key={index} className="h-[20rem] w-full border-none">
+            <CarouselItem key={index} className="h-full w-full border-none">
               <Card className="h-[20rem] overflow-hidden border-none">
                 <CardContent className="flex relative items-center justify-center p-0 overflow-hidden h-full border-none">
                   <Image
@@ -55,11 +56,20 @@ export function CarouselSlider() {
                       align: "start",
                     }}
                   >
-                    <CarouselContent className="h-full w-full  m-auto z-5">
-                      <CarouselItem key={index} className="h-[20rem] w-full">
-                        <span className="text-4xl font-semibold absolute m-auto z-5 text-white transition-opacity duration-200 ">
+                    <CarouselContent className="h-full w-full m-auto z-5">
+                      <CarouselItem key={index} className="h-40 w-full">
+                        <motion.div
+                          initial={{ x: 5, y: -5 }}
+                          animate={{ x: 0, y: 0 }}
+                          transition={{
+                            delay: 0.8,
+                            type: "spring",
+                            restDelta: 0.5,
+                          }}
+                          className="text-4xl font-semibold absolute m-auto z-5 text-red-900 transition-opacity duration-200 "
+                        >
                           {index + 1}
-                        </span>
+                        </motion.div>
                       </CarouselItem>
                     </CarouselContent>
                   </Carousel>
