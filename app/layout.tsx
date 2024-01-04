@@ -17,12 +17,12 @@ export default function RootLayout({
     <html lang="en" className=" h-full">
       <body
         className={cn(
-          "relative h-full font-sans antialiased dark:bg-darkBg bg-white",
+          "h-full font-sans antialiased dark:bg-darkBg flex",
           inter.className
         )}
       >
         <ClientProvider>
-          <main className="relative flex flex-col h-screen">
+          <main className="flex flex-1 h-screen overflow-hidden">
             <div className="flex-grow flex-1">{children}</div>
             <Toaster />
           </main>

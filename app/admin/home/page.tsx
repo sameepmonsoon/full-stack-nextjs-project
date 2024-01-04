@@ -8,7 +8,7 @@ function AdminPage() {
   return (
     <div className="flex flex-1 flex-col gap-2">
       <div className="p-0 w-full flex gap-5 h-[22rem]">
-        <div className="h-auto w-auto bg-[#D1F1E5] flex-1 rounded-[12px] flex justify-center items-center">
+        <div className="h-auto w-auto bg-accent flex-1 rounded-[12px] flex justify-center items-center">
           a
         </div>
         <CarouselSlider />

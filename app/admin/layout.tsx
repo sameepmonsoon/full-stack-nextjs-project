@@ -4,6 +4,7 @@ import AdminLeftDrawer from "@/components/Elements/AdminLeftDrawer/AdminLeftDraw
 import { Suspense } from "react";
 import Loading from "./loading";
 import ProtectedRoute from "@/components/HOC/ProtectedRoute";
+import "@/Styles/Admin/AdminBody.scss";
 function layout({
   children,
   home,
@@ -23,11 +24,11 @@ function layout({
           </nav>
         </header>
         <section
-          className={`flex w-full h-full lg:pr-5 pl-5 pr-5 lg:pl-0 mt-[5.5rem] dark:bg-darkBg `}
+          className={`flex w-full h-full lg:pr-5 pl-5 pr-5 lg:pl-0 pt-[5.5rem] dark:bg-darkBg`}
         >
           <AdminLeftDrawer />
           <div
-            className={`dark:bg-darkModeBg dark:text-white bg-accent flex-1 w-auto rounded-xl p-5 flex `}
+            className={`adminBody dark:bg-darkModeBg dark:text-white overflow-x-hidden h-[99%] bg-accent flex-1 flex-grow rounded-xl p-5 flex overflow-y-auto`}
           >
             {children}
           </div>

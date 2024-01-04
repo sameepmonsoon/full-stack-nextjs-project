@@ -32,7 +32,7 @@ const AdminLeftDrawer = () => {
       />
       <nav
         id="adminLeftDrawer"
-        className={`adminLeftDrawer fixed lg:bg-transparent bg-white dark:bg-darkBg lg:dark:bg-transparent dark:text-white px-5 overflow-y-scroll h-screen visible transition-width duration-300 ease-in-out ${
+        className={`adminLeftDrawer  lg:bg-transparent bg-white dark:bg-darkBg lg:dark:bg-transparent dark:text-white px-5 overflow-y-scroll h-full visible transition-width duration-300 ease-in-out ${
           siderState == 0
             ? "w-[19rem] left-0 transition-left duration-400 ease-in-out l"
             : siderState == 1
