@@ -40,7 +40,7 @@ function AdminNav() {
   };
   return (
     <div
-      className={` top-0 bg-white fixed flex w-full z-40 h-auto flex-nowrap justify-start items-center flex-col`}
+      className={`top-0 bg-white fixed flex w-full z-40 h-auto flex-nowrap justify-start items-center flex-col`}
     >
       <div
         className={`order-1 bg-white  flex w-full z-40 h-[5.5rem] flex-nowrap justify-start items-center px-3 pr-5 pt-0 pb-0  gap-5 dark:bg-darkBg dark:text-white`}
