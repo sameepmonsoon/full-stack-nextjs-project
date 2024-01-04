@@ -17,7 +17,6 @@ const AdminLeftDrawer = () => {
 
   const router = useRouter();
 
-  console.log(adminLeftDrawerList[0].list[0].listName.toLowerCase());
   return (
     <>
       <div
@@ -66,7 +65,6 @@ const AdminLeftDrawer = () => {
               </div>
               {item.list.map((item: any, index: number) => {
                 const url = item.listName.toLowerCase();
-                console.log(url);
                 return (
                   <>
                     <CustomToolTip
