@@ -8,8 +8,11 @@ function AdminPage() {
   const routeHistory = useRouteHistory();
   return (
     <div className="flex flex-1 flex-col gap-2">
-      <div className="p-0 w-full flex gap-5 h-[18rem]">
-        <Banner /> <CarouselSlider />
+      <div className="p-0 w-full flex gap-5 h-[18rem] flex-1">
+        <Banner />{" "}
+        <div className="w-[30%] h-full">
+          <CarouselSlider />
+        </div>
       </div>
       <div className="p-2 w-full h-full flex flex-col gap-5">
         <CardLayout
