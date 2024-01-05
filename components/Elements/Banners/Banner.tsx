@@ -1,14 +1,26 @@
 import Image from "next/image";
 import React from "react";
-import image from "@/public/image-two.jpg";
+import image from "@/public/image-one.png";
+import { Button } from "@/components/ui/button";
 const Banner = () => {
   return (
-    <div className="h-auto flex-1 bg-white dark:bg-darkBg rounded-[12px] flex justify-center items-center  overflow-hidden gap-1">
-      <div className="h-full flex flex-col justify-center px-5 py-2 flex-1">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quidem
-        quibusdam voluptas eum, accusantium corrupti neque? Quo, velit eos natus
-        voluptates laudantium mollitia suscipit dolorem. Minus praesentium
-        tenetur est veniam id?
+    <div className="h-auto flex-1 flex-col bg-white w-auto dark:bg-darkBg rounded-[12px] md:flex-row flex justify-center items-center  overflow-hidden gap-1">
+      <div className="h-full flex flex-col justify-start px-10 py-14 flex-1 gap-1">
+        <span className="text-2xl font-medium flex justify-center md:justify-start tracking-[0.02em] items-center">
+          Welcome back 👋
+        </span>
+        <span className="text-2xl font-medium flex justify-center md:justify-start  items-start tracking-[0.02em]">
+          Super Mario
+        </span>
+        <span className="h-auto lg:h-[8rem] overflow-hidden  flex text-[15px] justify-center items-start py-3 tracking-[0.03em]">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia
+          corrupti omnis quasi est cupiditate ex, accusamus, dolore voluptatum
+          tenetur impedit quia quae sapiente quos autem! Facere libero
+          voluptates dolores eligendi?
+        </span>
+        <span className="w-full flex justify-center md:justify-start items-center h-20">
+          <Button variant={"default"}>Visit</Button>
+        </span>
       </div>
 
       <div className="max-w-[40%] h-full flex justify-center items-center overflow-hidden">

@@ -26,14 +26,14 @@ function AdminPage() {
   };
 
   return (
-    <div className="flex flex-1 flex-col gap-2">
-      <div className="p-0 w-full flex gap-5 max-h-[22rem] flex-1 justify-evenly items-stretch">
+    <div className="flex flex-1 flex-col gap-5 w-full">
+      <div className="p-0 w-auto lg:flex-row flex-col flex gap-5 h-auto lg:h-[22rem] lg:max-h-[22rem] flex-1 justify-evenly items-stretch">
         <Banner />
-        <div className="max-w-[35%]">
+        <div className="w-auto lg:w-[35%] h-[15rem] lg:h-auto">
           <CarouselSlider />
         </div>
       </div>
-      <div className="p-2 w-full h-[10rem] flex gap-5">
+      <div className=" w-full flex-wrap flex gap-5">
         <CardLayout
           type={"column"}
           title={"$100"}
@@ -55,13 +55,8 @@ function AdminPage() {
         title={"$100"}
         detail="Lorem Ipsum is the earning."
       />
-      <div>
-        <Chart
-          options={state.options}
-          series={state.series}
-          type="area"
-          width="500"
-        />
+      <div className="w-auto">
+        <Chart options={state.options} series={state.series} type="area" />
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import { FaRegCreditCard } from "react-icons/fa6";
 import "./CardLayout.scss";
 import { motion } from "framer-motion";
 const cardLayoutVariant = cva(
-  `flex-1 flex justify-start relative items-center p-4 rounded-[8px] overflow-hidden bg-darkBg text-white`,
+  `flex-1 min-w-[15rem] flex justify-start relative items-center p-4 rounded-[8px] overflow-hidden bg-darkBg text-white`,
   {
     variants: {
       type: {
@@ -82,7 +82,7 @@ const CardLayout = ({
       <motion.div
         initial={{ x: 5, y: -5 }}
         animate={{ x: 0, y: 0 }}
-        transition={{ delay: 0.7,  type: "spring", restDelta: 0.5 }}
+        transition={{ delay: 0.7, type: "spring", restDelta: 0.5 }}
         className="third-div absolute  z-2 w-40 bg-accent/10 h-full right-0"
       ></motion.div>
       <motion.div
