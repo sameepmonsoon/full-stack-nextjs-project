@@ -6,7 +6,6 @@
     background-color: transparent;
     width: 5px;
   }
-
 }
 .adminLeftDrawer:hover {
   &::-webkit-scrollbar {
@@ -15,7 +14,7 @@
 
   &::-webkit-scrollbar-thumb {
     border-radius: 15px;
-    background-color: #d1d5db;
+    background-color: #b6b6b6;
   }
 }
 @media (hover: none) {
@@ -24,7 +23,7 @@
       width: 8px;
     }
     &::-webkit-scrollbar-thumb {
-      background-color: #d1d5db;
+      background-color: #b6b6b6;
     }
   }
 }
