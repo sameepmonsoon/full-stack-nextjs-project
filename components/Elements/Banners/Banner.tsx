@@ -12,13 +12,13 @@ const Banner = () => {
         <span className="text-2xl font-medium flex justify-center md:justify-start  items-start tracking-[0.02em]">
           Super Mario
         </span>
-        <span className="h-40 overflow-hidden  flex text-[15px] justify-center items-start pt-3 tracking-[0.03em]">
+        <span className="h-auto lg:h-[8rem] overflow-hidden  flex text-[15px] justify-center items-start py-3 tracking-[0.03em]">
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia
           corrupti omnis quasi est cupiditate ex, accusamus, dolore voluptatum
           tenetur impedit quia quae sapiente quos autem! Facere libero
           voluptates dolores eligendi?
         </span>
-        <span className="w-full flex justify-center md:justify-start h-20">
+        <span className="w-full flex justify-center md:justify-start items-center h-20">
           <Button variant={"default"}>Visit</Button>
         </span>
       </div>
