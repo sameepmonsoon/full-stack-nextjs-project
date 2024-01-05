@@ -9,7 +9,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { motion } from "framer-motion";
-import image from "@/public/image-one.jpg";
+import image from "@/public/image-two.png";
 import Image from "next/image";
 export function CarouselSlider() {
   const [api, setApi] = React.useState<CarouselApi>();
@@ -30,7 +30,7 @@ export function CarouselSlider() {
   }, [api]);
   return (
     <Carousel
-      className=" max-w-[30rem] overflow-hidden rounded-[12px] border-none h-full"
+      className="w-auto overflow-hidden bg-transparent rounded-[12px] border-none h-full"
       setApi={setApi}
       loop={true}
       opts={{
@@ -40,40 +40,35 @@ export function CarouselSlider() {
       <CarouselContent className="h-[22rem] rounded-[12px] bg-transparent border-none">
         {Array.from({ length: 10 }).map((_, index) => (
           <>
-            <CarouselItem key={index} className="h-full w-full border-none">
-              <Card className="h-[22rem] overflow-hidden border-none">
-                <CardContent className="flex relative items-center justify-center p-0 overflow-hidden h-[22rem] border-none">
+            <CarouselItem
+              key={index}
+              className="h-full w-full bg-white dark:bg-darkBg border-none"
+            >
+              <Card className="h-[22rem] overflow-hidden border-none bg-white dark:bg-darkBg">
+                <CardContent className="flex relative items-center justify-center bg-transparent p-0 overflow-hidden h-[22rem] border-none">
                   <Image
                     src={image}
                     alt="none"
-                    className="h-full w-full object-cover transition-all duration-100"
+                    className="h-full w-full object-cover transition-all bg-transparent duration-100"
                   />
-                  <Carousel
-                    className="h-full w-full  absolute m-auto z-5"
-                    setApi={setApi}
-                    loop={true}
-                    opts={{
-                      align: "start",
-                    }}
-                  >
-                    <CarouselContent className="h-full w-full m-auto z-5">
-                      <CarouselItem key={index} className="h-40 w-full">
-                        <motion.div
-                          key={index}
-                          initial={{ x: 5, y: -5 }}
-                          animate={{ x: 0, y: 0 }}
-                          transition={{
-                            delay: 0.8,
-                            type: "spring",
-                            restDelta: 0.5,
-                          }}
-                          className="text-4xl font-semibold absolute m-auto z-5 text-red-900 transition-opacity duration-200 "
-                        >
-                          {index + 1}
-                        </motion.div>
-                      </CarouselItem>
-                    </CarouselContent>
-                  </Carousel>
+
+                  <CarouselContent className="h-full w-full m-auto z-5">
+                    <CarouselItem key={index} className="h-40 w-full">
+                      <motion.div
+                        key={index}
+                        initial={{ x: 5, y: -5 }}
+                        animate={{ x: 0, y: 0 }}
+                        transition={{
+                          delay: 0.8,
+                          type: "spring",
+                          restDelta: 0.5,
+                        }}
+                        className="text-4xl font-semibold absolute m-auto z-5 text-red-900 transition-opacity duration-200 "
+                      >
+                        {index + 1}
+                      </motion.div>
+                    </CarouselItem>
+                  </CarouselContent>
                 </CardContent>
               </Card>
             </CarouselItem>{" "}

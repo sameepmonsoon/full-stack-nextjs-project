@@ -26,14 +26,14 @@ function AdminPage() {
   };
 
   return (
-    <div className="flex flex-1 flex-col gap-2">
-      <div className="p-0 w-full flex gap-5 max-h-[22rem] flex-1 justify-evenly items-stretch">
+    <div className="flex flex-1 flex-col gap-2 w-full">
+      <div className="p-0 w-auto md:flex-row flex-col flex gap-5 h-auto md:h-[22rem] flex-1 justify-evenly items-stretch">
         <Banner />
-        <div className="max-w-[35%]">
+        <div className="w-auto md:w-[35%]">
           <CarouselSlider />
         </div>
       </div>
-      <div className="p-2 w-full h-[10rem] flex gap-5">
+      <div className="p-2 w-full h-auto flex gap-5">
         <CardLayout
           type={"column"}
           title={"$100"}
