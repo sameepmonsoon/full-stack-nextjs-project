@@ -37,12 +37,12 @@ export function CarouselSlider() {
         align: "start",
       }}
     >
-      <CarouselContent className="h-auto rounded-[12px] bg-transparent border-none">
+      <CarouselContent className="h-[22rem] rounded-[12px] bg-transparent border-none">
         {Array.from({ length: 10 }).map((_, index) => (
           <>
             <CarouselItem key={index} className="h-full w-full border-none">
-              <Card className="h-[20rem] overflow-hidden border-none">
-                <CardContent className="flex relative items-center justify-center p-0 overflow-hidden h-full border-none">
+              <Card className="h-[22rem] overflow-hidden border-none">
+                <CardContent className="flex relative items-center justify-center p-0 overflow-hidden h-[22rem] border-none">
                   <Image
                     src={image}
                     alt="none"
@@ -59,6 +59,7 @@ export function CarouselSlider() {
                     <CarouselContent className="h-full w-full m-auto z-5">
                       <CarouselItem key={index} className="h-40 w-full">
                         <motion.div
+                          key={index}
                           initial={{ x: 5, y: -5 }}
                           animate={{ x: 0, y: 0 }}
                           transition={{
