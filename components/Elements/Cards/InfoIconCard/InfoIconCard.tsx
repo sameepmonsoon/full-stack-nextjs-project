@@ -28,7 +28,7 @@ const InfoIconCard = ({
         },
         color: {
           default: " bg-darkBg",
-          red: "bg-[#FFEBE3] dark:bg-red-950/30",
+          red: "bg-orange-500/10 dark:bg-orange-900/30",
           yellow: "bg-[#f9fae2] dark:bg-yellow-900/30",
           green: "bg-[#D5F3E6] dark:bg-green-900/30",
           rose: "bg-rose-200/30 dark:bg-rose-900/20",
@@ -52,7 +52,7 @@ const InfoIconCard = ({
         },
         color: {
           default: "text-white",
-          red: "dark:text-white text-red-950",
+          red: "dark:text-white text-orange-800",
           yellow: "text-yellow-900 dark:text-white",
           green: "text-green-900 dark:text-white",
           rose: "text-rose-900 dark:text-white",
