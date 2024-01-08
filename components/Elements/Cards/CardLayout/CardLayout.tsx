@@ -6,7 +6,7 @@ import { FaRegCreditCard } from "react-icons/fa6";
 import "./CardLayout.scss";
 import { motion } from "framer-motion";
 const cardLayoutVariant = cva(
-  `flex-1 min-w-[15rem] flex justify-start relative items-center p-4 rounded-[12px] overflow-hidden text-white`,
+  `flex-1 min-w-[15rem] shadow-sm flex justify-start relative items-center p-4 rounded-[12px] overflow-hidden text-white`,
   {
     variants: {
       type: {

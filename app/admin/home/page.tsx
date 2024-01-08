@@ -9,6 +9,7 @@ import Chart from "react-apexcharts";
 import { FaMoneyBillTransfer, FaSackDollar } from "react-icons/fa6";
 import { GiWallet } from "react-icons/gi";
 import { BiSolidShoppingBags } from "react-icons/bi";
+import { GoPeople } from "react-icons/go";
 function AdminPage() {
   const routeHistory = useRouteHistory();
 
@@ -60,27 +61,7 @@ function AdminPage() {
           detail="Total Savings"
         ></CardLayout>
       </div>
-      <InfoIconCard
-        type={"column"}
-        color="safe"
-        title="$500K"
-        detail={"Lorem ipsum"}
-        icon={BiSolidShoppingBags}
-      />
-      <InfoIconCard
-        type={"row"}
-        color="danger"
-        title="$50K"
-        detail={"Lorem ipsum"}
-        icon={BiSolidShoppingBags}
-      />
-      <InfoIconCard
-        type={"default"}
-        color="alert"
-        title="$100K"
-        detail={"Lorem ipsum"}
-        icon={BiSolidShoppingBags}
-      />
+
       <div className="w-auto">
         <Chart options={state.options} series={state.series} type="area" />
       </div>
