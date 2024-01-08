@@ -29,21 +29,21 @@ const ComponentPage = () => {
           <br />
           <InfoIconCard
             type={"column"}
-            color="safe"
+            color="green"
             title="$500K"
             detail={"Lorem ipsum"}
             icon={BiSolidShoppingBags}
           />
           <InfoIconCard
             type={"row"}
-            color="danger"
+            color="red"
             title="$50K"
             detail={"Lorem ipsum"}
             icon={BiSolidShoppingBags}
           />
           <InfoIconCard
             type={"default"}
-            color="alert"
+            color="yellow"
             title="$100K"
             detail={"Lorem ipsum"}
             icon={BiSolidShoppingBags}
