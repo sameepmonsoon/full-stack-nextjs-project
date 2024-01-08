@@ -6,7 +6,7 @@ import { FaRegCreditCard } from "react-icons/fa6";
 import "./CardLayout.scss";
 import { motion } from "framer-motion";
 const cardLayoutVariant = cva(
-  `flex-1 min-w-[15rem] flex justify-start relative items-center p-4 rounded-[8px] overflow-hidden text-white`,
+  `flex-1 min-w-[15rem] flex justify-start relative items-center p-4 rounded-[12px] overflow-hidden text-white`,
   {
     variants: {
       type: {
@@ -16,9 +16,9 @@ const cardLayoutVariant = cva(
       },
       color: {
         default: " bg-darkBg",
-        danger: "bg-red-100/90 dark:bg-red-900/30",
-        alert: "bg-yellow-100/90 dark:bg-yellow-900/30",
-        safe: "bg-green-100/90 dark:bg-green-900/30",
+        danger: "bg-[#FFEBE3] dark:bg-red-900/30",
+        alert: "bg-[#f9fae2] dark:bg-yellow-900/30",
+        safe: "bg-[#D5F3E6] dark:bg-green-900/30",
       },
     },
     defaultVariants: {
