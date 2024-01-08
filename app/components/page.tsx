@@ -8,7 +8,10 @@ import LoadingDots from "@/components/Elements/Loading/LoadingDots/LoadingDots";
 import SkeletonCard from "@/components/Elements/Skeleton/SkeletonCard/SkeletonCard";
 import React from "react";
 import { FaRegCreditCard } from "react-icons/fa";
-
+import { FaMoneyBillTransfer, FaSackDollar } from "react-icons/fa6";
+import { GiWallet } from "react-icons/gi";
+import { BiSolidShoppingBags } from "react-icons/bi";
+import InfoIconCard from "@/components/Elements/Cards/InfoIconCard/InfoIconCard";
 const ComponentPage = () => {
   const routeHistory = useRouteHistory();
   return (
@@ -24,7 +27,27 @@ const ComponentPage = () => {
           <LoadingDots />
           <BreadCrumbs gap={20} separatorType={5} routeHistory={routeHistory} />
           <br />
-
+          <InfoIconCard
+            type={"column"}
+            color="green"
+            title="$500K"
+            detail={"Lorem ipsum"}
+            icon={BiSolidShoppingBags}
+          />
+          <InfoIconCard
+            type={"row"}
+            color="red"
+            title="$50K"
+            detail={"Lorem ipsum"}
+            icon={BiSolidShoppingBags}
+          />
+          <InfoIconCard
+            type={"default"}
+            color="yellow"
+            title="$100K"
+            detail={"Lorem ipsum"}
+            icon={BiSolidShoppingBags}
+          />
           <CustomInputContainer
             size={"default"}
             font={"medium"}
@@ -36,30 +59,39 @@ const ComponentPage = () => {
           />
 
           <CardLayout
-            icon={FaRegCreditCard}
-            type={"row"}
-            title={"$100"}
-            detail="Lorem Ipsum is the earning."
-          />
-
-          <CardLayout
-            icon={FaRegCreditCard}
+            color="danger"
+            icon={GiWallet}
             type={"column"}
             title={"$100"}
-            detail="Lorem Ipsum is the earning."
+            detail="Total Income"
           />
           <CardLayout
+            color="alert"
+            icon={FaMoneyBillTransfer}
             type={"column"}
             title={"$100"}
-            detail="Lorem Ipsum is the earning."
+            detail="Total Expenses"
+          />
+          <CardLayout
+            color={"safe"}
+            icon={FaSackDollar}
+            type={"column"}
+            title={"$100"}
+            detail="Total Savings"
           >
-            <div>lorem</div>
-            <div>lorem</div>
-            <div>lorem</div>
+            <>
+              <div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Aspernatur commodi vel excepturi fuga nobis iusto repellat optio
+                deserunt illo eum eaque obcaecati aliquid error, architecto
+                delectus minima eveniet voluptate sed.
+              </div>
+            </>
           </CardLayout>
         </div>
         <div className="p-2 w-full h-full flex flex-col gap-5">
           <CardLayout
+            color={"default"}
             icon={FaRegCreditCard}
             type={"row"}
             title={"$100"}
@@ -67,12 +99,14 @@ const ComponentPage = () => {
           />
 
           <CardLayout
+            color={"default"}
             icon={FaRegCreditCard}
             type={"column"}
             title={"$100"}
             detail="Lorem Ipsum is the earning."
           />
           <CardLayout
+            color={"default"}
             icon={FaRegCreditCard}
             type={"column"}
             title={"$100"}
