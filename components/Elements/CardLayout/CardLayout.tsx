@@ -78,6 +78,39 @@ const styleContainerVariant = cva(`absolute z-4 w-40  h-full right-0`, {
   },
 });
 
+const iconContainerVariant = cva(
+  `bg-accent/10 h-full cursor-pointer relative z-10 rounded-md flex justify-center items-center overflow-hidden`,
+  {
+    variants: {
+      color: {
+        default: "bg-accent/10",
+        danger: "bg-red-500/10 dark:bg-accent/10",
+        alert: "bg-yellow-500/20 dark:bg-accent/10",
+        safe: "bg-green-500/10 dark:bg-accent/10",
+      },
+    },
+    defaultVariants: {
+      color: "default",
+    },
+  }
+);
+const dotContainerVariant = cva(
+  ` relative cursor-pointer z-10 rounded-md justify-center items-center overflow-hidden `,
+  {
+    variants: {
+      color: {
+        default: "bg-accent/10",
+        danger: "bg-red-500/30 dark:bg-accent/10",
+        alert: "bg-yellow-500/30 dark:bg-accent/10",
+        safe: "bg-green-500/30 dark:bg-accent/10",
+      },
+    },
+    defaultVariants: {
+      color: "default",
+    },
+  }
+);
+
 const CardLayout = ({
   type,
   children,
