@@ -58,7 +58,6 @@ function AdminPage() {
           detail="Total Savings"
         ></CardLayout>
       </div>
-
       <div className="w-auto">
         <Chart options={state.options} series={state.series} type="area" />
       </div>
