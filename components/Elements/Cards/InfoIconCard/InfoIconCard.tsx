@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 import React from "react";
-
+import { TbCurrencyRupeeNepalese } from "react-icons/tb";
 const InfoIconCard = ({
   type,
   children,
@@ -23,7 +23,7 @@ const InfoIconCard = ({
       variants: {
         type: {
           default: "min-h-[135px] min-w-[13rem] justify-start",
-          column: "min-h-[222px] w-[354px] max-w-[354px] justify-center py-12",
+          column: "min-h-[222px] w-[354px] justify-center py-12",
           row: "min-h-[135px] min-w-[13rem] justify-start",
         },
         color: {
@@ -89,7 +89,10 @@ const InfoIconCard = ({
           children
         ) : (
           <>
-            <h3 className="text-4xl font-semibold tracking-tight">{title}</h3>
+            <h3 className="text-4xl font-semibold tracking-tight flex justify-center items-center">
+              <TbCurrencyRupeeNepalese />
+              {title}
+            </h3>
             <h6 className="text-[14px] capitalize h-3 font-medium">{detail}</h6>
           </>
         )}

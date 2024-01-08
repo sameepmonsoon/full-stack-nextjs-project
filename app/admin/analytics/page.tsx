@@ -1,9 +1,8 @@
 import InfoIconCard from "@/components/Elements/Cards/InfoIconCard/InfoIconCard";
 import React from "react";
-import { BiSolidShoppingBags } from "react-icons/bi";
-import { FaSackDollar } from "react-icons/fa6";
-import { GoPeople } from "react-icons/go";
-
+import { FaMoneyBillTransfer, FaSackDollar } from "react-icons/fa6";
+import { GiWallet } from "react-icons/gi";
+import { FaHandHoldingDollar } from "react-icons/fa6";
 const page = () => {
   return (
     <div className="w-full">
@@ -11,33 +10,33 @@ const page = () => {
         <InfoIconCard
           type={"column"}
           color="green"
-          title="$500K"
-          detail={"Lorem ipsum"}
-          icon={BiSolidShoppingBags}
+          title="500K"
+          detail={"Monthly Income"}
+          icon={GiWallet}
         />
 
         <InfoIconCard
           type={"column"}
           color="red"
-          title="$500K"
-          detail={"Lorem ipsum"}
-          icon={BiSolidShoppingBags}
+          title="500K"
+          detail={"Monthly Savings"}
+          icon={FaSackDollar}
         />
 
         <InfoIconCard
-          type={"column"}
+          type={"row"}
           color="yellow"
-          title="$500K"
-          detail={"Lorem ipsum"}
-          icon={BiSolidShoppingBags}
+          title="500K"
+          detail={"Monthly Expense"}
+          icon={FaMoneyBillTransfer}
         />
 
         <InfoIconCard
-          type={"column"}
+          type={"default"}
           color="rose"
-          title="$500K"
-          detail={"Lorem ipsum"}
-          icon={BiSolidShoppingBags}
+          title="500K"
+          detail={"Monthly EMI"}
+          icon={FaHandHoldingDollar}
         />
       </div>
     </div>
