@@ -7,6 +7,7 @@ import ListContainer from "@/components/Elements/ListContainer/ListContainer";
 import LoadingDots from "@/components/Elements/Loading/LoadingDots/LoadingDots";
 import SkeletonCard from "@/components/Elements/Skeleton/SkeletonCard/SkeletonCard";
 import React from "react";
+import { FaRegCreditCard } from "react-icons/fa";
 
 const ComponentPage = () => {
   const routeHistory = useRouteHistory();
@@ -35,12 +36,15 @@ const ComponentPage = () => {
           />
 
           <CardLayout
+            icon={FaRegCreditCard}
             type={"row"}
             title={"$100"}
             detail="Lorem Ipsum is the earning."
           />
 
           <CardLayout
+                      icon={FaRegCreditCard}
+
             type={"column"}
             title={"$100"}
             detail="Lorem Ipsum is the earning."
@@ -57,17 +61,23 @@ const ComponentPage = () => {
         </div>
         <div className="p-2 w-full h-full flex flex-col gap-5">
           <CardLayout
+                      icon={FaRegCreditCard}
+
             type={"row"}
             title={"$100"}
             detail="Lorem Ipsum is the earning."
           />
 
           <CardLayout
+                      icon={FaRegCreditCard}
+
             type={"column"}
             title={"$100"}
             detail="Lorem Ipsum is the earning."
           />
           <CardLayout
+                      icon={FaRegCreditCard}
+
             type={"column"}
             title={"$100"}
             detail="Lorem Ipsum is the earning."

@@ -5,6 +5,8 @@ import CardLayout from "@/components/Elements/CardLayout/CardLayout";
 import { CarouselSlider } from "@/components/Elements/Carousels/CarouselSlider/CarouselSlider";
 import React from "react";
 import Chart from "react-apexcharts";
+import { FaMoneyBillTransfer, FaSackDollar } from "react-icons/fa6";
+import { GiWallet } from "react-icons/gi";
 function AdminPage() {
   const routeHistory = useRouteHistory();
 
@@ -35,26 +37,27 @@ function AdminPage() {
       </div>
       <div className=" w-full flex-wrap flex gap-5">
         <CardLayout
+          color="danger"
+          icon={GiWallet}
           type={"column"}
           title={"$100"}
-          detail="Lorem Ipsum is the earning."
+          detail="Total Income"
         />
         <CardLayout
+          color="alert"
+          icon={FaMoneyBillTransfer}
           type={"column"}
           title={"$100"}
-          detail="Lorem Ipsum is the earning."
+          detail="Total Expenses"
         />
         <CardLayout
+          color={"safe"}
+          icon={FaSackDollar}
           type={"column"}
           title={"$100"}
-          detail="Lorem Ipsum is the earning."
+          detail="Total Savings"
         ></CardLayout>
       </div>
-      <CardLayout
-        type={"row"}
-        title={"$100"}
-        detail="Lorem Ipsum is the earning."
-      />
       <div className="w-auto">
         <Chart options={state.options} series={state.series} type="area" />
       </div>
