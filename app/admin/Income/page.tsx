@@ -65,6 +65,18 @@ const IncomePage = () => {
           title="five hunred"
           detail="500"
         />
+        <DetailCard
+          type="row"
+          image={userImage}
+          title="five hunred"
+          detail="500"
+        />
+        <DetailCard
+          type="row"
+          image={userImage}
+          title="five hunred"
+          detail="500"
+        />
 
         <Button
           size={"lg"}
