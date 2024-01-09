@@ -28,7 +28,7 @@ function layout({
         >
           <AdminLeftDrawer />
           <div
-            className={`adminBody dark:bg-darkModeBg dark:text-white overflow-x-hidden h-full bg-accent flex-1 flex-grow rounded-xl p-5 flex overflow-y-auto`}
+            className={`adminBody dark:bg-darkModeBg dark:text-white overflow-x-hidden h-full bg-accent flex-1 flex-grow rounded-[10px] p-5 flex overflow-y-auto`}
           >
             {children}
           </div>

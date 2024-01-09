@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
 import React from "react";
 import { TbDots } from "react-icons/tb";
-import { FaRegCreditCard } from "react-icons/fa6";
 import "./CardLayout.scss";
 import { motion } from "framer-motion";
 const cardLayoutVariant = cva(
