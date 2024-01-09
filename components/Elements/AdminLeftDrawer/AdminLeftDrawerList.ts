@@ -21,11 +21,11 @@ export const adminLeftDrawerList = [
     title: "Finance",
     list: [
       { icon: GiWallet, listName: "Income" },
-      { icon: FaMoneyBillTransfer, listName: "Expenses" }, { icon: FaHandHoldingDollar, listName: "Loans" },
-    
+      { icon: FaMoneyBillTransfer, listName: "Expenses" },
+      { icon: FaHandHoldingDollar, listName: "Loans" },
       { icon: FaSackDollar, listName: "Savings" },
-      { icon: SlCalculator, listName: "Budget" },  { icon: LuGoal, listName: "Goals" },
-     
+      { icon: SlCalculator, listName: "Budget" },
+      { icon: LuGoal, listName: "Goals" },
     ],
   },
   {

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 import StyledBreadCrumb from "./StyledBreadCrumb/StyledBreadCrumb";
 import { AiTwotoneHome } from "react-icons/ai";
@@ -10,11 +10,13 @@ const BreadCrumbs = ({
   separatorType,
   showBackground,
   routeHistory,
+  icon,
 }: {
   gap: number;
   separatorType?: number;
   showBackground?: boolean;
   routeHistory: [];
+  icon: React.ComponentType<{ size: number; className?: string }>;
 }) => {
   let separator: React.ReactNode;
   if (separatorType === 1) {
@@ -42,7 +44,7 @@ const BreadCrumbs = ({
               return (
                 <>
                   <StyledBreadCrumb
-                    icon={AiTwotoneHome}
+                    icon={icon}
                     href={`/admin/${item}`}
                     label={item}
                     showBackground={true}

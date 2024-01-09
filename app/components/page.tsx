@@ -12,6 +12,7 @@ import { FaMoneyBillTransfer, FaSackDollar } from "react-icons/fa6";
 import { GiWallet } from "react-icons/gi";
 import { BiSolidShoppingBags } from "react-icons/bi";
 import InfoIconCard from "@/components/Elements/Cards/InfoIconCard/InfoIconCard";
+import { AiTwotoneHome } from "react-icons/ai";
 const ComponentPage = () => {
   const routeHistory = useRouteHistory();
   return (
@@ -25,7 +26,12 @@ const ComponentPage = () => {
         <div className="p-2 w-[20rem] h-full flex flex-col gap-5">
           <SkeletonCard type={"column"} />
           <LoadingDots />
-          <BreadCrumbs gap={20} separatorType={5} routeHistory={routeHistory} />
+          <BreadCrumbs
+            gap={20}
+            separatorType={5}
+            routeHistory={routeHistory}
+            icon={AiTwotoneHome}
+          />
           <br />
           <InfoIconCard
             type={"column"}
