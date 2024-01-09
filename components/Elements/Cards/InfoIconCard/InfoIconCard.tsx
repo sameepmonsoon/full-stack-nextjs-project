@@ -23,8 +23,8 @@ const InfoIconCard = ({
       variants: {
         type: {
           default: "min-h-[135px] min-w-[13rem] justify-start",
-          column: "min-h-[222px] w-[354px] justify-center py-12",
-          row: "min-h-[135px] min-w-[13rem] justify-start",
+          column: "min-h-[222px] w-[354px] min-w-[300px] justify-center py-12",
+          row: "min-h-[135px] min-w-[15rem] justify-start",
         },
         color: {
           default: " bg-darkBg",

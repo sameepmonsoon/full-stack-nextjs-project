@@ -121,7 +121,7 @@ const CardLayout = ({
 }: {
   type: "default" | "column" | "row" | null | undefined;
   children?: React.ReactNode;
-  title: string;
+  title: string | React.ReactNode;
   detail: string;
   color: "default" | "danger" | "alert" | "safe" | null | undefined;
   icon: React.ComponentType<{ size: number }>;
