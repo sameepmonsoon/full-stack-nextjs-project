@@ -23,8 +23,8 @@ const InfoIconCard = ({
       variants: {
         type: {
           default: "min-h-[135px] min-w-[13rem] justify-start",
-          column: "min-h-[222px] w-[354px] justify-center py-12",
-          row: "min-h-[135px] min-w-[13rem] justify-start",
+          column: "min-h-[222px] w-[354px] min-w-[300px] justify-center py-12",
+          row: "min-h-[135px] min-w-[15rem] justify-start",
         },
         color: {
           default: " bg-darkBg",
@@ -41,14 +41,14 @@ const InfoIconCard = ({
   );
 
   const infoIconInnerDivVariant = cva(
-    `flex-1 h-full w-full flex gap-[5px] relative items-center text-white`,
+    `flex-1 h-full w-full flex gap-[5px]  items-center text-white`,
     {
       variants: {
         type: {
           default:
-            "justify-center justify-center items-start pl-[5rem] flex-col",
+            "justify-center justify-center items-start pl-[6rem] flex-col",
           column: "justify-between flex-col",
-          row: "justify-center items-start pl-5 flex-col",
+          row: "justify-center items-start pl-5 flex-col pr-[6rem]",
         },
         color: {
           default: "text-white",
@@ -83,7 +83,7 @@ const InfoIconCard = ({
     <div className={cn(infoIconCardVariant({ type, color }))}>
       <div className={cn(infoIconInnerDivVariant({ type, color }))}>
         <div className={cn(innerIconContainerVariant({ type }))}>
-          <Icon size={50} className={`h-full w-full`} />
+          <Icon size={45} className={`h-full w-full`} />
         </div>
         {children ? (
           children
@@ -93,7 +93,9 @@ const InfoIconCard = ({
               <TbCurrencyRupeeNepalese />
               {title}
             </h3>
-            <h6 className="text-[14px] capitalize h-3 font-medium">{detail}</h6>
+            <h6 className="text-[14px] capitalize h-5 font-medium whitespace-nowrap text-ellipsis overflow-hidden">
+              {detail}
+            </h6>
           </>
         )}
       </div>

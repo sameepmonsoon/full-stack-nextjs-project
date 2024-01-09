@@ -11,6 +11,7 @@ import { FaMoneyBillTransfer, FaSackDollar } from "react-icons/fa6";
 import { GiWallet } from "react-icons/gi";
 import { BiSolidShoppingBags } from "react-icons/bi";
 import { GoPeople } from "react-icons/go";
+import { TbCurrencyRupeeNepalese } from "react-icons/tb";
 function AdminPage() {
   const routeHistory = useRouteHistory();
 
@@ -41,21 +42,26 @@ function AdminPage() {
       </div>
       <div className=" w-full flex-wrap flex gap-5">
         <CardLayout
-          color="danger"
+          color="safe"
           icon={GiWallet}
           type={"column"}
-          title={"$100"}
+          title={
+            <>
+              <TbCurrencyRupeeNepalese />
+              100
+            </>
+          }
           detail="Total Income"
         />
         <CardLayout
-          color="alert"
+          color="danger"
           icon={FaMoneyBillTransfer}
           type={"column"}
           title={"$100"}
           detail="Total Expenses"
         />
         <CardLayout
-          color={"safe"}
+          color={"alert"}
           icon={FaSackDollar}
           type={"column"}
           title={"$100"}
