@@ -46,10 +46,10 @@ function AdminPage() {
           icon={GiWallet}
           type={"column"}
           title={
-            <>
+            <span className="flex justify-start items-center gap-0">
               <TbCurrencyRupeeNepalese />
-              100
-            </>
+              300k
+            </span>
           }
           detail="Total Income"
         />
@@ -57,14 +57,24 @@ function AdminPage() {
           color="danger"
           icon={FaMoneyBillTransfer}
           type={"column"}
-          title={"$100"}
+          title={
+            <span className="flex justify-start items-center gap-0">
+              <TbCurrencyRupeeNepalese />
+              50k
+            </span>
+          }
           detail="Total Expenses"
         />
         <CardLayout
           color={"alert"}
           icon={FaSackDollar}
           type={"column"}
-          title={"$100"}
+          title={
+            <span className="flex justify-start items-center gap-0">
+              <TbCurrencyRupeeNepalese />
+              250k
+            </span>
+          }
           detail="Total Savings"
         ></CardLayout>
       </div>

@@ -1,4 +1,4 @@
-import { FaHouse } from "react-icons/fa6";
+import { FaHandHoldingDollar, FaHouse } from "react-icons/fa6";
 import { GoGraph } from "react-icons/go";
 import { LuGoal } from "react-icons/lu";
 import { FaSackDollar } from "react-icons/fa6";
@@ -21,10 +21,11 @@ export const adminLeftDrawerList = [
     title: "Finance",
     list: [
       { icon: GiWallet, listName: "Income" },
-      { icon: FaMoneyBillTransfer, listName: "Expenses" },
-      { icon: LuGoal, listName: "Goals" },
+      { icon: FaMoneyBillTransfer, listName: "Expenses" }, { icon: FaHandHoldingDollar, listName: "Loans" },
+    
       { icon: FaSackDollar, listName: "Savings" },
-      { icon: SlCalculator, listName: "Budget" },
+      { icon: SlCalculator, listName: "Budget" },  { icon: LuGoal, listName: "Goals" },
+     
     ],
   },
   {
