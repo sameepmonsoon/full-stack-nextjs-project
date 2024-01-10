@@ -12,6 +12,7 @@ import userImage from "@/public/image-one.jpg";
 import DetailCard from "@/components/Elements/Cards/DetailCard/DetailCard";
 import { Button } from "@/components/ui/button";
 import { BsPlusCircleDotted } from "react-icons/bs";
+import ListContainer from "@/components/Elements/ListContainer/ListContainer";
 const IncomePage = () => {
   const routeHistory = useRouteHistory();
   return (
@@ -85,6 +86,43 @@ const IncomePage = () => {
         >
           <BsPlusCircleDotted size={20} />
         </Button>
+      </div>
+      <div className="flex flex-1 gap-5 justify-start items-start">
+        <ListContainer title={"History"} showViewAll={true}>
+         
+            <DetailCard
+              type="row"
+              image={userImage}
+              title="five hunred"
+              detail="500"
+            />
+            <DetailCard
+              type="row"
+              image={userImage}
+              title="five hunred"
+              detail="500"
+            />
+            <DetailCard
+              type="row"
+              image={userImage}
+              title="five hunred"
+              detail="500"
+            />
+            <DetailCard
+              type="row"
+              image={userImage}
+              title="five hunred"
+              detail="500"
+            />
+        </ListContainer>
+        <ListContainer title={"History"} showViewAll={true}>
+          <DetailCard
+            type="row"
+            image={userImage}
+            title="five hunred"
+            detail="500"
+          />
+        </ListContainer>
       </div>
     </div>
   );
