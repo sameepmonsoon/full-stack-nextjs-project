@@ -215,6 +215,43 @@ const IncomePage = () => {
           />
         </ListContainer>
       </div>
+      <div className="flex flex-1 gap-5 justify-start items-start">
+        <ListContainer title={"History"} showViewAll={true}>
+         
+            <DetailCard
+              type="row"
+              image={userImage}
+              title="five hunred"
+              detail="500"
+            />
+            <DetailCard
+              type="row"
+              image={userImage}
+              title="five hunred"
+              detail="500"
+            />
+            <DetailCard
+              type="row"
+              image={userImage}
+              title="five hunred"
+              detail="500"
+            />
+            <DetailCard
+              type="row"
+              image={userImage}
+              title="five hunred"
+              detail="500"
+            />
+        </ListContainer>
+        <ListContainer title={"History"} showViewAll={true}>
+          <DetailCard
+            type="row"
+            image={userImage}
+            title="five hunred"
+            detail="500"
+          />
+        </ListContainer>
+      </div>
     </div>
   );
 };
