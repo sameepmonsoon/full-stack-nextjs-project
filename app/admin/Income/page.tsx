@@ -81,7 +81,7 @@ const IncomePage = () => {
         <Button
           size={"lg"}
           variant={"outline"}
-          className="w-[3rem] h-[3rem] hover:bg-white text-gray-400 outline-gray-400 border-dotted outline-dashed outline-[1px] flex justify-center items-center p-1 "
+          className="w-[3rem] h-[3rem] hover:bg-white text-gray-400 outline-gray-400 dark:outline-gray-100/30 dark:hover:text-gray-100/30 border-dashed outline-dashed outline-[1px] flex justify-center items-center p-1 rounded-full"
         >
           <BsPlusCircleDotted size={20} />
         </Button>
