@@ -19,27 +19,30 @@ export function DialogBox({
   dialogTitle,
   dialogDescription,
   children,
+  footer,
 }: {
   dialogDescription: string;
   trigger: React.ReactNode;
   children: React.ReactNode;
+  footer?: React.ReactNode;
   dialogTitle: string;
 }) {
   return (
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className="sm:max-w-md dark:bg-darkModeBg opacity-100 dark:text-white border-accent/10 rounded-[14px] shadow-sm">
+      <DialogContent className="sm:max-w-md dark:bg-darkModeBg opacity-100 dark:text-white border-accent/10 rounded-full shadow-sm">
         <DialogHeader>
           <DialogTitle>{dialogTitle}</DialogTitle>
           <DialogDescription>{dialogDescription}</DialogDescription>
         </DialogHeader>
         <>{children}</>
         <DialogFooter className="sm:justify-start">
-          <DialogClose asChild>
+          {footer}
+          {/* <DialogClose asChild>
             <Button type="button" variant="secondary" className="rounded-md">
               Close
             </Button>
-          </DialogClose>
+          </DialogClose> */}
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -119,6 +119,7 @@ const CustomInputContainer = forwardRef(function CustomInputContainer(
     errorMessage,
     onBlur,
     onFocus,
+    onInput,
   }: {
     id: string;
     errorMessage?: string;
@@ -137,6 +138,7 @@ const CustomInputContainer = forwardRef(function CustomInputContainer(
     onClick?: (e: any) => void;
     onBlur?: (e: any) => any;
     onFocus?: (e: any) => any;
+    onInput?: (e: any) => any;
     maxlength?: number;
   },
   ref: any
@@ -165,9 +167,11 @@ const CustomInputContainer = forwardRef(function CustomInputContainer(
             !valid &&
             "dark:border-red-600 dark:focus-within:border-red-600 dark:focus-within:ring-red-600 border-red-600 dark:outline-red-600 dark:text-red-600 ring-red-600 text-red-600 outline-red-600 focus-within:ring-red-700 focus-within:border-red-700 focus-within:hover:border-red-600 hover:border-red-600 focus-within:dark:outline-red-600"
           }`
-        )}>
+        )}
+      >
         <div className="relative w-full h-full flex justify-start items-center">
           <Input
+            onInput={onInput}
             onFocus={onFocus}
             onBlur={onBlur}
             maxLength={maxlength}
@@ -198,7 +202,8 @@ const CustomInputContainer = forwardRef(function CustomInputContainer(
                 !valid &&
                 " text-red-600 dark:hover:border-red-600 dark:text-red-600 focus-within:text-red-600 focus-within:dark:text-red-600"
               }`
-            )}>
+            )}
+          >
             {label}
           </Label>
 
@@ -206,7 +211,8 @@ const CustomInputContainer = forwardRef(function CustomInputContainer(
             <span
               style={{ zIndex: "15" }}
               className={cn(iconContainerVariant({ size, className }))}
-              onClick={handleToggle}>
+              onClick={handleToggle}
+            >
               {viewPassword ? (
                 <HiEye
                   size={25}
@@ -227,7 +233,8 @@ const CustomInputContainer = forwardRef(function CustomInputContainer(
       {!valid && (
         <p
           id="filled_success_help"
-          className="h-[20px] pl-4 text-start align-middle overflow-hidden text-ellipsis text-sm text-red-600 dark:text-red-600 w-full ">
+          className="h-[20px] pl-4 text-start align-middle overflow-hidden text-ellipsis text-sm text-red-600 dark:text-red-600 w-full "
+        >
           {errorMessage}
         </p>
       )}
