@@ -22,7 +22,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { validateFormField, validateNumberField } from "@/Helpers/validateForm";
+import {
+  validateFormField,
+  validateNumberField,
+  validateTextField,
+} from "@/Helpers/validateForm";
 const IncomePage = () => {
   const routeHistory = useRouteHistory();
   return (
@@ -114,6 +118,9 @@ const IncomePage = () => {
                 id="income-type"
                 maxlength={14}
                 required
+                onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  validateTextField(e, 14)
+                }
                 // onChange={handleChange}
               />
               <CustomInputContainer
@@ -140,6 +147,9 @@ const IncomePage = () => {
               label={"Source"}
               id="income-type"
               required
+              onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+                validateTextField(e, 14)
+              }
               // onChange={handleChange}
             />
             <CustomInputContainer
@@ -165,7 +175,7 @@ const IncomePage = () => {
               // onChange={handleChange}
             />
             <Select onValueChange={() => {}} name="method">
-              <SelectTrigger className="px-3 py-4 bg-transparent  text-gray-500 dark:text-gray-400 focus-within:border-black overflow-hidden focus-within:ring-[1px] h-[60px] ring-offset-0 focus-within:ring-black/80 dark:focus-within:ring-gray-200/80 flex  dark:focus-within:border-gray-200 dark:border-gray-600 dark:hover:border-white hover:border-black border-[1px] cursor-pointer group rounded-[8px] gap-0 border-gray-300  w-full  justify-between items-center">
+              <SelectTrigger className="px-3 py-4 bg-transparent  text-gray-500 dark:text-gray-400 focus-within:border-black overflow-hidden focus-within:ring-[1px] h-[50px] ring-offset-0 focus-within:ring-black/80 dark:focus-within:ring-gray-200/80 flex  dark:focus-within:border-gray-200 dark:border-gray-600 dark:hover:border-white hover:border-black border-[1px] cursor-pointer group rounded-[8px] gap-0 border-gray-300  w-full  justify-between items-center">
                 <SelectValue placeholder="Payment Method" />
               </SelectTrigger>
               <SelectContent className="dark:bg-darkBg dark:text-white">
@@ -175,9 +185,9 @@ const IncomePage = () => {
               </SelectContent>
             </Select>
             <CustomInputContainer
-              size={"medium"}
-              font={"medium"}
-              type="text"
+              size={"small"}
+              font={"default"}
+              type="textarea"
               inputBorder={"none"}
               containerStyle={"border"}
               label={"Note"}
@@ -185,6 +195,11 @@ const IncomePage = () => {
               required
               // onChange={handleChange}
             />
+            {/* <textarea
+              rows={10}
+              cols={10}
+              className="focus-within:border-black overflow-hidden focus-within:ring-[1px] ring-offset-0 focus-within:ring-black/80 dark:focus-within:ring-gray-200/80  dark:focus-within:border-gray-200  dark:border-gray-600 dark:hover:border-white hover:border-black border-[1px] group rounded-[8px] p-0 pb-0 gap-0 border-gray-300 h-20  w-full flex flex-col justify-end items-startborder-2 relative  group  items-start "
+            /> */}
 
             <div>
               <Button variant="outline">Submit</Button>
