@@ -11,6 +11,7 @@ import { TbCurrencyRupeeNepalese } from "react-icons/tb";
 import userImage from "@/public/image-one.jpg";
 import DetailCard from "@/components/Elements/Cards/DetailCard/DetailCard";
 import { Button } from "@/components/ui/button";
+import { BsPlusCircleDotted } from "react-icons/bs";
 const IncomePage = () => {
   const routeHistory = useRouteHistory();
   return (
@@ -45,7 +46,19 @@ const IncomePage = () => {
         </div>
       </div>
 
-      <div className="w-full flex flex-row flex-wrap justify-stretch gap-2">
+      <div className="w-full flex flex-row flex-wrap items-center justify-stretch gap-2 ">
+        <DetailCard
+          type="row"
+          image={userImage}
+          title="five hunred"
+          detail="500"
+        />
+        <DetailCard
+          type="row"
+          image={userImage}
+          title="five hunred"
+          detail="500"
+        />
         <DetailCard
           type="row"
           image={userImage}
@@ -65,7 +78,13 @@ const IncomePage = () => {
           detail="500"
         />
 
-        <Button variant={"icon"} />
+        <Button
+          size={"lg"}
+          variant={"outline"}
+          className="w-[3rem] h-[3rem] hover:bg-white text-gray-400 outline-gray-400 dark:outline-gray-100/30 dark:hover:text-gray-100/30 border-dashed outline-dashed outline-[1px] flex justify-center items-center p-1 rounded-full"
+        >
+          <BsPlusCircleDotted size={20} />
+        </Button>
       </div>
     </div>
   );
