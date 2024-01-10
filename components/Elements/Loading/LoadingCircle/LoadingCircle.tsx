@@ -5,7 +5,7 @@ const LoadingCircle = () => {
   return (
     <div
       role="status"
-      className="flex ju items-center h-full w-full overflow-hidden"
+      className="flex justify-center items-center h-full w-full overflow-hidden"
     >
       {/* <svg
         aria-hidden="true"

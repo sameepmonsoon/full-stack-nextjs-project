@@ -59,7 +59,7 @@ const LoginPage = () => {
   }, [token, router]);
   return (
     <form
-      className="w-full  h-full flex justify-center items-center p-5 bg-accent  dark:bg-darkBg"
+      className="w-screen h-full flex justify-center items-center p-5 bg-accent  dark:bg-darkBg"
       onSubmit={handleSubmit}
     >
       <div className="w-[29.5rem] h-auto p-10 flex flex-col justify-start items-center dark:text-white bg-white dark:bg-darkBg rounded-lg gap-2">
