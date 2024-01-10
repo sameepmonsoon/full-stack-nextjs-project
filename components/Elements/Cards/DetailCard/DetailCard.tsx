@@ -13,14 +13,14 @@ const DetailCard = ({
   type: "row" | "column";
 }) => {
   return (
-    <div className="flex gap-3 flex-1 bg-white dark:bg-transparent rounded-[18px] px-2 py-2 min-w-[15rem] h-[4rem] items-start justify-start border-[1px] border-darkBg/20 dark:border-accent/10">
-      <span className="h-full overflow-hidden w-[50px] rounded-full">
+    <div className="flex overflow-hidden gap-3 flex-1 bg-white dark:bg-transparent rounded-[18px] px-2 py-2 min-w-[15rem] h-[4rem] items-start justify-start border-[1px] border-darkBg/20 dark:border-accent/10">
+      <div className="h-[45px] overflow-hidden w-[46px] rounded-full">
         <Image
           src={image}
-          alt="alt image"
-          className="object-cover h-full w-full rounded-full"
+          alt="item"
+          className="object-cover min-h-full w-full rounded-full"
         />
-      </span>
+      </div>
       <div
         className={`${
           type?.toLowerCase() === "column"

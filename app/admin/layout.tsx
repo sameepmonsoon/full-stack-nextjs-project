@@ -1,4 +1,4 @@
-import "../globals.css";
+import "./admin.scss";
 import AdminNav from "@/components/Elements/AdminNavbar/AdminNavbar";
 import AdminLeftDrawer from "@/components/Elements/AdminLeftDrawer/AdminLeftDrawer";
 import { Suspense } from "react";

@@ -13,11 +13,13 @@ import DetailCard from "@/components/Elements/Cards/DetailCard/DetailCard";
 import { Button } from "@/components/ui/button";
 import { BsPlusCircleDotted } from "react-icons/bs";
 import ListContainer from "@/components/Elements/ListContainer/ListContainer";
+import { DialogBox } from "@/components/Elements/DialogBox/DialogBox";
+import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 const IncomePage = () => {
   const routeHistory = useRouteHistory();
   return (
     <div className="w-full h-full flex flex-col gap-5">
-      <p className="w-full h-14 rounded-[10px] bg-white dark:bg-darkBg flex justify-between items-center px-5">
+      <p className="w-full min-h-14 rounded-[10px] bg-white dark:bg-darkBg flex justify-between items-center px-5">
         <span className="font-medium capitalize text-xl tracking-tight">
           Income
         </span>
@@ -79,13 +81,139 @@ const IncomePage = () => {
           detail="500"
         />
 
-        <Button
-          size={"lg"}
-          variant={"outline"}
-          className="w-[3rem] h-[3rem] hover:bg-white text-gray-400 outline-gray-400 dark:outline-gray-100/30 dark:hover:text-gray-100/30 border-dashed outline-dashed outline-[1px] flex justify-center items-center p-1 rounded-full"
+        <DialogBox
+          dialogDescription="Add Income Details"
+          dialogTitle="Income"
+          trigger={
+            <Button
+              size={"lg"}
+              variant={"outline"}
+              className="w-[3rem] h-[3rem] hover:bg-white text-gray-400 outline-gray-400 dark:outline-gray-100/30 dark:hover:text-gray-100/30 border-dashed outline-dashed outline-[1px] flex justify-center items-center p-1 rounded-full"
+            >
+              <BsPlusCircleDotted size={20} />
+            </Button>
+          }
         >
-          <BsPlusCircleDotted size={20} />
-        </Button>
+          <form className="w-full h-full flex flex-col gap-4">
+            <div className="flex gap-2 w-full items-center justify-between flex-1">
+              <CustomInputContainer
+                size={"small"}
+                font={"medium"}
+                type="text"
+                inputBorder={"none"}
+                containerStyle={"border"}
+                label={"Title"}
+                id="income-type"
+                required
+                // onChange={handleChange}
+              />
+              <CustomInputContainer
+                size={"small"}
+                font={"medium"}
+                type="text"
+                inputBorder={"none"}
+                containerStyle={"border"}
+                label={"Amount"}
+                id="income-type"
+                required
+                // onChange={handleChange}
+              />
+            </div>
+            <CustomInputContainer
+              size={"small"}
+              font={"medium"}
+              type="text"
+              inputBorder={"none"}
+              containerStyle={"border"}
+              label={"Source"}
+              id="income-type"
+              required
+              // onChange={handleChange}
+            />
+            <CustomInputContainer
+              size={"small"}
+              font={"medium"}
+              type="text"
+              inputBorder={"none"}
+              containerStyle={"border"}
+              label={"Category"}
+              id="income-type"
+              required
+              // onChange={handleChange}
+            />
+            <CustomInputContainer
+              size={"small"}
+              font={"medium"}
+              type="date"
+              inputBorder={"none"}
+              containerStyle={"border"}
+              label={"Date"}
+              id="income-type"
+              required
+              // onChange={handleChange}
+            />
+            <CustomInputContainer
+              size={"small"}
+              font={"medium"}
+              type="text"
+              inputBorder={"none"}
+              containerStyle={"border"}
+              label={"Paymet Method"}
+              id="income-type"
+              required
+              // onChange={handleChange}
+            />
+            <CustomInputContainer
+              size={"medium"}
+              font={"medium"}
+              type="text"
+              inputBorder={"none"}
+              containerStyle={"border"}
+              label={"Note"}
+              id="income-type"
+              required
+              // onChange={handleChange}
+            />
+          </form>
+        </DialogBox>
+      </div>
+      <div className="flex flex-1 gap-5 justify-start items-start flex-wrap">
+        <ListContainer title={"History"} showViewAll={true}>
+          <div className="flex flex-col gap-1 w-full h-full">
+            <DetailCard
+              type="row"
+              image={userImage}
+              title="five hunred"
+              detail="500"
+            />
+            <DetailCard
+              type="row"
+              image={userImage}
+              title="five hunred"
+              detail="500"
+            />
+            <DetailCard
+              type="row"
+              image={userImage}
+              title="five hunred"
+              detail="500"
+            />
+            <DetailCard
+              type="row"
+              image={userImage}
+              title="five hunred"
+              detail="500"
+            />
+          </div>
+        </ListContainer>
+        <ListContainer title={"History"} showViewAll={true}>
+          <DetailCard
+            type="row"
+            image={userImage}
+            title="five hunred"
+            detail="500"
+          />
+        </ListContainer>
       </div>
       <div className="flex flex-1 gap-5 justify-start items-start">
         <ListContainer title={"History"} showViewAll={true}>
