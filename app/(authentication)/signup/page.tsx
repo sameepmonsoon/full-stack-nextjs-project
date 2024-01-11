@@ -109,7 +109,7 @@ const LoginPage = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full  h-full flex justify-center items-center p-5 bg-accent  dark:bg-darkBg"
+      className="w-screen  h-full flex justify-center items-center p-5 bg-accent  dark:bg-darkBg"
     >
       <div className="w-[29.5rem] h-auto p-10 flex flex-col justify-start items-center dark:text-white bg-white dark:bg-darkBg rounded-lg gap-2">
         <div className="h-[25%] flex justify-start items-center flex-col gap-0 md:gap-2">

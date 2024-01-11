@@ -1,7 +1,7 @@
 "use client";
 import useRouteHistory from "@/Hooks/useRouteHistory";
 import BreadCrumbs from "@/components/Elements/BreadCrumbs/BreadCrumbs";
-import CardLayout from "@/components/Elements/CardLayout/CardLayout";
+import CardLayout from "@/components/Elements/Cards/CardLayout/CardLayout";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import ListContainer from "@/components/Elements/ListContainer/ListContainer";
 import ThemeButton from "@/components/Elements/ThemeButton/ThemeButton";

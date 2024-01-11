@@ -1,32 +1,86 @@
 "use client";
 import useRouteHistory from "@/Hooks/useRouteHistory";
 import Banner from "@/components/Elements/Banners/Banner";
-import CardLayout from "@/components/Elements/CardLayout/CardLayout";
+
+import CardLayout from "@/components/Elements/Cards/CardLayout/CardLayout";
+import InfoIconCard from "@/components/Elements/Cards/InfoIconCard/InfoIconCard";
 import { CarouselSlider } from "@/components/Elements/Carousels/CarouselSlider/CarouselSlider";
 import React from "react";
+import Chart from "react-apexcharts";
+import { FaMoneyBillTransfer, FaSackDollar } from "react-icons/fa6";
+import { GiWallet } from "react-icons/gi";
+import { BiSolidShoppingBags } from "react-icons/bi";
+import { GoPeople } from "react-icons/go";
+import { TbCurrencyRupeeNepalese } from "react-icons/tb";
 function AdminPage() {
   const routeHistory = useRouteHistory();
+
+  const state = {
+    options: {
+      chart: {
+        id: "basic-bar",
+      },
+      xaxis: {
+        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
+      },
+    },
+    series: [
+      {
+        name: "series-1",
+        data: [30, 40, 45, 50, 49, 60, 70, 91],
+      },
+    ],
+  };
+
   return (
-    <div className="flex flex-1 flex-col gap-2">
-      <div className="p-0 w-full flex gap-5 h-[18rem]">
-        <Banner /> <CarouselSlider />
+    <div className="flex flex-1 flex-col gap-5 w-full">
+      <div className="p-0 w-auto lg:flex-row flex-col flex gap-5 h-auto lg:h-[22rem] lg:max-h-[22rem] flex-1 justify-evenly items-stretch">
+        <Banner />
+        <div className="w-auto lg:w-[35%] h-[15rem] lg:h-auto">
+          <CarouselSlider />
+        </div>
       </div>
-      <div className="p-2 w-full h-full flex flex-col gap-5">
+      <div className=" w-full flex-wrap flex gap-5">
         <CardLayout
-          type={"row"}
-          title={"$100"}
-          detail="Lorem Ipsum is the earning."
+          color="safe"
+          icon={GiWallet}
+          type={"column"}
+          title={
+            <span className="flex justify-start items-center gap-0">
+              <TbCurrencyRupeeNepalese />
+              300k
+            </span>
+          }
+          detail="Total Income"
         />
         <CardLayout
+          color="danger"
+          icon={FaMoneyBillTransfer}
           type={"column"}
-          title={"$100"}
-          detail="Lorem Ipsum is the earning."
+          title={
+            <span className="flex justify-start items-center gap-0">
+              <TbCurrencyRupeeNepalese />
+              50k
+            </span>
+          }
+          detail="Total Expenses"
         />
         <CardLayout
+          color={"alert"}
+          icon={FaSackDollar}
           type={"column"}
-          title={"$100"}
-          detail="Lorem Ipsum is the earning."
+          title={
+            <span className="flex justify-start items-center gap-0">
+              <TbCurrencyRupeeNepalese />
+              250k
+            </span>
+          }
+          detail="Total Savings"
         ></CardLayout>
+      </div>
+
+      <div className="w-auto">
+        <Chart options={state.options} series={state.series} type="area" />
       </div>
     </div>
   );
