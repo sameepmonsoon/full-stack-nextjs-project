@@ -11,6 +11,7 @@ import React, { useEffect, useRef, useState } from "react";
 const LoginPage = () => {
   const [formValues, setFormValues] = useState<any>({});
   const [formErrors, setFormErrors] = useState<any>({});
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const token = getToken();
   const router = useRouter();
   const ref = useRef<any>(null);
@@ -20,7 +21,7 @@ const LoginPage = () => {
     setFormErrors(validateFormField(formValues));
 
     const hasErrors = validateFormField(formValues);
-
+    setIsSubmitting(true);
     if (hasErrors) {
       fetch("api/auth/signin", {
         method: "POST",
@@ -43,12 +44,16 @@ const LoginPage = () => {
         })
         .catch((error) => {
           console.error("Error:", error.message);
+        })
+        .finally(() => {
+          setIsSubmitting(false);
         });
     }
   }
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
+    setFormErrors(validateFormField(formValues));
     setFormValues({ ...formValues, [name]: value });
   };
 
@@ -120,10 +125,14 @@ const LoginPage = () => {
           </div>
 
           <Button
-            effect={"press"}
+            effect={`${isSubmitting ? "none" : "press"}`}
             asChild={false}
             type="submit"
-            className={`w-full bg-darkBg dark:bg-white hover:bg-darkBg dark:hover:bg-white text-white dark:text-darkBg h-10 rounded-md flex justify-center items-center  text-md font-medium capitalize`}
+            className={`w-full ${
+              isSubmitting
+                ? "bg-gray-300 text-gray-500  hover:bg-gray-300"
+                : "bg-darkBg dark:bg-white hover:bg-darkBg text-white"
+            }  dark:hover:bg-white  dark:text-darkBg h-10 rounded-md flex justify-center items-center  text-md font-medium capitalize`}
           >
             Sign In
           </Button>

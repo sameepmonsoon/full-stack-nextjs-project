@@ -6,7 +6,7 @@ import { FaMoneyBillTransfer } from "react-icons/fa6";
 const ExpensePage = () => {
   const routeHistory = useRouteHistory();
   return (
-    <div className="w-full h-full">
+    <>
       <p className="w-full h-14 rounded-[10px] bg-white dark:bg-darkBg flex justify-between items-center px-5">
         <span className="font-medium capitalize text-xl tracking-tight">
           Expenses
@@ -19,7 +19,7 @@ const ExpensePage = () => {
         />
       </p>
       ExpensePage
-    </div>
+    </>
   );
 };
 

@@ -3,7 +3,7 @@ import { TbDotsVertical } from "react-icons/tb";
 const BalanceCard = () => {
   return (
     <div className="h-[10rem] relative flex justify-center items-center">
-      <div className="z-[100] bg-darkBg w-full h-full rounded-[14px] p-5 py-3">
+      <div className="z-[40] bg-darkBg w-full h-full rounded-[14px] p-5 py-3">
         <div className="h-12 flex justify-between items-center">
           <span className="text-gray-400 text-md font-medium capitalize">
             current balance

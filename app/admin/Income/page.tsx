@@ -15,11 +15,23 @@ import { BsPlusCircleDotted } from "react-icons/bs";
 import ListContainer from "@/components/Elements/ListContainer/ListContainer";
 import { DialogBox } from "@/components/Elements/DialogBox/DialogBox";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  validateFormField,
+  validateNumberField,
+  validateTextField,
+} from "@/Helpers/validateForm";
 const IncomePage = () => {
   const routeHistory = useRouteHistory();
   return (
-    <div className="w-full h-full flex flex-col gap-5">
-      <p className="w-full min-h-14 rounded-[10px] bg-white dark:bg-darkBg flex justify-between items-center px-5">
+    <>
+      <div className="w-full h-14 rounded-[10px] bg-white dark:bg-darkBg flex justify-between items-center px-5">
         <span className="font-medium capitalize text-xl tracking-tight">
           Income
         </span>
@@ -29,7 +41,7 @@ const IncomePage = () => {
           routeHistory={routeHistory}
           icon={GiWallet}
         />
-      </p>
+      </div>
 
       <div className="w-full flex flex-wrap gap-5">
         <CardLayout
@@ -104,7 +116,11 @@ const IncomePage = () => {
                 containerStyle={"border"}
                 label={"Title"}
                 id="income-type"
+                maxlength={14}
                 required
+                onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  validateTextField(e, 14)
+                }
                 // onChange={handleChange}
               />
               <CustomInputContainer
@@ -113,9 +129,12 @@ const IncomePage = () => {
                 type="text"
                 inputBorder={"none"}
                 containerStyle={"border"}
-                label={"Amount"}
+                label={"Amount (Rs.)"}
                 id="income-type"
                 required
+                onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  validateNumberField(e, 5)
+                }
                 // onChange={handleChange}
               />
             </div>
@@ -128,6 +147,9 @@ const IncomePage = () => {
               label={"Source"}
               id="income-type"
               required
+              onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+                validateTextField(e, 14)
+              }
               // onChange={handleChange}
             />
             <CustomInputContainer
@@ -152,21 +174,20 @@ const IncomePage = () => {
               required
               // onChange={handleChange}
             />
+            <Select onValueChange={() => {}} name="method">
+              <SelectTrigger className="px-3 py-4 bg-transparent  text-gray-500 dark:text-gray-400 focus-within:border-black overflow-hidden focus-within:ring-[1px] h-[50px] ring-offset-0 focus-within:ring-black/80 dark:focus-within:ring-gray-200/80 flex  dark:focus-within:border-gray-200 dark:border-gray-600 dark:hover:border-white hover:border-black border-[1px] cursor-pointer group rounded-[8px] gap-0 border-gray-300  w-full  justify-between items-center">
+                <SelectValue placeholder="Payment Method" />
+              </SelectTrigger>
+              <SelectContent className="dark:bg-darkBg dark:text-white">
+                <SelectItem value="cash">Cash</SelectItem>
+                <SelectItem value="bank">Bank</SelectItem>
+                <SelectItem value="cheque">Cheque</SelectItem>
+              </SelectContent>
+            </Select>
             <CustomInputContainer
               size={"small"}
-              font={"medium"}
-              type="text"
-              inputBorder={"none"}
-              containerStyle={"border"}
-              label={"Paymet Method"}
-              id="income-type"
-              required
-              // onChange={handleChange}
-            />
-            <CustomInputContainer
-              size={"medium"}
-              font={"medium"}
-              type="text"
+              font={"default"}
+              type="textarea"
               inputBorder={"none"}
               containerStyle={"border"}
               label={"Note"}
@@ -174,6 +195,15 @@ const IncomePage = () => {
               required
               // onChange={handleChange}
             />
+            {/* <textarea
+              rows={10}
+              cols={10}
+              className="focus-within:border-black overflow-hidden focus-within:ring-[1px] ring-offset-0 focus-within:ring-black/80 dark:focus-within:ring-gray-200/80  dark:focus-within:border-gray-200  dark:border-gray-600 dark:hover:border-white hover:border-black border-[1px] group rounded-[8px] p-0 pb-0 gap-0 border-gray-300 h-20  w-full flex flex-col justify-end items-startborder-2 relative  group  items-start "
+            /> */}
+
+            <div>
+              <Button variant="outline">Submit</Button>
+            </div>
           </form>
         </DialogBox>
       </div>
@@ -183,7 +213,7 @@ const IncomePage = () => {
             <DetailCard
               type="row"
               image={userImage}
-              title="five hunred"
+              title="five hundred"
               detail="500"
             />
             <DetailCard
@@ -215,44 +245,7 @@ const IncomePage = () => {
           />
         </ListContainer>
       </div>
-      <div className="flex flex-1 gap-5 justify-start items-start">
-        <ListContainer title={"History"} showViewAll={true}>
-         
-            <DetailCard
-              type="row"
-              image={userImage}
-              title="five hunred"
-              detail="500"
-            />
-            <DetailCard
-              type="row"
-              image={userImage}
-              title="five hunred"
-              detail="500"
-            />
-            <DetailCard
-              type="row"
-              image={userImage}
-              title="five hunred"
-              detail="500"
-            />
-            <DetailCard
-              type="row"
-              image={userImage}
-              title="five hunred"
-              detail="500"
-            />
-        </ListContainer>
-        <ListContainer title={"History"} showViewAll={true}>
-          <DetailCard
-            type="row"
-            image={userImage}
-            title="five hunred"
-            detail="500"
-          />
-        </ListContainer>
-      </div>
-    </div>
+    </>
   );
 };
 

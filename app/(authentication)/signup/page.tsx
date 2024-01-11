@@ -5,19 +5,14 @@ import {
   calculatePasswordStrength,
   passwordStrengthType,
   validateFormField,
+  validateNumberField,
 } from "@/Helpers/validateForm";
 import { CustomProgressBar } from "@/components/Elements/CustomProgressBar/CustomProgressBar";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import Logo from "@/components/Elements/Logo/Logo";
 import ThemeButton from "@/components/Elements/ThemeButton/ThemeButton";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 const LoginPage = () => {
@@ -153,9 +148,12 @@ const LoginPage = () => {
           <CustomInputContainer
             size={"default"}
             font={"medium"}
-            type="number"
+            type="text"
             inputBorder={"none"}
             containerStyle={"border"}
+            onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+              validateNumberField(e, 10)
+            }
             id="phone"
             label={"Phone Number"}
             required
@@ -166,16 +164,6 @@ const LoginPage = () => {
             valid={!formErrors?.phone}
             errorMessage={formErrors?.phone}
           />
-          <Select onValueChange={handleSelectChange} name="role">
-            <SelectTrigger className="px-3 py-4 bg-transparent  text-gray-500 dark:text-gray-400 focus-within:border-black overflow-hidden focus-within:ring-[1px] h-[60px] ring-offset-0 focus-within:ring-black/80 dark:focus-within:ring-gray-200/80 flex  dark:focus-within:border-gray-200 dark:border-gray-600 dark:hover:border-white hover:border-black border-[1px] cursor-pointer group rounded-[8px] gap-0 border-gray-300  w-full  justify-between items-center">
-              <SelectValue placeholder="Select a Role" />
-            </SelectTrigger>
-            <SelectContent className="dark:bg-darkBg dark:text-white">
-              <SelectItem value="super-admin">Super Admin</SelectItem>
-              <SelectItem value="admin">Admin</SelectItem>
-              <SelectItem value="user">Student</SelectItem>
-            </SelectContent>
-          </Select>
 
           <CustomInputContainer
             size={"default"}

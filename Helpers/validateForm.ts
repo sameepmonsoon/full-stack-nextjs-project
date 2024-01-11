@@ -171,4 +171,37 @@ const passwordStrengthType = (strength: number) => {
   return type;
 };
 
-export { calculatePasswordStrength, passwordStrengthType, validateFormField };
+//number validation
+
+const validateNumberField = (
+  e: React.ChangeEvent<HTMLInputElement>,
+  length: number
+) => {
+  let maxLength = length;
+  e.target.value = e.target.value.replace(/[^0-9]/g, "");
+  if (e.target.value.length > length) {
+    e.target.value = e.target.value.trim().slice(0, maxLength);
+  }
+  return e.target.value;
+};
+//String Only validation
+
+const validateTextField = (
+  e: React.ChangeEvent<HTMLInputElement>,
+  length: number
+) => {
+  let maxLength = length;
+  e.target.value = e.target.value.replace(/\d+/g, "");
+  if (e.target.value.length > length) {
+    e.target.value = e.target.value.trim().slice(0, maxLength);
+  }
+  return e.target.value;
+};
+
+export {
+  calculatePasswordStrength,
+  passwordStrengthType,
+  validateFormField,
+  validateNumberField,
+  validateTextField,
+};
