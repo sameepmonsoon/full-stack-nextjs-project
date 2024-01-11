@@ -9,7 +9,6 @@ import { NextResponse } from "next/server";
 export async function POST(request: any, res: NextApiResponse) {
   try {
     await connect();
-
     const body = await request.json();
     console.log(body);
     const notHashedPassword = body.password;

@@ -74,7 +74,7 @@ const AdminLeftDrawer = () => {
                       showToolTip={hideSiderDetail}
                     >
                       <Button
-                        onClick={() => router.push(`/admin/${url}`)}
+                        onClick={() => router.push(`${url}`)}
                         variant={pathname.includes(url) ? "selected" : "icon"}
                         size={"iconWithText"}
                         className={`${
