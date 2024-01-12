@@ -1,0 +1,32 @@
+.select__menu.css-1nmdiq5-menu {
+  z-index: 100;
+  font-weight: 400;
+  padding: 2px 4px;
+  font-size: 14px;
+}
+
+.select__menu-list {
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #b6b6b6;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    cursor: pointer;
+    background-color: #aaaaaa;
+  }
+}
+
+.select__option {
+  border-radius: 5px;
+}
+.select__control.css-mu5u19-control:hover {
+  border-color: black;
+}
+.css-uh81zv-control:hover {
+  border-color: black !important;
+}
