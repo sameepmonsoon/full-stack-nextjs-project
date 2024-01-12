@@ -4,6 +4,7 @@ import BreadCrumbs from "@/components/Elements/BreadCrumbs/BreadCrumbs";
 import BalanceCard from "@/components/Elements/Cards/BalanceCard/BalanceCard";
 import CardLayout from "@/components/Elements/Cards/CardLayout/CardLayout";
 import Image from "next/image";
+import "@/Styles/Admin/income/income.scss";
 import { RxCross2 } from "react-icons/rx";
 import React, { useState } from "react";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
@@ -16,7 +17,11 @@ import { BsPlusCircleDotted } from "react-icons/bs";
 import ListContainer from "@/components/Elements/ListContainer/ListContainer";
 import { DialogBox } from "@/components/Elements/DialogBox/DialogBox";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
-import Select, { components, MultiValueRemoveProps } from "react-select";
+import Select, {
+  components,
+  MultiValueRemoveProps,
+  OptionProps,
+} from "react-select";
 import {
   CustomSelect,
   SelectContent,
@@ -46,7 +51,7 @@ const IncomePage = () => {
   async function handleSubmit(e: React.FormEvent<HTMLElement>) {
     e.preventDefault();
     console.log(formValue);
-    const res = await fetch(" ", {
+    const res = await fetch("/api/finance/income", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -56,7 +61,6 @@ const IncomePage = () => {
     });
 
     const data = await res.json();
-    console.log(data);
   }
 
   const handleChange = (e: React.ChangeEvent<any>) => {
@@ -75,6 +79,10 @@ const IncomePage = () => {
         <RxCross2 />
       </components.MultiValueRemove>
     );
+  };
+
+  const Option = (props: OptionProps<any>) => {
+    return <components.Option {...props} />;
   };
   return (
     <>
@@ -236,18 +244,21 @@ const IncomePage = () => {
             </CustomSelect>
 
             <Select
+              closeMenuOnSelect={false}
               isClearable={false}
               components={{
                 MultiValueRemove,
+                Option,
               }}
               styles={{
                 control: (baseStyles, state) => ({
                   ...baseStyles,
-                  borderColor: state.isFocused ? "black" : "grey",
-                  borderRadius: "10px",
+                  borderColor: state.isFocused ? "black" : "rgb(211, 211, 211)",
+                  borderRadius: "7px",
                   zIndex: 40,
                   minHeight: "50px",
                   outline: 0,
+                  boxShadow: "none",
                 }),
                 multiValue: (base) => ({
                   ...base,
@@ -267,7 +278,7 @@ const IncomePage = () => {
                   color: "grey",
                   ":hover": {
                     backgroundColor: "none",
-                    color: "red",
+                    color: "black",
                   },
                 }),
               }}
