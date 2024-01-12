@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { Toaster } from "@/components/ui/sonner";
-import { DndContext } from "@dnd-kit/core";
 import ClientProvider from "@/Providers/ClientProvider";
+import { ToastProvider } from "@/components/ui/toast";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +24,8 @@ export default function RootLayout({
         <ClientProvider>
           <main className="flex flex-1 h-screen overflow-hidden">
             <div className="flex-grow flex-1">{children}</div>
-            <Toaster />
+            {/* <Toaster richColors /> */}
+            <Toaster/>
           </main>
         </ClientProvider>
       </body>

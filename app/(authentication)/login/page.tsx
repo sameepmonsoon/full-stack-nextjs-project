@@ -4,6 +4,7 @@ import CustomInputContainer from "@/components/Elements/CutomInputContainer/Cust
 import Logo from "@/components/Elements/Logo/Logo";
 import ThemeButton from "@/components/Elements/ThemeButton/ThemeButton";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import { getToken, setToken } from "@/utils/token";
 import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
@@ -15,7 +16,7 @@ const LoginPage = () => {
   const token = getToken();
   const router = useRouter();
   const ref = useRef<any>(null);
-
+  const { toast } = useToast();
   async function handleSubmit(e: any) {
     e.preventDefault();
     setFormErrors(validateFormField(formValues));
@@ -23,31 +24,37 @@ const LoginPage = () => {
     const hasErrors = validateFormField(formValues);
     setIsSubmitting(true);
     if (hasErrors) {
-      fetch("api/auth/signin", {
+      const data = await fetch("api/auth/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formValues),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          if (data?.token) {
-            setToken(data?.token);
-            window.location.href = "/admin/home";
-          } else {
-            console.error("Error:", data.error);
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error.message);
-        })
-        .finally(() => {
-          setIsSubmitting(false);
-        });
+      });
+
+      console.log(data);
+      // .then((response: any) => {
+      //   if (!response.ok) {
+      //     throw new Error(`HTTP error! Status: ${response}`);
+      //   }
+      //   return response.json();
+      // })
+      // .then((data) => {
+      //   if (data?.token) {
+      //     setToken(data?.token);
+      //     window.location.href = "/admin/home";
+      //   } else {
+      //     console.error("Error:", data.error);
+      //   }
+      // })
+      // .catch((error: any) => {
+      //   toast({
+      //     duration: 900,
+      //     title: "Uh oh! Something went wrong.",
+      //   });
+      //   console.log("Error:", error.message);
+      // })
+      // .finally(() => {
+      //   setIsSubmitting(false);
+      // });
     }
   }
 

@@ -5,21 +5,27 @@ import bcrypt from "bcrypt";
 import connect from "@/utils/db_config";
 
 const MAX_AGE = 60 * 60 * 24 * 30;
+async function generateAuthToken(userId: any) {
+  const secret = process.env.JWT || "";
+  const token = sign({ userId }, secret, {
+    expiresIn: MAX_AGE,
+  });
+  return token;
+}
 
 export async function POST(request: Request) {
   try {
     await connect();
     const body = await request.json();
     const { emailAddress, password: userPassword } = body;
-    console.log(emailAddress, userPassword);
+    console.log(emailAddress);
     if (!emailAddress || !userPassword) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
     const user = await UserAuth.findOne({
-      $or: [{ username: emailAddress }, { email: emailAddress }],
+      $or: [{ firstName: emailAddress }, { email: emailAddress }],
     });
-
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 401 });
     }
@@ -33,14 +39,12 @@ export async function POST(request: Request) {
       );
     }
 
-    const { password, ...othersData } = user._doc;
+    const { password, createdAt, updatedAt, __v, ...othersData } = user._doc;
 
     const secret = process.env.JWT_SECRET || "";
 
-    const token = sign({ password }, secret, {
-      expiresIn: MAX_AGE,
-    });
-
+    const token = await generateAuthToken(user);
+    console.log(othersData);
     const response = {
       message: "Authenticated!",
       token,
