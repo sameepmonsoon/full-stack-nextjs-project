@@ -1,44 +1,67 @@
 import { sign } from "jsonwebtoken";
 import { NextResponse } from "next/server";
+import UserAuth from "@/models/UserAuth";
+import bcrypt from "bcrypt";
+import connect from "@/utils/db_config";
 
 const MAX_AGE = 60 * 60 * 24 * 30;
+async function generateAuthToken(userId: any) {
+  const secret = process.env.JWT || "";
+  const token = sign({ userId }, secret, {
+    expiresIn: MAX_AGE,
+  });
+  return token;
+}
 
 export async function POST(request: Request) {
-  const body = await request.json();
+  try {
+    await connect();
+    const body = await request.json();
+    const { emailAddress, password: userPassword } = body;
+    console.log(emailAddress);
+    if (!emailAddress || !userPassword) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
 
-  const { username, password } = body;
+    const user = await UserAuth.findOne({
+      $or: [{ firstName: emailAddress }, { email: emailAddress }],
+    });
+    if (!user) {
+      return NextResponse.json({ message: "User not found" }, { status: 401 });
+    }
 
-  if (!username && !password) {
-    return NextResponse.json(
-      {
-        message: "Unauthorized",
+    const isCorrect = await bcrypt.compare(userPassword, user.password);
+
+    if (!isCorrect) {
+      return NextResponse.json(
+        { message: "Incorrect password" },
+        { status: 401 }
+      );
+    }
+
+    const { password, createdAt, updatedAt, __v, ...othersData } = user._doc;
+
+    const secret = process.env.JWT_SECRET || "";
+
+    const token = await generateAuthToken(user);
+    console.log(othersData);
+    const response = {
+      message: "Authenticated!",
+      token,
+      userDetails: othersData,
+    };
+
+    return new Response(JSON.stringify(response), {
+      status: 200,
+      headers: {
+        "Set-Cookie": `authToken=${token}; HttpOnly; Path=/; Max-Age=${MAX_AGE}; SameSite=Strict`,
       },
-      {
-        status: 401,
-      }
+    });
+  } catch (error) {
+    console.error("Error during authentication:", error);
+    return NextResponse.json(
+      { message: "Internal Server Error" },
+      { status: 500 }
     );
   }
-
-  // Always check this
-  const secret = process.env.JWT || "";
-
-  const token = sign(
-    {
-      username,
-    },
-    secret,
-    {
-      expiresIn: MAX_AGE,
-    }
-  );
-
-  const response = {
-    message: "Authenticated!",
-    token,
-  };
-
-  return new Response(JSON.stringify(response), {
-    status: 200,
-    headers: { "Set-Cookie": "name" },
-  });
 }

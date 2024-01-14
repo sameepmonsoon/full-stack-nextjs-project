@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 
 const { Document, Schema } = mongoose;
 interface incomeDoc extends Document {
+  userId: string;
   title: string;
   amount: number;
-  lastName: string;
+  category: string;
   source: string;
   method: "cash" | "cheque" | "bank";
   note: string;
@@ -12,29 +13,35 @@ interface incomeDoc extends Document {
 }
 const incomeSchema = new Schema<incomeDoc>(
   {
+    userId: {
+      type: String,
+      required: true,
+    },
     title: {
       type: String,
-      unique: true,
       required: true,
     },
     amount: {
       type: Number,
-      unique: true,
       required: true,
     },
     source: {
       type: String,
-      unique: true,
+      required: true,
+    },
+    category: {
+      type: String,
       required: true,
     },
     note: {
       type: String,
-      required: true,
+      required: false,
     },
+
     method: {
       type: String,
       required: true,
-      enum: ["cheque", "bank", "cash"],
+      enum: ["cash", "cheque", "bank"],
       default: "cash",
     },
     date: {
@@ -44,5 +51,4 @@ const incomeSchema = new Schema<incomeDoc>(
   },
   { timestamps: true }
 );
-export default mongoose.models.Income ||
-  mongoose.model("IncomeSchema", incomeSchema);
+export default mongoose.models.Income || mongoose.model("Income", incomeSchema);
