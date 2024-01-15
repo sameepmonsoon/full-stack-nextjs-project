@@ -17,7 +17,6 @@ const LoginPage = () => {
   const router = useRouter();
   const ref = useRef<any>(null);
   const { toast } = useToast();
-
   async function handleSubmit(e: any) {
     e.preventDefault();
     setFormErrors(validateFormField(formValues));
