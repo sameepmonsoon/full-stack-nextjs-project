@@ -6,9 +6,11 @@ const DetailCard = ({
   title,
   detail,
   type,
+  note,
 }: {
   image: string | StaticImageData;
   title: string;
+  note: string;
   detail: string | React.ReactNode;
   type: "row" | "column";
 }) => {
@@ -45,7 +47,7 @@ const DetailCard = ({
                 : " text-black/40 dark:text-accent/50"
             } relative whitespace-nowrap text-ellipsis -top-[2px] font-medium text-sm `}
           >
-            lorem
+            {note}
           </p>
         </div>
         <span

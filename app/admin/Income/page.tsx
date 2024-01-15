@@ -51,12 +51,13 @@ const IncomePage = () => {
     method: "",
     userId: "",
   };
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [incomeDetail, setIncomeDetail] = useState<any[]>([]);
   const [formValue, setFormValue] =
     useState<AddIncomeFormValueType>(initialValue);
   async function handleSubmit(e: React.FormEvent<HTMLElement>) {
     e.preventDefault();
-    console.log(formValue);
+    setIsSubmitting(true);
     const res = await fetch("/api/finance/income", {
       method: "POST",
       headers: {
@@ -67,6 +68,7 @@ const IncomePage = () => {
     });
 
     const data = await res.json();
+    setIsSubmitting(false);
   }
 
   const handleChange = (e: React.ChangeEvent<any>) => {
@@ -91,7 +93,6 @@ const IncomePage = () => {
     return <components.Option {...props} />;
   };
   useEffect(() => {
-    // Check if userId is already set
     if (!formValue.userId && userDetail?._id) {
       setFormValue((prevFormValue) => ({
         ...prevFormValue,
@@ -122,10 +123,9 @@ const IncomePage = () => {
 
     fetchData();
   }, []);
-  console.log(incomeDetail);
   return (
     <>
-      <div className="w-full h-14 rounded-[10px] bg-white dark:bg-darkBg flex justify-between items-center px-5">
+      <div className="w-full h-[60px] rounded-[10px] bg-white dark:bg-darkBg flex justify-between items-center px-5">
         <span className="font-medium capitalize text-xl tracking-tight">
           Income
         </span>
@@ -160,6 +160,7 @@ const IncomePage = () => {
           if (id <= 4) {
             return (
               <DetailCard
+                note={item?.note}
                 type="row"
                 image={userImage}
                 title={item.title}
@@ -174,37 +175,6 @@ const IncomePage = () => {
             );
           }
         })}
-
-        {/* <DetailCard
-          type="row"
-          image={userImage}
-          title="five hunred"
-          detail="500"
-        />
-        <DetailCard
-          type="row"
-          image={userImage}
-          title="five hunred"
-          detail="500"
-        />
-        <DetailCard
-          type="row"
-          image={userImage}
-          title="five hunred"
-          detail="500"
-        />
-        <DetailCard
-          type="row"
-          image={userImage}
-          title="five hunred"
-          detail="500"
-        />
-        <DetailCard
-          type="row"
-          image={userImage}
-          title="five hunred"
-          detail="500"
-        /> */}
 
         <DialogBox
           dialogDescription="Add Income Details"
@@ -373,8 +343,20 @@ const IncomePage = () => {
               className="focus-within:border-black overflow-hidden focus-within:ring-[1px] ring-offset-0 focus-within:ring-black/80 dark:focus-within:ring-gray-200/80  dark:focus-within:border-gray-200  dark:border-gray-600 dark:hover:border-white hover:border-black border-[1px] group rounded-[8px] p-0 pb-0 gap-0 border-gray-300 h-20  w-full flex flex-col justify-end items-startborder-2 relative  group  items-start "
             /> */}
 
-            <div>
-              <Button variant="outline">Submit</Button>
+            <div className="flex justify-end items-center w-full">
+              {" "}
+              <Button
+                effect={`${isSubmitting ? "none" : "press"}`}
+                asChild={false}
+                type="submit"
+                className={`w-full ${
+                  isSubmitting
+                    ? "bg-gray-300 text-gray-500  hover:bg-gray-300"
+                    : "bg-darkBg dark:bg-white hover:bg-darkBg text-white"
+                }  dark:hover:bg-white  dark:text-darkBg h-10 rounded-md flex justify-center items-center  text-md font-medium capitalize`}
+              >
+                {isSubmitting ? "Submitting" : "Submit"}
+              </Button>
             </div>
           </form>
         </DialogBox>
@@ -382,40 +364,33 @@ const IncomePage = () => {
       <div className="flex flex-1 gap-5 justify-start items-start flex-wrap">
         <ListContainer title={"History"} showViewAll={true}>
           <div className="flex flex-col gap-1 w-full h-full">
-            <DetailCard
-              type="row"
-              image={userImage}
-              title="five hundred"
-              detail="500"
-            />
-            <DetailCard
-              type="row"
-              image={userImage}
-              title="five hunred"
-              detail="500"
-            />
-            <DetailCard
-              type="row"
-              image={userImage}
-              title="five hunred"
-              detail="500"
-            />
-            <DetailCard
-              type="row"
-              image={userImage}
-              title="five hunred"
-              detail="500"
-            />
+            {incomeDetail?.map((item: any, id: number) => {
+              return (
+                <DetailCard
+                  note={item?.note}
+                  type="row"
+                  image={userImage}
+                  title={item.title}
+                  detail={
+                    <span className="flex justify-start items-center">
+                      <TbCurrencyRupeeNepalese />
+                      {item.amount}
+                    </span>
+                  }
+                  key={id}
+                />
+              );
+            })}
           </div>
         </ListContainer>
-        <ListContainer title={"History"} showViewAll={true}>
+        {/* <ListContainer title={"History"} showViewAll={true}>
           <DetailCard
             type="row"
             image={userImage}
             title="five hunred"
             detail="500"
           />
-        </ListContainer>
+        </ListContainer> */}
       </div>
     </>
   );
