@@ -18,23 +18,28 @@ export async function POST(request: Request) {
     await connect();
     const body = await request.json();
     const { emailAddress, password: userPassword } = body;
-    console.log(emailAddress);
     if (!emailAddress || !userPassword) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      return NextResponse.json(
+        { message: "Unauthorized", isValid: false },
+        { status: 401 }
+      );
     }
 
     const user = await UserAuth.findOne({
       $or: [{ firstName: emailAddress }, { email: emailAddress }],
     });
     if (!user) {
-      return NextResponse.json({ message: "User not found" }, { status: 401 });
+      return NextResponse.json(
+        { message: "User not found", isValid: false },
+        { status: 401 }
+      );
     }
 
     const isCorrect = await bcrypt.compare(userPassword, user.password);
 
     if (!isCorrect) {
       return NextResponse.json(
-        { message: "Incorrect password" },
+        { message: "Incorrect password", isValid: false },
         { status: 401 }
       );
     }
@@ -44,11 +49,11 @@ export async function POST(request: Request) {
     const secret = process.env.JWT_SECRET || "";
 
     const token = await generateAuthToken(user);
-    console.log(othersData);
     const response = {
       message: "Authenticated!",
       token,
       userDetails: othersData,
+      isValid: true,
     };
 
     return new Response(JSON.stringify(response), {
