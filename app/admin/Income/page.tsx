@@ -6,7 +6,7 @@ import CardLayout from "@/components/Elements/Cards/CardLayout/CardLayout";
 import Image from "next/image";
 import "@/Styles/Admin/income/income.scss";
 import { RxCross2 } from "react-icons/rx";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { GiWallet } from "react-icons/gi";
 import { TbCurrencyRupeeNepalese } from "react-icons/tb";
@@ -34,20 +34,27 @@ import {
   validateNumberField,
   validateTextField,
 } from "@/Helpers/validateForm";
+import { getUserDetail } from "@/utils/token";
+import { AddIncomeFormValueType } from "@/utils/types";
+import { debounce } from "@/Helpers/Debounce";
 
 const IncomePage = () => {
   const routeHistory = useRouteHistory();
-  const initialValue = {
+  const userDetail: any = getUserDetail();
+
+  let initialValue: AddIncomeFormValueType = {
     title: "",
     amount: 0,
     source: "",
     category: "",
-    date: "",
+    date: new Date(),
     note: "",
     method: "",
+    userId: "",
   };
-  const [formValue, setFormValue] = useState<{}>(initialValue);
-
+  const [incomeDetail, setIncomeDetail] = useState<any>({});
+  const [formValue, setFormValue] =
+    useState<AddIncomeFormValueType>(initialValue);
   async function handleSubmit(e: React.FormEvent<HTMLElement>) {
     e.preventDefault();
     console.log(formValue);
@@ -84,6 +91,32 @@ const IncomePage = () => {
   const Option = (props: OptionProps<any>) => {
     return <components.Option {...props} />;
   };
+  useEffect(() => {
+    // Check if userId is already set
+    if (!formValue.userId && userDetail?._id) {
+      setFormValue((prevFormValue) => ({
+        ...prevFormValue,
+        userId: userDetail._id,
+      }));
+    }
+  }, [userDetail, formValue.userId]);
+
+  async function getInitialData(userId: string) {
+    const data = await fetch(`/api/finance/income?userId=${userId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    return data;
+  }
+  useEffect(() => {
+    if (userDetail._id) {
+      const res = debounce(getInitialData(userDetail._id), 3000);
+      setIncomeDetail(res);
+    }
+  }, [userDetail]);
   return (
     <>
       <div className="w-full h-14 rounded-[10px] bg-white dark:bg-darkBg flex justify-between items-center px-5">
