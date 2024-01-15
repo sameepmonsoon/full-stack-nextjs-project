@@ -1,7 +1,4 @@
-export function debounce(
-  func: (this: any, ...args: any[]) => Promise<any>,
-  delay: number
-) {
+export function debounce(func: any, delay: number) {
   let timeoutId: NodeJS.Timeout;
 
   return function (this: any, ...args: any[]) {
