@@ -9,7 +9,7 @@ const DetailCard = ({
 }: {
   image: string | StaticImageData;
   title: string;
-  detail: string;
+  detail: string | React.ReactNode;
   type: "row" | "column";
 }) => {
   return (

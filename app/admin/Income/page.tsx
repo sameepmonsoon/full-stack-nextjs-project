@@ -36,7 +36,6 @@ import {
 } from "@/Helpers/validateForm";
 import { getUserDetail } from "@/utils/token";
 import { AddIncomeFormValueType } from "@/utils/types";
-import { debounce } from "@/Helpers/Debounce";
 
 const IncomePage = () => {
   const routeHistory = useRouteHistory();
@@ -52,7 +51,7 @@ const IncomePage = () => {
     method: "",
     userId: "",
   };
-  const [incomeDetail, setIncomeDetail] = useState<any>({});
+  const [incomeDetail, setIncomeDetail] = useState<any[]>([]);
   const [formValue, setFormValue] =
     useState<AddIncomeFormValueType>(initialValue);
   async function handleSubmit(e: React.FormEvent<HTMLElement>) {
@@ -102,21 +101,28 @@ const IncomePage = () => {
   }, [userDetail, formValue.userId]);
 
   async function getInitialData(userId: string) {
-    const data = await fetch(`/api/finance/income?userId=${userId}`, {
+    const response = await fetch(`/api/finance/income?userId=${userId}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
     });
+    const data = await response.json();
     return data;
   }
+
   useEffect(() => {
-    if (userDetail._id) {
-      const res = debounce(getInitialData(userDetail._id), 3000);
-      setIncomeDetail(res);
-    }
-  }, [userDetail]);
+    const fetchData = async () => {
+      if (userDetail._id) {
+        const res = await getInitialData(userDetail._id);
+        setIncomeDetail(res);
+      }
+    };
+
+    fetchData();
+  }, []);
+  console.log(incomeDetail);
   return (
     <>
       <div className="w-full h-14 rounded-[10px] bg-white dark:bg-darkBg flex justify-between items-center px-5">
@@ -150,7 +156,26 @@ const IncomePage = () => {
       </div>
 
       <div className="w-full flex flex-row flex-wrap items-center justify-stretch gap-2 ">
-        <DetailCard
+        {incomeDetail?.map((item: any, id: number) => {
+          if (id <= 4) {
+            return (
+              <DetailCard
+                type="row"
+                image={userImage}
+                title={item.title}
+                detail={
+                  <span className="flex justify-start items-center">
+                    <TbCurrencyRupeeNepalese />
+                    {item.amount}
+                  </span>
+                }
+                key={id}
+              />
+            );
+          }
+        })}
+
+        {/* <DetailCard
           type="row"
           image={userImage}
           title="five hunred"
@@ -179,7 +204,7 @@ const IncomePage = () => {
           image={userImage}
           title="five hunred"
           detail="500"
-        />
+        /> */}
 
         <DialogBox
           dialogDescription="Add Income Details"
