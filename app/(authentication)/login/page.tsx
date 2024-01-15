@@ -5,7 +5,7 @@ import Logo from "@/components/Elements/Logo/Logo";
 import ThemeButton from "@/components/Elements/ThemeButton/ThemeButton";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { getToken, setToken } from "@/utils/token";
+import { getToken, setToken, setUserDetail } from "@/utils/token";
 import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
@@ -39,6 +39,7 @@ const LoginPage = () => {
 
         if (data?.token) {
           setToken(data?.token);
+          setUserDetail(data?.userDetails);
           window.location.href = "/admin/home";
         } else {
           throw new Error(`Error logging in.`);
