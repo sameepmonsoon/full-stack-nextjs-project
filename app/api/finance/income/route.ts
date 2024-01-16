@@ -33,9 +33,10 @@ export async function POST(request: any, res: NextResponse) {
 
 export async function GET(request: any) {
   // const userId = request.query.userId;
+  await connect();
   const { searchParams } = new URL(request.url);
   const param = searchParams.get("userId");
   console.log(param);
   const data = await Income.find({ userId: param });
-  return NextResponse.json( data );
+  return NextResponse.json(data);
 }
