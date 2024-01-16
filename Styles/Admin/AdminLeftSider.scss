@@ -4,12 +4,12 @@
   overflow-x: hidden;
   &::-webkit-scrollbar {
     background-color: transparent;
-    width: 5px;
+    width: 4px;
   }
 }
 .adminLeftDrawer:hover {
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 4px;
   }
 
   &::-webkit-scrollbar-thumb {
