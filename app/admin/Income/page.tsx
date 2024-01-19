@@ -36,6 +36,7 @@ import {
 } from "@/Helpers/validateForm";
 import { getUserDetail } from "@/utils/token";
 import { AddIncomeFormValueType } from "@/utils/types";
+import { useToast } from "@/components/ui/use-toast";
 
 const IncomePage = () => {
   const routeHistory = useRouteHistory();
@@ -51,6 +52,7 @@ const IncomePage = () => {
     method: "",
     userId: "",
   };
+  const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [incomeDetail, setIncomeDetail] = useState<any[]>([]);
   const [formValue, setFormValue] =
@@ -68,6 +70,15 @@ const IncomePage = () => {
     });
 
     const data = await res.json();
+
+    if (data.status) {
+      toast({
+        duration: 900,
+        title: data.message,
+        variant: "success",
+      });
+    }
+    console.log(data);
     setIsSubmitting(false);
   }
 
@@ -80,7 +91,10 @@ const IncomePage = () => {
   const handleSelectChange = (e: any) => {
     setFormValue({ ...formValue, ["method"]: e });
   };
-
+  const handleCategoryChange = (e: any) => {
+    setFormValue({ ...formValue, ["category"]: e });
+  };
+  console.log(formValue);
   const MultiValueRemove = (props: MultiValueRemoveProps<any>) => {
     return (
       <components.MultiValueRemove {...props}>
@@ -272,6 +286,7 @@ const IncomePage = () => {
             </CustomSelect>
 
             <Select
+              onChange={handleCategoryChange}
               closeMenuOnSelect={false}
               isClearable={false}
               components={{

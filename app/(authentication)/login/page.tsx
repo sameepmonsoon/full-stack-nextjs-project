@@ -48,7 +48,7 @@ const LoginPage = () => {
         toast({
           duration: 900,
           title: error.message,
-          variant: "destructive",
+          variant: "success",
         });
       } finally {
         setIsSubmitting(false);
