@@ -125,7 +125,7 @@ const IncomePage = () => {
 
   async function getInitialData(userId: string) {
     const response = await fetch(
-      `/api/finance/income?userId=${userId}/?pageNumber=${pageNumber}`,
+      `/api/finance/income?userId=${userId}&pageNumber=${pageNumber}`,
       {
         method: "GET",
         headers: {
@@ -155,7 +155,7 @@ const IncomePage = () => {
       //@ts-ignore
       (item) => item === formValue?.source?.value
     ) ?? "";
-
+  console.log(incomeDetail);
   return (
     <>
       <div className="w-full flex flex-row flex-wrap items-center justify-stretch gap-2">
@@ -231,7 +231,7 @@ const IncomePage = () => {
         ) : (
           <>
             {incomeDetail?.map((item: any, id: number) => {
-              if (id <= 4) {
+              if (incomeDetail.length <= 4) {
                 return (
                   <DetailCard
                     note={item?.note}
@@ -247,6 +247,8 @@ const IncomePage = () => {
                     key={id}
                   />
                 );
+              } else {
+                return null;
               }
             })}
           </>
@@ -478,7 +480,6 @@ const IncomePage = () => {
               className="focus-within:border-black overflow-hidden focus-within:ring-[1px] ring-offset-0 focus-within:ring-black/80 dark:focus-within:ring-gray-200/80  dark:focus-within:border-gray-200  dark:border-gray-600 dark:hover:border-white hover:border-black border-[1px] group rounded-[8px] p-0 pb-0 gap-0 border-gray-300 h-20  w-full flex flex-col justify-end items-startborder-2 relative  group  items-start "
             /> */}
             <div className="flex justify-end items-center w-full">
-              {" "}
               <Button
                 effect={`${isSubmitting ? "none" : "press"}`}
                 asChild={false}

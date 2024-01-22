@@ -40,7 +40,7 @@ export async function GET(request: any) {
     const { searchParams } = new URL(request.url);
     const param = searchParams.get("userId");
     const pageNumber: any = searchParams.get("pageNumber") || 1;
-    const pageSize = 10;
+    const pageSize = 5;
     const skipAmount = (pageNumber - 1) * pageSize;
     console.log(pageNumber, skipAmount, pageSize);
 
