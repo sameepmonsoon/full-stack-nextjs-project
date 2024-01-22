@@ -21,13 +21,16 @@ export async function POST(request: any, res: NextResponse) {
     });
 
     return NextResponse.json(
-      { message: "Income Detail Added !", incomeDetail },
+      { message: "Income Detail Added !", incomeDetail, status: true },
       { status: 200 }
     );
     // });
   } catch (error: any) {
     console.error("Error:", error.message);
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    return NextResponse.json(
+      { error: error.message, status: false },
+      { status: 400 }
+    );
   }
 }
 
