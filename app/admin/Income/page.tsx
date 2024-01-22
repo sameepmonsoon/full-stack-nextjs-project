@@ -19,16 +19,11 @@ import { DialogBox } from "@/components/Elements/DialogBox/DialogBox";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import Select, {
   components,
+  ControlProps,
   MultiValueRemoveProps,
   OptionProps,
 } from "react-select";
-import {
-  CustomSelect,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import {
   validateFormField,
   validateNumberField,
@@ -36,6 +31,12 @@ import {
 } from "@/Helpers/validateForm";
 import { getUserDetail } from "@/utils/token";
 import { AddIncomeFormValueType } from "@/utils/types";
+import { useToast } from "@/components/ui/use-toast";
+import {
+  IncomeCategoryConstant,
+  IncomeSubcategoryConstant,
+  PaymentMethodConstant,
+} from "@/Helpers/Constants/Admin/IncomeConstants";
 
 const IncomePage = () => {
   const routeHistory = useRouteHistory();
@@ -51,8 +52,12 @@ const IncomePage = () => {
     method: "",
     userId: "",
   };
+  const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [incomeDetail, setIncomeDetail] = useState<any[]>([]);
+  const [categoryOptions, setCategoryOptions] = useState<any[]>(
+    IncomeSubcategoryConstant
+  );
   const [formValue, setFormValue] =
     useState<AddIncomeFormValueType>(initialValue);
   async function handleSubmit(e: React.FormEvent<HTMLElement>) {
@@ -68,6 +73,15 @@ const IncomePage = () => {
     });
 
     const data = await res.json();
+
+    if (data.status) {
+      toast({
+        duration: 900,
+        title: data.message,
+        variant: "success",
+      });
+    }
+    console.log(data);
     setIsSubmitting(false);
   }
 
@@ -80,7 +94,13 @@ const IncomePage = () => {
   const handleSelectChange = (e: any) => {
     setFormValue({ ...formValue, ["method"]: e });
   };
-
+  const handleCategoryChange = (e: any) => {
+    setFormValue({ ...formValue, ["category"]: e });
+  };
+  const handleSourceChange = (e: any) => {
+    setFormValue({ ...formValue, ["source"]: e });
+  };
+  console.log(formValue);
   const MultiValueRemove = (props: MultiValueRemoveProps<any>) => {
     return (
       <components.MultiValueRemove {...props}>
@@ -92,6 +112,7 @@ const IncomePage = () => {
   const Option = (props: OptionProps<any>) => {
     return <components.Option {...props} />;
   };
+
   useEffect(() => {
     if (!formValue.userId && userDetail?._id) {
       setFormValue((prevFormValue) => ({
@@ -123,6 +144,10 @@ const IncomePage = () => {
 
     fetchData();
   }, []);
+  // useEffect(() => {
+  //   setCategoryOptions;
+  // }, [formValue.source]);
+  console.log(Object.keys(IncomeSubcategoryConstant));
   return (
     <>
       <div className="w-full h-[60px] rounded-[10px] bg-white dark:bg-darkBg flex justify-between items-center px-5">
@@ -155,7 +180,7 @@ const IncomePage = () => {
         </div>
       </div>
 
-      <div className="w-full flex flex-row flex-wrap items-center justify-stretch gap-2 ">
+      <div className="w-full flex flex-row flex-wrap items-center justify-stretch gap-2">
         {incomeDetail?.map((item: any, id: number) => {
           if (id <= 4) {
             return (
@@ -224,7 +249,7 @@ const IncomePage = () => {
                 onChange={handleChange}
               />
             </div>
-            <CustomInputContainer
+            {/* <CustomInputContainer
               size={"small"}
               font={"medium"}
               type="text"
@@ -237,41 +262,9 @@ const IncomePage = () => {
                 validateTextField(e, 14)
               }
               onChange={handleChange}
-            />
-            <CustomInputContainer
-              size={"small"}
-              font={"medium"}
-              type="text"
-              inputBorder={"none"}
-              containerStyle={"border"}
-              label={"Category"}
-              id="category"
-              required
-              onChange={handleChange}
-            />
-            <CustomInputContainer
-              size={"small"}
-              font={"medium"}
-              type="date"
-              inputBorder={"none"}
-              containerStyle={"border"}
-              label={"Date"}
-              id="date"
-              required
-              onChange={handleChange}
-            />
-            <CustomSelect onValueChange={handleSelectChange} name="method">
-              <SelectTrigger className="px-3 py-4 bg-transparent  text-gray-500 dark:text-gray-400 focus-within:border-black overflow-hidden focus-within:ring-[1px] h-[50px] ring-offset-0 focus-within:ring-black/80 dark:focus-within:ring-gray-200/80 flex  dark:focus-within:border-gray-200 dark:border-gray-600 dark:hover:border-white hover:border-black border-[1px] cursor-pointer group rounded-[8px] gap-0 border-gray-300  w-full  justify-between items-center">
-                <SelectValue placeholder="Payment Method" />
-              </SelectTrigger>
-              <SelectContent className="dark:bg-darkBg dark:text-white">
-                <SelectItem value="cash">Cash</SelectItem>
-                <SelectItem value="bank">Bank</SelectItem>
-                <SelectItem value="cheque">Cheque</SelectItem>
-              </SelectContent>
-            </CustomSelect>
-
+            /> */}
             <Select
+              onChange={handleCategoryChange}
               closeMenuOnSelect={false}
               isClearable={false}
               components={{
@@ -287,6 +280,10 @@ const IncomePage = () => {
                   minHeight: "50px",
                   outline: 0,
                   boxShadow: "none",
+                  cursor: "pointer",
+                  ":hover": {
+                    borderColor: "black",
+                  },
                 }),
                 multiValue: (base) => ({
                   ...base,
@@ -310,21 +307,125 @@ const IncomePage = () => {
                   },
                 }),
               }}
-              options={[
-                { value: "chocolate", label: "Chocolate" },
-                { value: "strawberry", label: "Strawberry" },
-                { value: "vanilla", label: "Vanilla" },
-                { value: "Mango", label: "mango" },
-                { value: "Mangoose", label: "mangoose" },
-                { value: "MangoOne", label: "mangoOne" },
-                { value: "MangoTango", label: "mangoTango" },
-                { value: "Apple", label: "apple" },
-                { value: "Choco", label: "choco" },
-              ]}
+              options={IncomeCategoryConstant}
               isMulti
               name="colors"
-              className="basic-multi-select"
+              className="basic-multi-select "
               classNamePrefix="select"
+              placeholder="Source"
+            />
+            <CustomInputContainer
+              size={"small"}
+              font={"medium"}
+              type="date"
+              inputBorder={"none"}
+              containerStyle={"border"}
+              label={"Date"}
+              id="date"
+              required
+              onChange={handleChange}
+            />
+            <Select
+              onChange={handleSelectChange}
+              closeMenuOnSelect={true}
+              isClearable={false}
+              components={{
+                MultiValueRemove,
+                Option,
+              }}
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  borderColor: state.isFocused ? "black" : "rgb(211, 211, 211)",
+                  borderRadius: "7px",
+                  zIndex: 40,
+                  minHeight: "50px",
+                  outline: 0,
+                  boxShadow: "none",
+                  cursor: "pointer",
+                  ":hover": {
+                    borderColor: "black",
+                  },
+                }),
+                singleValue: (base) => ({
+                  ...base,
+                  overflow: "hidden",
+                  paddingY: "0px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                }),
+                option: (base, state) => ({
+                  ...base,
+                  marginTop: "4px",
+                  gap: "2px",
+                  display: "flex",
+                  alignItems: "start",
+                  justifyContent: "Start",
+                  flexDirection: "column",
+                  backgroundColor: state.isSelected
+                    ? "rgb(221, 241, 251)"
+                    : "white",
+                  color: "black",
+                  ":hover": { backgroundColor: "rgb(221, 241, 251)" },
+                }),
+              }}
+              options={PaymentMethodConstant}
+              name="colors"
+              className="basic-multi-select "
+              classNamePrefix="select"
+              placeholder="Payment Method"
+            />
+
+            <Select
+              onChange={handleCategoryChange}
+              closeMenuOnSelect={false}
+              isClearable={false}
+              components={{
+                MultiValueRemove,
+                Option,
+              }}
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  borderColor: state.isFocused ? "black" : "rgb(211, 211, 211)",
+                  borderRadius: "7px",
+                  zIndex: 40,
+                  minHeight: "50px",
+                  outline: 0,
+                  boxShadow: "none",
+                  cursor: "pointer",
+                  ":hover": {
+                    borderColor: "black",
+                  },
+                }),
+                multiValue: (base) => ({
+                  ...base,
+                  borderRadius: "20px",
+                  zIndex: 40,
+                  overflow: "hidden",
+                  paddingY: "0px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                }),
+                multiValueLabel: (styles, { data }) => ({
+                  ...styles,
+                  color: "black",
+                }),
+                multiValueRemove: (styles, { data }) => ({
+                  ...styles,
+                  color: "grey",
+                  ":hover": {
+                    backgroundColor: "none",
+                    color: "black",
+                  },
+                }),
+              }}
+              options={IncomeCategoryConstant}
+              isMulti
+              name="colors"
+              className="basic-multi-select "
+              classNamePrefix="select"
+              placeholder="Category"
             />
             <CustomInputContainer
               size={"small"}

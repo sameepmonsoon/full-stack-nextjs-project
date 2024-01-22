@@ -1,11 +1,15 @@
 import mongoose from "mongoose";
 
 const { Document, Schema } = mongoose;
+interface Category {
+  value: string;
+  label: string;
+}
 interface incomeDoc extends Document {
   userId: string;
   title: string;
   amount: number;
-  category: string;
+  category: Category[];
   source: string;
   method: "cash" | "cheque" | "bank";
   note: string;
@@ -30,8 +34,14 @@ const incomeSchema = new Schema<incomeDoc>(
       required: true,
     },
     category: {
-      type: String,
+      type: [
+        {
+          value: String,
+          label: String,
+        },
+      ],
       required: true,
+      default: [],
     },
     note: {
       type: String,
