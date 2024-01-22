@@ -11,7 +11,7 @@ interface incomeDoc extends Document {
   amount: number;
   category: Category[];
   source: Category[];
-  method: "cash" | "cheque" | "bank";
+  method: Category[];
   note: string;
   date: Date;
 }
@@ -55,10 +55,15 @@ const incomeSchema = new Schema<incomeDoc>(
     },
 
     method: {
-      type: String,
+      type: [
+        {
+          value: String,
+          label: String,
+        },
+      ],
       required: true,
-      enum: ["cash", "cheque", "bank"],
-      default: "cash",
+
+      default: [],
     },
     date: {
       type: Date,

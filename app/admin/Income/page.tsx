@@ -61,6 +61,8 @@ const IncomePage = () => {
   const [isFetching, setIsFetching] = useState<boolean>(true);
   const [formValue, setFormValue] =
     useState<AddIncomeFormValueType>(initialValue);
+  const [pageNumber, setPageNumber] = useState(1);
+
   async function handleSubmit(e: React.FormEvent<HTMLElement>) {
     e.preventDefault();
     setIsSubmitting(true);
@@ -122,13 +124,16 @@ const IncomePage = () => {
   }, [userDetail, formValue.userId]);
 
   async function getInitialData(userId: string) {
-    const response = await fetch(`/api/finance/income?userId=${userId}`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `/api/finance/income?userId=${userId}/?pageNumber=${pageNumber}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
     const data = await response.json();
     return data;
   }
@@ -143,7 +148,7 @@ const IncomePage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [pageNumber, userDetail._id]);
 
   const currentSubCat: any =
     Object.keys(IncomeSubcategoryConstant).find(
@@ -184,6 +189,37 @@ const IncomePage = () => {
         </div>
       </div>
       <div className="w-full flex flex-row flex-wrap items-center justify-stretch gap-2">
+        {isFetching ? (
+          <div className="flex justify-evenly flex-1 flex-nowrap gap-2">
+            <SkeletonDetailCard />
+            <SkeletonDetailCard />
+            <SkeletonDetailCard />
+            <SkeletonDetailCard />
+            <SkeletonDetailCard />
+          </div>
+        ) : (
+          <>
+            {incomeDetail?.map((item: any, id: number) => {
+              if (id <= 4) {
+                return (
+                  <DetailCard
+                    note={item?.note}
+                    type="row"
+                    image={userImage}
+                    title={item.title}
+                    detail={
+                      <span className="flex justify-start items-center">
+                        <TbCurrencyRupeeNepalese />
+                        {item.amount}
+                      </span>
+                    }
+                    key={id}
+                  />
+                );
+              }
+            })}
+          </>
+        )}
         {isFetching ? (
           <div className="flex justify-evenly flex-1 flex-nowrap gap-2">
             <SkeletonDetailCard />
