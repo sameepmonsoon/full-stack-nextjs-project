@@ -231,6 +231,37 @@ const IncomePage = () => {
         ) : (
           <>
             {incomeDetail?.map((item: any, id: number) => {
+              if (id <= 4) {
+                return (
+                  <DetailCard
+                    note={item?.note}
+                    type="row"
+                    image={userImage}
+                    title={item.title}
+                    detail={
+                      <span className="flex justify-start items-center">
+                        <TbCurrencyRupeeNepalese />
+                        {item.amount}
+                      </span>
+                    }
+                    key={id}
+                  />
+                );
+              }
+            })}
+          </>
+        )}
+        {isFetching ? (
+          <div className="flex justify-evenly flex-1 flex-nowrap gap-2">
+            <SkeletonDetailCard />
+            <SkeletonDetailCard />
+            <SkeletonDetailCard />
+            <SkeletonDetailCard />
+            <SkeletonDetailCard />
+          </div>
+        ) : (
+          <>
+            {incomeDetail?.map((item: any, id: number) => {
               if (incomeDetail.length <= 4) {
                 return (
                   <DetailCard
