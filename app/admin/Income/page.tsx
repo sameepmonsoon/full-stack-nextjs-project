@@ -38,6 +38,8 @@ import {
   PaymentMethodConstant,
 } from "@/Helpers/Constants/Admin/IncomeConstants";
 import BreadCrumbNav from "@/components/Elements/BreadCrumbs/BreadCrumbNav/BreadCrumbNav";
+import SkeletonCard from "@/components/Elements/Skeleton/SkeletonCard/SkeletonCard";
+import SkeletonDetailCard from "@/components/Elements/Skeleton/SkeletonDetailCard/SkeletonDetailCard";
 
 const IncomePage = () => {
   const routeHistory = useRouteHistory();
@@ -56,9 +58,7 @@ const IncomePage = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [incomeDetail, setIncomeDetail] = useState<any[]>([]);
-  const [categoryOptions, setCategoryOptions] = useState<any[]>(
-    IncomeSubcategoryConstant
-  );
+  const [isFetching, setIsFetching] = useState<boolean>(true);
   const [formValue, setFormValue] =
     useState<AddIncomeFormValueType>(initialValue);
   async function handleSubmit(e: React.FormEvent<HTMLElement>) {
@@ -82,7 +82,6 @@ const IncomePage = () => {
         variant: "success",
       });
     }
-    console.log(data);
     setIsSubmitting(false);
   }
 
@@ -101,7 +100,6 @@ const IncomePage = () => {
   const handleSourceChange = (e: any) => {
     setFormValue({ ...formValue, ["source"]: e });
   };
-  console.log(formValue);
   const MultiValueRemove = (props: MultiValueRemoveProps<any>) => {
     return (
       <components.MultiValueRemove {...props}>
@@ -140,15 +138,19 @@ const IncomePage = () => {
       if (userDetail._id) {
         const res = await getInitialData(userDetail._id);
         setIncomeDetail(res);
+        setIsFetching(false);
       }
     };
 
     fetchData();
   }, []);
-  // useEffect(() => {
-  //   setCategoryOptions;
-  // }, [formValue.source]);
-  console.log(Object.keys(IncomeSubcategoryConstant));
+
+  const currentSubCat: any =
+    Object.keys(IncomeSubcategoryConstant).find(
+      //@ts-ignore
+      (item) => item === formValue?.source?.value
+    ) ?? "";
+
   return (
     <>
       <div className="w-full flex flex-row flex-wrap items-center justify-stretch gap-2">
@@ -182,26 +184,37 @@ const IncomePage = () => {
         </div>
       </div>
       <div className="w-full flex flex-row flex-wrap items-center justify-stretch gap-2">
-        {incomeDetail?.map((item: any, id: number) => {
-          if (id <= 4) {
-            return (
-              <DetailCard
-                note={item?.note}
-                type="row"
-                image={userImage}
-                title={item.title}
-                detail={
-                  <span className="flex justify-start items-center">
-                    <TbCurrencyRupeeNepalese />
-                    {item.amount}
-                  </span>
-                }
-                key={id}
-              />
-            );
-          }
-        })}
-
+        {isFetching ? (
+          <div className="flex justify-evenly flex-1 flex-nowrap gap-2">
+            <SkeletonDetailCard />
+            <SkeletonDetailCard />
+            <SkeletonDetailCard />
+            <SkeletonDetailCard />
+            <SkeletonDetailCard />
+          </div>
+        ) : (
+          <>
+            {incomeDetail?.map((item: any, id: number) => {
+              if (id <= 4) {
+                return (
+                  <DetailCard
+                    note={item?.note}
+                    type="row"
+                    image={userImage}
+                    title={item.title}
+                    detail={
+                      <span className="flex justify-start items-center">
+                        <TbCurrencyRupeeNepalese />
+                        {item.amount}
+                      </span>
+                    }
+                    key={id}
+                  />
+                );
+              }
+            })}
+          </>
+        )}
         <DialogBox
           dialogDescription="Add Income Details"
           dialogTitle="Income"
@@ -250,23 +263,21 @@ const IncomePage = () => {
                 onChange={handleChange}
               />
             </div>
-            {/* <CustomInputContainer
+
+            <CustomInputContainer
               size={"small"}
               font={"medium"}
-              type="text"
+              type="date"
               inputBorder={"none"}
               containerStyle={"border"}
-              label={"Source"}
-              id="source"
+              label={"Date"}
+              id="date"
               required
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
-                validateTextField(e, 14)
-              }
               onChange={handleChange}
-            /> */}
+            />
             <Select
-              onChange={handleCategoryChange}
-              closeMenuOnSelect={false}
+              onChange={handleSourceChange}
+              closeMenuOnSelect={true}
               isClearable={false}
               components={{
                 MultiValueRemove,
@@ -286,45 +297,83 @@ const IncomePage = () => {
                     borderColor: "black",
                   },
                 }),
-                multiValue: (base) => ({
+                singleValue: (base) => ({
                   ...base,
-                  borderRadius: "20px",
-                  zIndex: 40,
                   overflow: "hidden",
                   paddingY: "0px",
                   fontSize: "14px",
                   fontWeight: "600",
                 }),
-                multiValueLabel: (styles, { data }) => ({
-                  ...styles,
+                option: (base, state) => ({
+                  ...base,
+                  marginTop: "4px",
+                  gap: "2px",
+                  display: "flex",
+                  alignItems: "start",
+                  justifyContent: "Start",
+                  flexDirection: "column",
+                  backgroundColor: state.isSelected
+                    ? "rgb(221, 241, 251)"
+                    : "white",
                   color: "black",
-                }),
-                multiValueRemove: (styles, { data }) => ({
-                  ...styles,
-                  color: "grey",
-                  ":hover": {
-                    backgroundColor: "none",
-                    color: "black",
-                  },
+                  ":hover": { backgroundColor: "rgb(221, 241, 251)" },
                 }),
               }}
               options={IncomeCategoryConstant}
-              isMulti
               name="colors"
               className="basic-multi-select "
               classNamePrefix="select"
               placeholder="Source"
             />
-            <CustomInputContainer
-              size={"small"}
-              font={"medium"}
-              type="date"
-              inputBorder={"none"}
-              containerStyle={"border"}
-              label={"Date"}
-              id="date"
-              required
-              onChange={handleChange}
+            <Select
+              onChange={handleCategoryChange}
+              closeMenuOnSelect={true}
+              isClearable={false}
+              components={{
+                MultiValueRemove,
+                Option,
+              }}
+              styles={{
+                control: (baseStyles, state) => ({
+                  ...baseStyles,
+                  borderColor: state.isFocused ? "black" : "rgb(211, 211, 211)",
+                  borderRadius: "7px",
+                  zIndex: 40,
+                  minHeight: "50px",
+                  outline: 0,
+                  boxShadow: "none",
+                  cursor: "pointer",
+                  ":hover": {
+                    borderColor: "black",
+                  },
+                }),
+                singleValue: (base) => ({
+                  ...base,
+                  overflow: "hidden",
+                  paddingY: "0px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                }),
+                option: (base, state) => ({
+                  ...base,
+                  marginTop: "4px",
+                  gap: "2px",
+                  display: "flex",
+                  alignItems: "start",
+                  justifyContent: "Start",
+                  flexDirection: "column",
+                  backgroundColor: state.isSelected
+                    ? "rgb(221, 241, 251)"
+                    : "white",
+                  color: "black",
+                  ":hover": { backgroundColor: "rgb(221, 241, 251)" },
+                }),
+              }}
+              options={IncomeSubcategoryConstant[currentSubCat]}
+              name="colors"
+              className="basic-multi-select "
+              classNamePrefix="select"
+              placeholder="Category"
             />
             <Select
               onChange={handleSelectChange}
@@ -376,58 +425,6 @@ const IncomePage = () => {
               classNamePrefix="select"
               placeholder="Payment Method"
             />
-
-            <Select
-              onChange={handleCategoryChange}
-              closeMenuOnSelect={false}
-              isClearable={false}
-              components={{
-                MultiValueRemove,
-                Option,
-              }}
-              styles={{
-                control: (baseStyles, state) => ({
-                  ...baseStyles,
-                  borderColor: state.isFocused ? "black" : "rgb(211, 211, 211)",
-                  borderRadius: "7px",
-                  zIndex: 40,
-                  minHeight: "50px",
-                  outline: 0,
-                  boxShadow: "none",
-                  cursor: "pointer",
-                  ":hover": {
-                    borderColor: "black",
-                  },
-                }),
-                multiValue: (base) => ({
-                  ...base,
-                  borderRadius: "20px",
-                  zIndex: 40,
-                  overflow: "hidden",
-                  paddingY: "0px",
-                  fontSize: "14px",
-                  fontWeight: "600",
-                }),
-                multiValueLabel: (styles, { data }) => ({
-                  ...styles,
-                  color: "black",
-                }),
-                multiValueRemove: (styles, { data }) => ({
-                  ...styles,
-                  color: "grey",
-                  ":hover": {
-                    backgroundColor: "none",
-                    color: "black",
-                  },
-                }),
-              }}
-              options={IncomeCategoryConstant}
-              isMulti
-              name="colors"
-              className="basic-multi-select "
-              classNamePrefix="select"
-              placeholder="Category"
-            />
             <CustomInputContainer
               size={"small"}
               font={"default"}
@@ -444,7 +441,6 @@ const IncomePage = () => {
               cols={10}
               className="focus-within:border-black overflow-hidden focus-within:ring-[1px] ring-offset-0 focus-within:ring-black/80 dark:focus-within:ring-gray-200/80  dark:focus-within:border-gray-200  dark:border-gray-600 dark:hover:border-white hover:border-black border-[1px] group rounded-[8px] p-0 pb-0 gap-0 border-gray-300 h-20  w-full flex flex-col justify-end items-startborder-2 relative  group  items-start "
             /> */}
-
             <div className="flex justify-end items-center w-full">
               {" "}
               <Button
@@ -466,23 +462,35 @@ const IncomePage = () => {
       <div className="flex flex-1 gap-5 justify-start items-start flex-wrap">
         <ListContainer title={"History"} showViewAll={true}>
           <div className="flex flex-col gap-1 w-full h-full">
-            {incomeDetail?.map((item: any, id: number) => {
-              return (
-                <DetailCard
-                  note={item?.note}
-                  type="row"
-                  image={userImage}
-                  title={item.title}
-                  detail={
-                    <span className="flex justify-start items-center">
-                      <TbCurrencyRupeeNepalese />
-                      {item.amount}
-                    </span>
-                  }
-                  key={id}
-                />
-              );
-            })}
+            {isFetching ? (
+              <>
+                <SkeletonDetailCard />
+                <SkeletonDetailCard />
+                <SkeletonDetailCard />
+                <SkeletonDetailCard />
+                <SkeletonDetailCard />
+              </>
+            ) : (
+              <>
+                {incomeDetail?.map((item: any, id: number) => {
+                  return (
+                    <DetailCard
+                      note={item?.note}
+                      type="row"
+                      image={userImage}
+                      title={item.title}
+                      detail={
+                        <span className="flex justify-start items-center">
+                          <TbCurrencyRupeeNepalese />
+                          {item.amount}
+                        </span>
+                      }
+                      key={id}
+                    />
+                  );
+                })}
+              </>
+            )}
           </div>
         </ListContainer>
         {/* <ListContainer title={"History"} showViewAll={true}>
