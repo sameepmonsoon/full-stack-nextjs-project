@@ -37,6 +37,7 @@ import {
   IncomeSubcategoryConstant,
   PaymentMethodConstant,
 } from "@/Helpers/Constants/Admin/IncomeConstants";
+import BreadCrumbNav from "@/components/Elements/BreadCrumbs/BreadCrumbNav/BreadCrumbNav";
 
 const IncomePage = () => {
   const routeHistory = useRouteHistory();
@@ -150,18 +151,19 @@ const IncomePage = () => {
   console.log(Object.keys(IncomeSubcategoryConstant));
   return (
     <>
-      <div className="w-full h-[60px] rounded-[10px] bg-white dark:bg-darkBg flex justify-between items-center px-5">
-        <span className="font-medium capitalize text-xl tracking-tight">
-          Income
-        </span>
-        <BreadCrumbs
-          gap={20}
-          separatorType={2}
-          routeHistory={routeHistory}
-          icon={GiWallet}
+      <div className="w-full flex flex-row flex-wrap items-center justify-stretch gap-2">
+        <BreadCrumbNav
+          title="income"
+          crumb={
+            <BreadCrumbs
+              gap={20}
+              separatorType={2}
+              routeHistory={routeHistory}
+              icon={GiWallet}
+            />
+          }
         />
       </div>
-
       <div className="w-full flex flex-wrap gap-5">
         <CardLayout
           color="safe"
@@ -179,7 +181,6 @@ const IncomePage = () => {
           <BalanceCard />
         </div>
       </div>
-
       <div className="w-full flex flex-row flex-wrap items-center justify-stretch gap-2">
         {incomeDetail?.map((item: any, id: number) => {
           if (id <= 4) {
