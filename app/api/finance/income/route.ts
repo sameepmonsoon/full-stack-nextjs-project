@@ -33,13 +33,29 @@ export async function POST(request: any, res: NextResponse) {
     );
   }
 }
-
 export async function GET(request: any) {
-  // const userId = request.query.userId;
-  await connect();
-  const { searchParams } = new URL(request.url);
-  const param = searchParams.get("userId");
-  console.log(param);
-  const data = await Income.find({ userId: param });
-  return NextResponse.json(data);
+  try {
+    await connect();
+
+    const { searchParams } = new URL(request.url);
+    const param = searchParams.get("userId");
+    const pageNumber: any = searchParams.get("pageNumber") || 1;
+    const pageSize = 10;
+    const skipAmount = (pageNumber - 1) * pageSize;
+    console.log(pageNumber, skipAmount, pageSize);
+
+    const data = await Income.find({ userId: param })
+      .skip(skipAmount)
+      .limit(pageSize);
+
+    console.log("Fetched data:", data);
+
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return NextResponse.json({
+      status: 500,
+      body: "Internal Server Error",
+    });
+  }
 }
