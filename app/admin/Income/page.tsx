@@ -53,12 +53,23 @@ const IncomePage = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [incomeDetail, setIncomeDetail] = useState<any[]>([]);
+  const [totalPosts, setTotalPosts] = useState<number>(0);
   const [isFetching, setIsFetching] = useState<boolean>(true);
   const [formValue, setFormValue] =
     useState<AddIncomeFormValueType>(initialValue);
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize] = useState(10);
+  const [pageSize] = useState(5);
   const theme = localStorage.getItem("theme");
+
+  const fetchData = async () => {
+    if (userDetail._id) {
+      const res = await getInitialData(userDetail._id);
+      setIncomeDetail(res.data);
+      setTotalPosts(res.total);
+      setIsFetching(false);
+    }
+  };
+
   async function handleSubmit(e: React.FormEvent<HTMLElement>) {
     e.preventDefault();
     setIsSubmitting(true);
@@ -79,6 +90,7 @@ const IncomePage = () => {
         title: data.message,
         variant: "success",
       });
+      fetchData();
       setFormValue(initialValue);
     }
     setIsSubmitting(false);
@@ -137,14 +149,6 @@ const IncomePage = () => {
   }
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (userDetail._id) {
-        const res = await getInitialData(userDetail._id);
-        setIncomeDetail(res);
-        setIsFetching(false);
-      }
-    };
-
     fetchData();
   }, [pageNumber, userDetail._id]);
 
@@ -188,7 +192,7 @@ const IncomePage = () => {
       </div>
       <div className="w-full flex flex-row flex-wrap items-center justify-stretch gap-2">
         {isFetching ? (
-          <div className="flex justify-evenly flex-1 flex-nowrap gap-2">
+          <div className="flex justify-evenly flex-1 flex-wrap gap-2">
             <SkeletonDetailCard />
             <SkeletonDetailCard />
             <SkeletonDetailCard />
@@ -528,10 +532,10 @@ const IncomePage = () => {
           title={"History"}
           footer={
             <PaginationBar
-              siblingCount={10}
+              siblingCount={5}
               currentPage={pageNumber}
-              totalCount={incomeDetail?.length ?? 10}
-              pageSize={pageSize}
+              totalCount={totalPosts}
+              pageSize={5}
               handlePagination={handlePageNumberChange}
             />
           }
@@ -548,25 +552,21 @@ const IncomePage = () => {
             ) : (
               <>
                 {incomeDetail?.map((item: any, id: number) => {
-                  if (id <= 4) {
-                    return (
-                      <DetailCard
-                        note={item?.note}
-                        type="row"
-                        image={userImage}
-                        title={item.title}
-                        detail={
-                          <span className="flex justify-start items-center">
-                            <TbCurrencyRupeeNepalese />
-                            {item.amount}
-                          </span>
-                        }
-                        key={id}
-                      />
-                    );
-                  } else {
-                    return null;
-                  }
+                  return (
+                    <DetailCard
+                      note={item?.note}
+                      type="row"
+                      image={userImage}
+                      title={item.title}
+                      detail={
+                        <span className="flex justify-start items-center">
+                          <TbCurrencyRupeeNepalese />
+                          {item.amount}
+                        </span>
+                      }
+                      key={id}
+                    />
+                  );
                 })}
               </>
             )}
