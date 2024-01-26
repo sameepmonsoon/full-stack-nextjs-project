@@ -104,6 +104,9 @@ const IncomePage = () => {
     setFormValue({ ...formValue, [name]: value });
   };
 
+  const handleDateChange = (date: any) => {
+    setFormValue({ ...formValue, ["date"]: date });
+  };
   const handleSelectChange = (e: any) => {
     setFormValue({ ...formValue, ["method"]: e });
   };
@@ -277,9 +280,9 @@ const IncomePage = () => {
             </div>
 
             <CustomDatePicker
-              value={new Date()}
+              value={formValue.date}
               disabled={false}
-              onChange={() => {}}
+              onChange={handleChange}
               mode="single"
             />
             <Select

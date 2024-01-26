@@ -23,6 +23,7 @@ export function CustomDatePicker({
   onChange: () => any;
   mode: "default" | "single" | "range" | "multiple" | undefined | any;
 }) {
+  const date: any = new Date(value);
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -31,7 +32,11 @@ export function CustomDatePicker({
           variant={"trigger"}
           className={cn("pl-3 text-left font-normal")}
         >
-          <span className="text-gray-400">Pick a date</span>
+          {value ? (
+            <span className="text-gray-400">Date</span>
+          ) : (
+            <span className="text-gray-400">Pick a date</span>
+          )}
 
           <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
         </Button>
