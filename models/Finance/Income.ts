@@ -1,11 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
-const { Document, Schema } = mongoose;
 interface Category {
   value: string;
   label: string;
 }
-interface incomeDoc extends Document {
+
+interface IncomeDoc extends Document {
   userId: string;
   title: string;
   amount: number;
@@ -15,7 +15,16 @@ interface incomeDoc extends Document {
   note: string;
   date: Date;
 }
-const incomeSchema = new Schema<incomeDoc>(
+
+const categorySchema = new Schema(
+  {
+    value: String,
+    label: String,
+  },
+  { _id: false }
+);
+
+const incomeSchema = new Schema<IncomeDoc>(
   {
     userId: {
       type: String,
@@ -30,22 +39,12 @@ const incomeSchema = new Schema<incomeDoc>(
       required: true,
     },
     source: {
-      type: [
-        {
-          value: String,
-          label: String,
-        },
-      ],
+      type: [categorySchema],
       default: [],
       required: true,
     },
     category: {
-      type: [
-        {
-          value: String,
-          label: String,
-        },
-      ],
+      type: [categorySchema],
       required: true,
       default: [],
     },
@@ -53,16 +52,9 @@ const incomeSchema = new Schema<incomeDoc>(
       type: String,
       required: false,
     },
-
     method: {
-      type: [
-        {
-          value: String,
-          label: String,
-        },
-      ],
+      type: [categorySchema],
       required: true,
-
       default: [],
     },
     date: {
@@ -72,4 +64,5 @@ const incomeSchema = new Schema<incomeDoc>(
   },
   { timestamps: true }
 );
+
 export default mongoose.models.Income || mongoose.model("Income", incomeSchema);

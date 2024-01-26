@@ -27,7 +27,7 @@ const DetailCard = ({
         className={`${
           type?.toLowerCase() === "column"
             ? "flex-col items-start justify-center"
-            : " flex-row w-full items-center justify-between pr-3"
+            : " flex-row relative w-full items-center justify-between pr-3"
         } flex flex-1   overflow-hidden h-full gap-0 pt-1`}
       >
         <div className=" flex justify-center items-start flex-col gap-0">
@@ -44,17 +44,17 @@ const DetailCard = ({
             className={`${
               type?.toLowerCase() === "column"
                 ? "hidden"
-                : " text-black/40 dark:text-accent/50"
+                : " text-black/40 dark:text-accent/50 overflow-hidden pr-10"
             } relative whitespace-nowrap text-ellipsis -top-[2px] font-medium text-sm `}
           >
             {note}
           </p>
         </div>
         <span
-          className={`relative -top-[2px] overflow-hidden whitespace-nowrap text-ellipsis  ${
+          className={`overflow-hidden whitespace-nowrap text-ellipsis  ${
             type?.toLowerCase() === "column"
-              ? "font-medium text-sm"
-              : "text-md font-bold"
+              ? "font-medium text-sm relative -top-[2px]"
+              : "text-md font-bold absolute top-[7px]  right-0"
           }`}
         >
           {detail}

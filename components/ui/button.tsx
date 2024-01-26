@@ -22,6 +22,8 @@ const buttonVariants = cva(
         icon: " flex justify-start gap-2  dark:hover:bg-gray-600/40 dark:text-gray-300 capitalize rounded-[10px] pl-5 bg-transparent hover:bg-accent text-black",
         selected:
           " flex justify-start gap-2 dark:text-gray-300 capitalize rounded-[10px] pl-5 bg-transparent dark:bg-gray-600/40 text-black bg-accent",
+        trigger:
+          " border-gray-300 flex dark:text-white border-gray-400 hover:border-black dark:focus-visible:ring-gray-400 dark:border-gray-400 bg-transparent dark:placeholder:text-red-100 h-full w-full dark:focus:border-darkBorderColor z-1 dark:text-darkText rounded-md border border-input  px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm transition-border ease-linear duration-100  file:font-medium placeholder:text-muted-foreground focus-visible:outline-none outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 ",
       },
       size: {
         default: "h-10 px-4 py-2",
@@ -30,6 +32,9 @@ const buttonVariants = cva(
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
         iconWithText: "h-[2.5rem] w-full",
+
+        medium: "h-20 ",
+        small: "h-[50px] ",
       },
       effect: {
         none: "",

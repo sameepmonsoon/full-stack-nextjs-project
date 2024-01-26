@@ -120,7 +120,9 @@ const CustomInputContainer = forwardRef(function CustomInputContainer(
     onBlur,
     onFocus,
     onInput,
+    value,
   }: {
+    value?: any;
     id: string;
     errorMessage?: string;
     type: string;
@@ -171,6 +173,7 @@ const CustomInputContainer = forwardRef(function CustomInputContainer(
       >
         <div className="relative w-full h-full flex justify-start items-center">
           <Input
+            value={value}
             onInput={onInput}
             onFocus={onFocus}
             onBlur={onBlur}
