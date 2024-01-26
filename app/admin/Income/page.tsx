@@ -3,7 +3,6 @@ import useRouteHistory from "@/Hooks/useRouteHistory";
 import BreadCrumbs from "@/components/Elements/BreadCrumbs/BreadCrumbs";
 import BalanceCard from "@/components/Elements/Cards/BalanceCard/BalanceCard";
 import CardLayout from "@/components/Elements/Cards/CardLayout/CardLayout";
-import Image from "next/image";
 import "@/Styles/Admin/income/income.scss";
 import { RxCross2 } from "react-icons/rx";
 import React, { useEffect, useState } from "react";
@@ -19,16 +18,11 @@ import { DialogBox } from "@/components/Elements/DialogBox/DialogBox";
 import CustomInputContainer from "@/components/Elements/CutomInputContainer/CustomInputContainer";
 import Select, {
   components,
-  ControlProps,
   MultiValueRemoveProps,
   OptionProps,
 } from "react-select";
 
-import {
-  validateFormField,
-  validateNumberField,
-  validateTextField,
-} from "@/Helpers/validateForm";
+import { validateNumberField, validateTextField } from "@/Helpers/validateForm";
 import { getUserDetail } from "@/utils/token";
 import { AddIncomeFormValueType } from "@/utils/types";
 import { useToast } from "@/components/ui/use-toast";
@@ -38,8 +32,9 @@ import {
   PaymentMethodConstant,
 } from "@/Helpers/Constants/Admin/IncomeConstants";
 import BreadCrumbNav from "@/components/Elements/BreadCrumbs/BreadCrumbNav/BreadCrumbNav";
-import SkeletonCard from "@/components/Elements/Skeleton/SkeletonCard/SkeletonCard";
 import SkeletonDetailCard from "@/components/Elements/Skeleton/SkeletonDetailCard/SkeletonDetailCard";
+import { CustomDatePicker } from "@/components/Elements/CustomDatePicker/CustomDatePicker";
+import { PaginationBar } from "@/components/Elements/Pagination/PaginationBar";
 
 const IncomePage = () => {
   const routeHistory = useRouteHistory();
@@ -62,7 +57,8 @@ const IncomePage = () => {
   const [formValue, setFormValue] =
     useState<AddIncomeFormValueType>(initialValue);
   const [pageNumber, setPageNumber] = useState(1);
-
+  const [pageSize] = useState(10);
+  const theme = localStorage.getItem("theme");
   async function handleSubmit(e: React.FormEvent<HTMLElement>) {
     e.preventDefault();
     setIsSubmitting(true);
@@ -83,10 +79,13 @@ const IncomePage = () => {
         title: data.message,
         variant: "success",
       });
+      setFormValue(initialValue);
     }
     setIsSubmitting(false);
   }
-
+  const handlePageNumberChange = (pageNumber: any) => {
+    setPageNumber(pageNumber);
+  };
   const handleChange = (e: React.ChangeEvent<any>) => {
     const { value, name } = e.target;
 
@@ -100,7 +99,7 @@ const IncomePage = () => {
     setFormValue({ ...formValue, ["category"]: e });
   };
   const handleSourceChange = (e: any) => {
-    setFormValue({ ...formValue, ["source"]: e });
+    setFormValue({ ...formValue, ["source"]: e, ["category"]: "" });
   };
   const MultiValueRemove = (props: MultiValueRemoveProps<any>) => {
     return (
@@ -109,7 +108,6 @@ const IncomePage = () => {
       </components.MultiValueRemove>
     );
   };
-
   const Option = (props: OptionProps<any>) => {
     return <components.Option {...props} />;
   };
@@ -125,7 +123,7 @@ const IncomePage = () => {
 
   async function getInitialData(userId: string) {
     const response = await fetch(
-      `/api/finance/income?userId=${userId}/?pageNumber=${pageNumber}`,
+      `/api/finance/income?userId=${userId}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
       {
         method: "GET",
         headers: {
@@ -216,37 +214,8 @@ const IncomePage = () => {
                     key={id}
                   />
                 );
-              }
-            })}
-          </>
-        )}
-        {isFetching ? (
-          <div className="flex justify-evenly flex-1 flex-nowrap gap-2">
-            <SkeletonDetailCard />
-            <SkeletonDetailCard />
-            <SkeletonDetailCard />
-            <SkeletonDetailCard />
-            <SkeletonDetailCard />
-          </div>
-        ) : (
-          <>
-            {incomeDetail?.map((item: any, id: number) => {
-              if (id <= 4) {
-                return (
-                  <DetailCard
-                    note={item?.note}
-                    type="row"
-                    image={userImage}
-                    title={item.title}
-                    detail={
-                      <span className="flex justify-start items-center">
-                        <TbCurrencyRupeeNepalese />
-                        {item.amount}
-                      </span>
-                    }
-                    key={id}
-                  />
-                );
+              } else {
+                return null;
               }
             })}
           </>
@@ -256,6 +225,7 @@ const IncomePage = () => {
           dialogTitle="Income"
           trigger={
             <Button
+              onClick={() => setFormValue(initialValue)}
               size={"lg"}
               variant={"outline"}
               className="w-[3rem] h-[3rem] hover:bg-white text-gray-400 outline-gray-400 dark:outline-gray-100/30 dark:hover:text-gray-100/30 border-dashed outline-dashed outline-[1px] flex justify-center items-center p-1 rounded-full"
@@ -283,8 +253,10 @@ const IncomePage = () => {
                   validateTextField(e, 14)
                 }
                 onChange={handleChange}
+                value={formValue.title}
               />
               <CustomInputContainer
+                value={formValue.amount}
                 size={"small"}
                 font={"medium"}
                 type="text"
@@ -300,18 +272,14 @@ const IncomePage = () => {
               />
             </div>
 
-            <CustomInputContainer
-              size={"small"}
-              font={"medium"}
-              type="date"
-              inputBorder={"none"}
-              containerStyle={"border"}
-              label={"Date"}
-              id="date"
-              required
-              onChange={handleChange}
+            <CustomDatePicker
+              value={new Date()}
+              disabled={false}
+              onChange={() => {}}
+              mode="single"
             />
             <Select
+              value={formValue.source}
               onChange={handleSourceChange}
               closeMenuOnSelect={true}
               isClearable={false}
@@ -322,15 +290,22 @@ const IncomePage = () => {
               styles={{
                 control: (baseStyles, state) => ({
                   ...baseStyles,
-                  borderColor: state.isFocused ? "black" : "rgb(211, 211, 211)",
+                  borderColor:
+                    theme !== "L"
+                      ? "rgb(211, 211, 211)"
+                      : state.isFocused
+                      ? "black"
+                      : "rgb(211, 211, 211)",
                   borderRadius: "7px",
                   zIndex: 40,
                   minHeight: "50px",
                   outline: 0,
                   boxShadow: "none",
                   cursor: "pointer",
+                  backgroundColor: "transparent",
+                  color: theme === "L" ? "black" : "white",
                   ":hover": {
-                    borderColor: "black",
+                    borderColor: theme !== "L" ? "rgb(211, 211, 211)" : "black",
                   },
                 }),
                 singleValue: (base) => ({
@@ -339,6 +314,7 @@ const IncomePage = () => {
                   paddingY: "0px",
                   fontSize: "14px",
                   fontWeight: "600",
+                  color: theme === "L" ? "black" : "white",
                 }),
                 option: (base, state) => ({
                   ...base,
@@ -348,11 +324,24 @@ const IncomePage = () => {
                   alignItems: "start",
                   justifyContent: "Start",
                   flexDirection: "column",
-                  backgroundColor: state.isSelected
-                    ? "rgb(221, 241, 251)"
-                    : "white",
-                  color: "black",
-                  ":hover": { backgroundColor: "rgb(221, 241, 251)" },
+                  backgroundColor:
+                    state.isSelected && theme !== "L"
+                      ? "#030708"
+                      : state.isSelected && theme === "L"
+                      ? "rgb(221, 241, 251)"
+                      : "white",
+                  color:
+                    state.isSelected && theme !== "L"
+                      ? "white"
+                      : state.isSelected && theme === "L"
+                      ? "black"
+                      : "black",
+                  ":hover": {
+                    backgroundColor:
+                      state.isSelected && theme !== "L"
+                        ? "#030708"
+                        : "rgb(221, 241, 251)",
+                  },
                 }),
               }}
               options={IncomeCategoryConstant}
@@ -369,18 +358,26 @@ const IncomePage = () => {
                 MultiValueRemove,
                 Option,
               }}
+              value={formValue?.category}
               styles={{
                 control: (baseStyles, state) => ({
                   ...baseStyles,
-                  borderColor: state.isFocused ? "black" : "rgb(211, 211, 211)",
+                  borderColor:
+                    theme !== "L"
+                      ? "rgb(211, 211, 211)"
+                      : state.isFocused
+                      ? "black"
+                      : "rgb(211, 211, 211)",
                   borderRadius: "7px",
                   zIndex: 40,
                   minHeight: "50px",
                   outline: 0,
                   boxShadow: "none",
                   cursor: "pointer",
+                  backgroundColor: "transparent",
+
                   ":hover": {
-                    borderColor: "black",
+                    borderColor: theme !== "L" ? "rgb(211, 211, 211)" : "black",
                   },
                 }),
                 singleValue: (base) => ({
@@ -389,6 +386,7 @@ const IncomePage = () => {
                   paddingY: "0px",
                   fontSize: "14px",
                   fontWeight: "600",
+                  color: theme === "L" ? "black" : "white",
                 }),
                 option: (base, state) => ({
                   ...base,
@@ -398,16 +396,29 @@ const IncomePage = () => {
                   alignItems: "start",
                   justifyContent: "Start",
                   flexDirection: "column",
-                  backgroundColor: state.isSelected
-                    ? "rgb(221, 241, 251)"
-                    : "white",
-                  color: "black",
-                  ":hover": { backgroundColor: "rgb(221, 241, 251)" },
+                  backgroundColor:
+                    state.isSelected && theme !== "L"
+                      ? "#030708"
+                      : state.isSelected && theme === "L"
+                      ? "rgb(221, 241, 251)"
+                      : "white",
+                  color:
+                    state.isSelected && theme !== "L"
+                      ? "white"
+                      : state.isSelected && theme === "L"
+                      ? "black"
+                      : "black",
+                  ":hover": {
+                    backgroundColor:
+                      state.isSelected && theme !== "L"
+                        ? "#030708"
+                        : "rgb(221, 241, 251)",
+                  },
                 }),
               }}
               options={IncomeSubcategoryConstant[currentSubCat]}
               name="colors"
-              className="basic-multi-select "
+              className="basic-multi-select"
               classNamePrefix="select"
               placeholder="Category"
             />
@@ -422,15 +433,21 @@ const IncomePage = () => {
               styles={{
                 control: (baseStyles, state) => ({
                   ...baseStyles,
-                  borderColor: state.isFocused ? "black" : "rgb(211, 211, 211)",
+                  borderColor:
+                    theme !== "L"
+                      ? "rgb(211, 211, 211)"
+                      : state.isFocused
+                      ? "black"
+                      : "rgb(211, 211, 211)",
                   borderRadius: "7px",
                   zIndex: 40,
                   minHeight: "50px",
                   outline: 0,
                   boxShadow: "none",
                   cursor: "pointer",
+                  backgroundColor: "transparent",
                   ":hover": {
-                    borderColor: "black",
+                    borderColor: theme !== "L" ? "rgb(211, 211, 211)" : "black",
                   },
                 }),
                 singleValue: (base) => ({
@@ -439,6 +456,7 @@ const IncomePage = () => {
                   paddingY: "0px",
                   fontSize: "14px",
                   fontWeight: "600",
+                  color: theme === "L" ? "black" : "white",
                 }),
                 option: (base, state) => ({
                   ...base,
@@ -447,12 +465,24 @@ const IncomePage = () => {
                   display: "flex",
                   alignItems: "start",
                   justifyContent: "Start",
-                  flexDirection: "column",
-                  backgroundColor: state.isSelected
-                    ? "rgb(221, 241, 251)"
-                    : "white",
-                  color: "black",
-                  ":hover": { backgroundColor: "rgb(221, 241, 251)" },
+                  backgroundColor:
+                    state.isSelected && theme !== "L"
+                      ? "#030708"
+                      : state.isSelected && theme === "L"
+                      ? "rgb(221, 241, 251)"
+                      : "white",
+                  color:
+                    state.isSelected && theme !== "L"
+                      ? "white"
+                      : state.isSelected && theme === "L"
+                      ? "black"
+                      : "black",
+                  ":hover": {
+                    backgroundColor:
+                      state.isSelected && theme !== "L"
+                        ? "#030708"
+                        : "rgb(221, 241, 251)",
+                  },
                 }),
               }}
               options={PaymentMethodConstant}
@@ -460,6 +490,7 @@ const IncomePage = () => {
               className="basic-multi-select "
               classNamePrefix="select"
               placeholder="Payment Method"
+              value={formValue.method}
             />
             <CustomInputContainer
               size={"small"}
@@ -471,14 +502,10 @@ const IncomePage = () => {
               id="note"
               required
               onChange={handleChange}
+              value={formValue.note}
             />
-            {/* <textarea
-              rows={10}
-              cols={10}
-              className="focus-within:border-black overflow-hidden focus-within:ring-[1px] ring-offset-0 focus-within:ring-black/80 dark:focus-within:ring-gray-200/80  dark:focus-within:border-gray-200  dark:border-gray-600 dark:hover:border-white hover:border-black border-[1px] group rounded-[8px] p-0 pb-0 gap-0 border-gray-300 h-20  w-full flex flex-col justify-end items-startborder-2 relative  group  items-start "
-            /> */}
+
             <div className="flex justify-end items-center w-full">
-              {" "}
               <Button
                 effect={`${isSubmitting ? "none" : "press"}`}
                 asChild={false}
@@ -495,8 +522,20 @@ const IncomePage = () => {
           </form>
         </DialogBox>
       </div>
+
       <div className="flex flex-1 gap-5 justify-start items-start flex-wrap">
-        <ListContainer title={"History"} showViewAll={true}>
+        <ListContainer
+          title={"History"}
+          footer={
+            <PaginationBar
+              siblingCount={10}
+              currentPage={pageNumber}
+              totalCount={incomeDetail?.length ?? 10}
+              pageSize={pageSize}
+              handlePagination={handlePageNumberChange}
+            />
+          }
+        >
           <div className="flex flex-col gap-1 w-full h-full">
             {isFetching ? (
               <>
@@ -509,34 +548,30 @@ const IncomePage = () => {
             ) : (
               <>
                 {incomeDetail?.map((item: any, id: number) => {
-                  return (
-                    <DetailCard
-                      note={item?.note}
-                      type="row"
-                      image={userImage}
-                      title={item.title}
-                      detail={
-                        <span className="flex justify-start items-center">
-                          <TbCurrencyRupeeNepalese />
-                          {item.amount}
-                        </span>
-                      }
-                      key={id}
-                    />
-                  );
+                  if (id <= 4) {
+                    return (
+                      <DetailCard
+                        note={item?.note}
+                        type="row"
+                        image={userImage}
+                        title={item.title}
+                        detail={
+                          <span className="flex justify-start items-center">
+                            <TbCurrencyRupeeNepalese />
+                            {item.amount}
+                          </span>
+                        }
+                        key={id}
+                      />
+                    );
+                  } else {
+                    return null;
+                  }
                 })}
               </>
             )}
           </div>
         </ListContainer>
-        {/* <ListContainer title={"History"} showViewAll={true}>
-          <DetailCard
-            type="row"
-            image={userImage}
-            title="five hunred"
-            detail="500"
-          />
-        </ListContainer> */}
       </div>
     </>
   );

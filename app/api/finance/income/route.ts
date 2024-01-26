@@ -12,15 +12,14 @@ export async function POST(request: any, res: NextResponse) {
     const incomeDetail = await Income.create({
       title: body.title,
       userId: body.userId,
-      source: body.source,
+      source: [body.source],
       date: body.date,
-      method: body.method,
+      method: [body.method],
       note: body.note,
       amount: body.amount,
-      category: body.category,
+      category: [body.category],
     });
-
-    return NextResponse.json(
+      return NextResponse.json(
       { message: "Income Detail Added !", incomeDetail, status: true },
       { status: 200 }
     );
@@ -40,15 +39,12 @@ export async function GET(request: any) {
     const { searchParams } = new URL(request.url);
     const param = searchParams.get("userId");
     const pageNumber: any = searchParams.get("pageNumber") || 1;
-    const pageSize = 10;
+    const pageSize: any = searchParams.get("pageSize") || 10;
     const skipAmount = (pageNumber - 1) * pageSize;
-    console.log(pageNumber, skipAmount, pageSize);
 
     const data = await Income.find({ userId: param })
       .skip(skipAmount)
       .limit(pageSize);
-
-    console.log("Fetched data:", data);
 
     return NextResponse.json(data);
   } catch (error) {

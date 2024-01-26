@@ -15,7 +15,7 @@ export interface AddIncomeFormValueType {
   title: string;
   amount: number;
   source: string;
-  category: string;
+  category: { value?: string; label?: string } | any;
   date: Date;
   note: string;
   method: string;
