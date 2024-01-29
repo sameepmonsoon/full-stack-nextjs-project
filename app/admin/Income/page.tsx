@@ -204,6 +204,7 @@ const IncomePage = () => {
       (item) => item === formValue?.source?.value
     ) ?? "";
 
+  console.log(formValue);
   return (
     <>
       <div className="w-full flex flex-row flex-wrap items-center justify-stretch gap-2">
@@ -334,7 +335,7 @@ const IncomePage = () => {
                   validateTextField(e, 14)
                 }
                 onChange={handleChange}
-                value={formValue.title ? formValue?.title : null}
+                value={formValue?.title ? formValue?.title : null}
               />
               <CustomInputContainer
                 value={formValue.amount ? formValue.amount : null}
