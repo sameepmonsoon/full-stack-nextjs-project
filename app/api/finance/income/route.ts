@@ -19,7 +19,7 @@ export async function POST(request: any, res: NextResponse) {
       amount: body.amount,
       category: [body.category],
     });
-      return NextResponse.json(
+    return NextResponse.json(
       { message: "Income Detail Added !", incomeDetail, status: true },
       { status: 200 }
     );
@@ -41,12 +41,12 @@ export async function GET(request: any) {
     const pageNumber: any = searchParams.get("pageNumber") || 1;
     const pageSize: any = searchParams.get("pageSize") || 10;
     const skipAmount = (pageNumber - 1) * pageSize;
-
+    const total = await Income.countDocuments({ userId: param });
     const data = await Income.find({ userId: param })
       .skip(skipAmount)
       .limit(pageSize);
 
-    return NextResponse.json(data);
+    return NextResponse.json({ total, data });
   } catch (error) {
     console.error("Error fetching data:", error);
     return NextResponse.json({
