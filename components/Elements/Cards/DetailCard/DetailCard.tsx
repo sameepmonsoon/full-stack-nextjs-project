@@ -2,13 +2,16 @@ import Image, { StaticImageData } from "next/image";
 import React from "react";
 
 const DetailCard = ({
-  image,
+  image = { asIcon: false, content: "" },
   title,
   detail,
   type,
   note,
 }: {
-  image: string | StaticImageData;
+  image: {
+    asIcon: boolean;
+    content: any;
+  };
   title: string;
   note: string;
   detail: string | React.ReactNode;
@@ -16,12 +19,16 @@ const DetailCard = ({
 }) => {
   return (
     <div className="flex overflow-hidden gap-3 flex-1 bg-white dark:bg-transparent rounded-[18px] px-2 py-2 min-w-[15rem] h-[4rem] items-start justify-start border-[1px] border-darkBg/20 dark:border-accent/10">
-      <div className="h-[45px] overflow-hidden w-[46px] rounded-full">
-        <Image
-          src={image}
-          alt="item"
-          className="object-cover min-h-full w-full rounded-full"
-        />
+      <div className="h-[45px] overflow-hidden w-[46px] rounded-full flex justify-center items-center">
+        {!image.asIcon ? (
+          <Image
+            src={image.content}
+            alt="item"
+            className="object-cover min-h-full w-full rounded-full"
+          />
+        ) : (
+          <>{image.content}</>
+        )}
       </div>
       <div
         className={`${

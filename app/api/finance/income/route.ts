@@ -14,7 +14,7 @@ export async function POST(request: any, res: NextResponse) {
       userId: body.userId,
       source: [body.source],
       date: body.date,
-      method: [body.method],
+      method: body.method?.value,
       note: body.note,
       amount: body.amount,
       category: [body.category],

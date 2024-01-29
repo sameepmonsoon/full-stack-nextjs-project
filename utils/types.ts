@@ -12,11 +12,11 @@ export type Task = {
 };
 
 export interface AddIncomeFormValueType {
-  title: string;
-  amount: number;
+  title: string ;
+  amount: number | string;
   source: string;
   category: { value?: string; label?: string } | any;
-  date: Date;
+  date: Date | null;
   note: string;
   method: string;
   userId: string;

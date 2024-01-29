@@ -44,7 +44,8 @@ export async function POST(request: Request) {
       );
     }
 
-    const { password, createdAt, updatedAt, __v, ...othersData } = user._doc;
+    const { password, createdAt, updatedAt, __v, _id, ...othersData } =
+      user._doc;
 
     const secret = process.env.JWT_SECRET || "";
 
@@ -52,7 +53,7 @@ export async function POST(request: Request) {
     const response = {
       message: "Authenticated!",
       token,
-      userDetails: othersData,
+      userDetails: { othersData, id: _id },
       isValid: true,
     };
 

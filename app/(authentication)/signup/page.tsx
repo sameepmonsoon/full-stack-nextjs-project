@@ -1,5 +1,5 @@
 "use client";
-import { getToken, setToken } from "@/utils/token";
+import { getToken, setToken, setUserDetail } from "@/utils/token";
 import { redirect, useRouter } from "next/navigation";
 import {
   calculatePasswordStrength,
@@ -15,10 +15,13 @@ import { Button } from "@/components/ui/button";
 
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
+import { toast } from "@/components/ui/use-toast";
 const LoginPage = () => {
   const [formValues, setFormValues] = useState<any>({});
   const [formErrors, setFormErrors] = useState<any>({});
   const [touched, setTouched] = useState<any>({});
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
   const [passwordStrength, setPasswordStrength] = useState<{
     strength: number;
     type: string;
@@ -32,30 +35,40 @@ const LoginPage = () => {
     setFormErrors(validateFormField(formValues));
 
     const hasErrors = validateFormField(formValues);
-
+    setIsSubmitting(true);
     if (hasErrors) {
-      fetch("api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formValues),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          if (data?.token) {
-            setToken(data?.token);
-            window.location.href = "/admin/home";
-          } else {
-            console.error("Error:", data.error);
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error.message);
+      try {
+        const response = await fetch("api/auth/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formValues),
         });
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(`${data.message}`);
+        }
+
+        if (data?.token) {
+          setToken(data?.token);
+          setUserDetail(data?.userDetails);
+          window.location.href = "/admin/home";
+        } else {
+          throw new Error(`Error while creating.`);
+        }
+
+        if (!data.isValid) {
+          throw new Error(`Error while creating.`);
+        }
+      } catch (error: any) {
+        toast({
+          duration: 900,
+          title: `Error while creating.`,
+          variant: "destructive",
+        });
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   }
 
@@ -121,6 +134,7 @@ const LoginPage = () => {
         <div className="flex flex-col justify-start items-center gap-5 w-full border-b-[1px] border-b-gray-300 py-5">
           <div className="w-full flex flex-col md:flex-row justify-between items-center gap-5 md:gap-10 flex-wrap md:flex-nowrap">
             <CustomInputContainer
+              disabled={isSubmitting}
               size={"default"}
               font={"medium"}
               type="text"
@@ -133,6 +147,7 @@ const LoginPage = () => {
               onFocus={handleTouched}
             />
             <CustomInputContainer
+              disabled={isSubmitting}
               size={"default"}
               font={"medium"}
               type="text"
@@ -146,6 +161,7 @@ const LoginPage = () => {
             />
           </div>
           <CustomInputContainer
+            disabled={isSubmitting}
             size={"default"}
             font={"medium"}
             type="text"
@@ -166,6 +182,7 @@ const LoginPage = () => {
           />
 
           <CustomInputContainer
+            disabled={isSubmitting}
             size={"default"}
             font={"medium"}
             type="email"
@@ -182,6 +199,7 @@ const LoginPage = () => {
           />
 
           <CustomInputContainer
+            disabled={isSubmitting}
             size={"default"}
             font={"medium"}
             type="password"
@@ -218,10 +236,15 @@ const LoginPage = () => {
             </span>
           </div>
           <Button
+            disabled={isSubmitting}
+            effect={`${isSubmitting ? "none" : "press"}`}
             asChild={false}
             type="submit"
-            effect={"press"}
-            className={`w-full bg-darkBg dark:bg-white hover:bg-darkBg dark:hover:bg-white text-white dark:text-darkBg h-10 rounded-md flex justify-center items-center  text-md font-medium capitalize`}
+            className={`w-full ${
+              isSubmitting
+                ? "bg-gray-300 text-gray-500  hover:bg-gray-300"
+                : "bg-darkBg dark:bg-white hover:bg-darkBg text-white"
+            }  dark:hover:bg-white  dark:text-darkBg h-10 rounded-md flex justify-center items-center  text-md font-medium capitalize`}
           >
             Sign Up
           </Button>

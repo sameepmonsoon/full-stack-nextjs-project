@@ -44,11 +44,15 @@ const LoginPage = () => {
         } else {
           throw new Error(`Error logging in.`);
         }
+
+        if (!data.isValid) {
+          throw new Error(`Error logging in.`);
+        }
       } catch (error: any) {
         toast({
           duration: 900,
           title: error.message,
-          variant: "success",
+          variant: "destructive",
         });
       } finally {
         setIsSubmitting(false);
@@ -86,6 +90,7 @@ const LoginPage = () => {
         </div>
         <div className="flex flex-col justify-start items-center gap-5 w-full border-b-[1px] border-b-gray-300 py-5">
           <CustomInputContainer
+            disabled={isSubmitting}
             size={"default"}
             font={"medium"}
             type="email"
@@ -97,6 +102,7 @@ const LoginPage = () => {
             onChange={handleChange}
           />
           <CustomInputContainer
+            disabled={isSubmitting}
             size={"default"}
             font={"medium"}
             type="password"
