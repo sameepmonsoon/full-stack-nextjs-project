@@ -13,12 +13,10 @@ const userAuthSchema = new Schema<userAuthDoc>(
   {
     firstName: {
       type: String,
-      unique: true,
       required: true,
     },
     lastName: {
       type: String,
-      unique: true,
       required: true,
     },
     phone: {

@@ -6,7 +6,6 @@ import CardLayout from "@/components/Elements/Cards/CardLayout/CardLayout";
 import "@/Styles/Admin/income/income.scss";
 import { RxCross2 } from "react-icons/rx";
 import React, { useEffect, useState } from "react";
-import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { GiWallet } from "react-icons/gi";
 import { TbCurrencyRupeeNepalese } from "react-icons/tb";
 import userImage from "@/public/image-one.jpg";
@@ -30,22 +29,24 @@ import {
   IncomeCategoryConstant,
   IncomeSubcategoryConstant,
   PaymentMethodConstant,
+  incomeCardConstant,
 } from "@/Helpers/Constants/Admin/IncomeConstants";
 import BreadCrumbNav from "@/components/Elements/BreadCrumbs/BreadCrumbNav/BreadCrumbNav";
 import SkeletonDetailCard from "@/components/Elements/Skeleton/SkeletonDetailCard/SkeletonDetailCard";
 import { CustomDatePicker } from "@/components/Elements/CustomDatePicker/CustomDatePicker";
 import { PaginationBar } from "@/components/Elements/Pagination/PaginationBar";
+import { Label } from "@radix-ui/react-label";
 
 const IncomePage = () => {
   const routeHistory = useRouteHistory();
   const userDetail: any = getUserDetail();
 
   let initialValue: AddIncomeFormValueType = {
-    title: "",
-    amount: 0,
+    title: null,
+    amount: null,
     source: "",
     category: "",
-    date: new Date(),
+    date: null,
     note: "",
     method: "",
     userId: "",
@@ -55,6 +56,21 @@ const IncomePage = () => {
   const [incomeDetail, setIncomeDetail] = useState<any[]>([]);
   const [totalPosts, setTotalPosts] = useState<number>(0);
   const [isFetching, setIsFetching] = useState<boolean>(true);
+
+  //popover states
+  const [toggle, setToggle] = useState(false);
+  const [currentMethod, setCurrentMethod] = useState("income");
+  const [totalIncomeDetail, setTotalIncomeDetail] = useState<{
+    income: number;
+    cash: number;
+    bank: number;
+    cheque: number;
+  }>({
+    income: 0,
+    cash: 0,
+    bank: 0,
+    cheque: 0,
+  });
   const [formValue, setFormValue] =
     useState<AddIncomeFormValueType>(initialValue);
   const [pageNumber, setPageNumber] = useState(1);
@@ -62,8 +78,8 @@ const IncomePage = () => {
   const theme = localStorage.getItem("theme");
 
   const fetchData = async () => {
-    if (userDetail._id) {
-      const res = await getInitialData(userDetail._id);
+    if (userDetail?.id) {
+      const res = await getInitialData(userDetail?.id);
       setIncomeDetail(res.data);
       setTotalPosts(res.total);
       setIsFetching(false);
@@ -98,6 +114,8 @@ const IncomePage = () => {
   const handlePageNumberChange = (pageNumber: any) => {
     setPageNumber(pageNumber);
   };
+
+  //form data change handlers
   const handleChange = (e: React.ChangeEvent<any>) => {
     const { value, name } = e.target;
 
@@ -127,11 +145,17 @@ const IncomePage = () => {
     return <components.Option {...props} />;
   };
 
+  //popover handler for cardlayout
+  const handlePopOverToggle = (value?: string) => {
+    setToggle(!toggle);
+    if (typeof value === "string") setCurrentMethod(value);
+  };
+
   useEffect(() => {
-    if (!formValue.userId && userDetail?._id) {
+    if (!formValue.userId && userDetail?.id) {
       setFormValue((prevFormValue) => ({
         ...prevFormValue,
-        userId: userDetail._id,
+        userId: userDetail?.id,
       }));
     }
   }, [userDetail, formValue.userId]);
@@ -147,13 +171,32 @@ const IncomePage = () => {
         },
       }
     );
+    const response2: any = await fetch(
+      `/api/finance/income/getTotalIncome?userId=${userId}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const totalUserIncome = await response2.json();
+    const { totalCashAmount, totalBankAmount, totalChequeAmount, totalIncome } =
+      totalUserIncome;
+    setTotalIncomeDetail({
+      income: totalIncome,
+      cash: totalCashAmount,
+      bank: totalBankAmount,
+      cheque: totalChequeAmount,
+    });
     const data = await response.json();
     return data;
   }
 
   useEffect(() => {
     fetchData();
-  }, [pageNumber, userDetail._id]);
+  }, [pageNumber, userDetail?.id]);
 
   const currentSubCat: any =
     Object.keys(IncomeSubcategoryConstant).find(
@@ -178,16 +221,47 @@ const IncomePage = () => {
       </div>
       <div className="w-full flex flex-wrap gap-5">
         <CardLayout
+          popOverContent={{
+            content: (
+              <>
+                {incomeCardConstant.map((item: any, index: number) => (
+                  <>
+                    <button
+                      key={index}
+                      onClick={() => {
+                        handlePopOverToggle(item.value);
+                      }}
+                      className={`gap-2 overflow-hidden cursor-pointer ${
+                        currentMethod === item.value && "bg-accent"
+                      } hover:bg-accent rounded-sm w-full text-sm flex justify-start items-center py-[2px] px-2`}
+                    >
+                      <Label
+                        key={index}
+                        className="text-ellipsis cursor-pointer overflow-hidden max-w-[75%] h-full"
+                      >
+                        {item.label}
+                      </Label>
+                    </button>
+                  </>
+                ))}
+              </>
+            ),
+            state: toggle,
+            currentData: currentMethod,
+            handler: handlePopOverToggle,
+          }}
           color="safe"
-          icon={FaMoneyBillTransfer}
+          icon={GiWallet}
           type={"column"}
           title={
-            <span className="flex justify-start items-center gap-0">
+            <div className="flex justify-start items-center gap-0">
               <TbCurrencyRupeeNepalese />
-              50k
-            </span>
+              <span className="flex justify-start items-center relative -top-[2px]">
+                {(totalIncomeDetail as any)[currentMethod]}
+              </span>
+            </div>
           }
-          detail="Total Expenses"
+          detail={`Total ${currentMethod} Balance`}
         />
         <div className="min-w-[60%] w-auto flex-1">
           <BalanceCard />
@@ -260,10 +334,10 @@ const IncomePage = () => {
                   validateTextField(e, 14)
                 }
                 onChange={handleChange}
-                value={formValue.title}
+                value={formValue.title ? formValue?.title : null}
               />
               <CustomInputContainer
-                value={formValue.amount}
+                value={formValue.amount ? formValue.amount : null}
                 size={"small"}
                 font={"medium"}
                 type="text"
@@ -280,13 +354,13 @@ const IncomePage = () => {
             </div>
 
             <CustomDatePicker
-              value={formValue.date}
+              value={formValue?.date ? formValue?.date : null}
               disabled={false}
-              onChange={handleChange}
+              onChange={handleDateChange}
               mode="single"
             />
             <Select
-              value={formValue.source}
+              value={formValue.source ? formValue.source : null}
               onChange={handleSourceChange}
               closeMenuOnSelect={true}
               isClearable={false}

@@ -1,9 +1,13 @@
+"use client";
 import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority";
-import React from "react";
+import React, { useState } from "react";
 import { TbDots } from "react-icons/tb";
 import "./CardLayout.scss";
 import { motion } from "framer-motion";
+import { CustomPopOver } from "@/components/Elements/CustomPopOver/CustomPopOver";
+import { Label } from "@radix-ui/react-label";
+import { PaymentMethodConstant } from "@/Helpers/Constants/Admin/IncomeConstants";
 const cardLayoutVariant = cva(
   `flex-1 min-w-[15rem] shadow-sm flex justify-start relative items-center p-4 rounded-[12px] overflow-hidden text-white`,
   {
@@ -116,15 +120,29 @@ const CardLayout = ({
   title,
   detail,
   icon: Icon,
+  popOverContent = {
+    content: <></>,
+    handler: () => {},
+    state: false,
+    currentData: "",
+  },
   color,
 }: {
   type: "default" | "column" | "row" | null | undefined;
   children?: React.ReactNode;
   title: string | React.ReactNode;
+  popOverContent?: {
+    content: React.ReactNode;
+    handler: () => any;
+    state: boolean;
+    currentData: any;
+  };
   detail: string;
   color: "default" | "danger" | "alert" | "safe" | null | undefined;
   icon: React.ComponentType<{ size: number }>;
 }) => {
+  const { content, handler, state, currentData } = popOverContent;
+  console.log(popOverContent);
   return (
     <div className={cn(cardLayoutVariant({ type, color }))}>
       <motion.div
@@ -162,18 +180,26 @@ const CardLayout = ({
           >
             <Icon size={18} />
           </span>
-          <span
-            className={cn(
-              dotContainerVariant({ color }),
-              `${
-                type?.toLowerCase() === "row"
-                  ? "w-0 hidden h-full"
-                  : "flex w-[2.3rem] h-[90%]"
-              }`
-            )}
+          <CustomPopOver
+            onOpenChange={handler}
+            defaultOpen={true}
+            open={state}
+            popOverContent={content}
           >
-            <TbDots size={20} />
-          </span>
+            <span
+              onClick={handler}
+              className={cn(
+                dotContainerVariant({ color }),
+                `${
+                  type?.toLowerCase() === "row"
+                    ? "w-0 hidden h-full"
+                    : "flex w-[2.3rem] h-[90%]"
+                }`
+              )}
+            >
+              <TbDots size={20} />
+            </span>
+          </CustomPopOver>
         </div>
         <div
           className={`w-full h-auto flex flex-col z-1  relative ${
@@ -195,7 +221,7 @@ const CardLayout = ({
               </p>
 
               <p
-                className={`h-7 font-semibold text-start overflow-hidden text-ellipsis  ${
+                className={`h-7 font-semibold capitalize text-start overflow-hidden text-ellipsis  ${
                   type?.toLowerCase() === "row"
                     ? "font-medium text-xs h-5"
                     : "font-base text-md h-7"

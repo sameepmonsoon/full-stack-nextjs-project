@@ -10,7 +10,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { DayPickerRangeProps } from "react-day-picker";
 
 export function CustomDatePicker({
   value,
@@ -18,12 +17,17 @@ export function CustomDatePicker({
   onChange,
   mode = "single",
 }: {
-  value: Date;
+  value: Date | null;
   disabled: boolean;
-  onChange: () => any;
+  onChange: (e: any) => void;
   mode: "default" | "single" | "range" | "multiple" | undefined | any;
 }) {
-  const date: any = new Date(value);
+  let date: any;
+  if (value) {
+    date = new Date(value);
+    date = date.toDateString();
+  }
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -32,10 +36,10 @@ export function CustomDatePicker({
           variant={"trigger"}
           className={cn("pl-3 text-left font-normal")}
         >
-          {value ? (
+          {!value ? (
             <span className="text-gray-400">Date</span>
           ) : (
-            <span className="text-gray-400">Pick a date</span>
+            <span className="text-gray-400">{date}</span>
           )}
 
           <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
@@ -45,7 +49,7 @@ export function CustomDatePicker({
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
             mode={mode}
-            selected={value}
+            selected={value ? value : new Date()}
             onSelect={onChange}
             disabled={disabled}
             initialFocus

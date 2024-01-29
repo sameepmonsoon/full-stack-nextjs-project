@@ -43,9 +43,16 @@ const PaymentMethodConstant: any = [
   { value: "bank", label: "Bank" },
   { value: "cheque", label: "Cheque" },
 ];
+const incomeCardConstant: any = [
+  { value: "cash", label: "Cash" },
+  { value: "bank", label: "Bank" },
+  { value: "cheque", label: "Cheque" },
+  { value: "income", label: "Income" },
+];
 
 export {
   IncomeCategoryConstant,
   PaymentMethodConstant,
   IncomeSubcategoryConstant,
+  incomeCardConstant,
 };
