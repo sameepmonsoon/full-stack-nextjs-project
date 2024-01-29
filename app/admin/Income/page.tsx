@@ -5,10 +5,15 @@ import BalanceCard from "@/components/Elements/Cards/BalanceCard/BalanceCard";
 import CardLayout from "@/components/Elements/Cards/CardLayout/CardLayout";
 import "@/Styles/Admin/income/income.scss";
 import { RxCross2 } from "react-icons/rx";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { GiWallet } from "react-icons/gi";
 import { TbCurrencyRupeeNepalese } from "react-icons/tb";
+import { RiMoneyDollarBoxLine } from "react-icons/ri";
 import userImage from "@/public/image-one.jpg";
+import { CiMoneyCheck1 } from "react-icons/ci";
+import { LiaMoneyCheckSolid } from "react-icons/lia";
+import { LiaRupeeSignSolid } from "react-icons/lia";
+import { CiBank } from "react-icons/ci";
 import DetailCard from "@/components/Elements/Cards/DetailCard/DetailCard";
 import { Button } from "@/components/ui/button";
 import { BsPlusCircleDotted } from "react-icons/bs";
@@ -42,8 +47,8 @@ const IncomePage = () => {
   const userDetail: any = getUserDetail();
 
   let initialValue: AddIncomeFormValueType = {
-    title: null,
-    amount: null,
+    title: "",
+    amount: "",
     source: "",
     category: "",
     date: null,
@@ -204,7 +209,12 @@ const IncomePage = () => {
       (item) => item === formValue?.source?.value
     ) ?? "";
 
-  console.log(formValue);
+  // const initialCachedIncomeData = useMemo(() => {
+  //   const data = incomeDetail;
+  //   return data;
+  // }, [userDetail.id]);
+
+  // console.log(initialCachedIncomeData);
   return (
     <>
       <div className="w-full flex flex-row flex-wrap items-center justify-stretch gap-2">
@@ -233,8 +243,8 @@ const IncomePage = () => {
                         handlePopOverToggle(item.value);
                       }}
                       className={`gap-2 overflow-hidden cursor-pointer ${
-                        currentMethod === item.value && "bg-accent"
-                      } hover:bg-accent rounded-sm w-full text-sm flex justify-start items-center py-[2px] px-2`}
+                        currentMethod === item.value && "bg-green-200"
+                      } hover:bg-green-200 text-green-950 rounded-sm w-full text-sm flex justify-start items-center py-[2px] px-2`}
                     >
                       <Label
                         key={index}
@@ -285,7 +295,23 @@ const IncomePage = () => {
                   <DetailCard
                     note={item?.note}
                     type="row"
-                    image={userImage}
+                    image={{
+                      asIcon: true,
+                      content:
+                        item.method === "bank" ? (
+                          <CiBank size={30} className="fill-green-500" />
+                        ) : item.method === "cash" ? (
+                          <LiaRupeeSignSolid
+                            size={30}
+                            className="fill-sky-400"
+                          />
+                        ) : (
+                          <CiMoneyCheck1
+                            size={30}
+                            className="fill-yellow-500"
+                          />
+                        ),
+                    }}
                     title={item.title}
                     detail={
                       <span className="flex justify-start items-center">
@@ -335,10 +361,10 @@ const IncomePage = () => {
                   validateTextField(e, 14)
                 }
                 onChange={handleChange}
-                value={formValue?.title ? formValue?.title : null}
+                value={formValue?.title}
               />
               <CustomInputContainer
-                value={formValue.amount ? formValue.amount : null}
+                value={formValue.amount}
                 size={"small"}
                 font={"medium"}
                 type="text"
@@ -634,7 +660,17 @@ const IncomePage = () => {
                     <DetailCard
                       note={item?.note}
                       type="row"
-                      image={userImage}
+                      image={{
+                        asIcon: true,
+                        content:
+                          item.method === "bank" ? (
+                            <CiBank size={30} />
+                          ) : item.method === "cash" ? (
+                            <LiaRupeeSignSolid size={30} />
+                          ) : (
+                            <CiMoneyCheck1 size={30} />
+                          ),
+                      }}
                       title={item.title}
                       detail={
                         <span className="flex justify-start items-center">
