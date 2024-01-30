@@ -78,7 +78,7 @@ const LoginPage = () => {
     >
       <div className="w-[29.5rem] h-auto p-10 flex flex-col justify-start items-center dark:text-white bg-white dark:bg-darkBg rounded-lg gap-2">
         <div className="h-[25%] flex justify-start items-center flex-col gap-2">
-          <Logo to="/admin" title="MARIO" />
+          <Logo to="/admin" title="WALLET" />
           <div className="flex justify-center items-cente flex-col gap-4">
             <p className="text-center dark:text-white capitalize font-bold text-2xl">
               Hi, Welcome Back

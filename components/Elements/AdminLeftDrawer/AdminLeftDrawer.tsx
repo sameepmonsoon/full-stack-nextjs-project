@@ -42,7 +42,7 @@ const AdminLeftDrawer = () => {
         <div
           className={`w-full  pt-3 flex  items-center flex-nowrap lg:hidden justify-between pr-3`}
         >
-          <Logo to="/admin" title="MARIO" />
+          <Logo to="/admin" title="WALLET" />
         </div>
         {adminLeftDrawerList.map((item: any, index: number) => (
           <>
