@@ -142,7 +142,6 @@ const CardLayout = ({
   icon: React.ComponentType<{ size: number }>;
 }) => {
   const { content, handler, state, currentData } = popOverContent;
-  console.log(popOverContent);
   return (
     <div className={cn(cardLayoutVariant({ type, color }))}>
       <motion.div

@@ -227,8 +227,10 @@ const IncomePage = () => {
     setCurrentListDay(e);
   };
   const [openFilter, setOpenFilter] = useState(false);
-  const handleListPopOverToggle = (value?: string) => {
+  const handleListPopOverToggle: any = (value?: string) => {
     setOpenFilter(!openFilter);
+    console.log(openFilter);
+
     if (typeof value === "string") setCurrentListPaymentType(value);
   };
   return (
@@ -280,7 +282,7 @@ const IncomePage = () => {
           color="safe"
           icon={GiWallet}
           type={"column"}
-          title={
+          title={(totalIncomeDetail as any)[currentMethod] &&
             <div className="flex justify-start items-center gap-0">
               <TbCurrencyRupeeNepalese />
               <span className="flex justify-start items-center relative -top-[2px]">
@@ -349,7 +351,10 @@ const IncomePage = () => {
           dialogTitle="Income"
           trigger={
             <Button
-              onClick={() => setFormValue(initialValue)}
+              onClick={() => {
+                console.log("clicked");
+                setFormValue(initialValue);
+              }}
               size={"lg"}
               variant={"outline"}
               className="w-[3rem] h-[3rem] hover:bg-white text-gray-400 outline-gray-400 dark:outline-gray-100/30 dark:hover:text-gray-100/30 border-dashed outline-dashed outline-[1px] flex justify-center items-center p-1 rounded-full"
@@ -655,10 +660,10 @@ const IncomePage = () => {
                 changeHandler={handleListContainerSelect}
                 title={`This ${currentListDay}`}
                 data={["day", "month", "year"]}
-              ></CustomDropDown>
+              />
               <CustomPopOver
                 onOpenChange={handleListPopOverToggle}
-                defaultOpen={false}
+                defaultOpen={true}
                 open={openFilter}
                 popOverContent={
                   <>
@@ -687,19 +692,16 @@ const IncomePage = () => {
                   </>
                 }
               >
-                <span
-                  className="hover:bg-accent cursor-pointer flex items-center justify-center p-1 rounded-sm"
-                  onClick={() => handleListPopOverToggle}
+                <Button
+                  onClick={handleListPopOverToggle}
+                  variant={"ghost"}
+                  className="w-[2rem] hidden xl:flex h-[2rem] justify-center items-center p-1"
                 >
-                  <CustomToolTip
-                    showArrow={true}
-                    key={"filter"}
-                    toolTipContent={"Filter"}
-                    showToolTip={true}
-                  >
-                    <LiaSlidersHSolid size={25} />
-                  </CustomToolTip>
-                </span>
+                  <LiaSlidersHSolid
+                    size={25}
+                    className="dark:group-hover:fill-black"
+                  />
+                </Button>
               </CustomPopOver>
             </div>
           }

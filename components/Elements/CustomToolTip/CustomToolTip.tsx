@@ -43,7 +43,7 @@ const CustomToolTip = ({
     return (
       <TooltipProvider delayDuration={delayDuration}>
         <Tooltip open={open} defaultOpen={false}>
-          <TooltipTrigger asChild>{children}</TooltipTrigger>
+          <TooltipTrigger>{children}</TooltipTrigger>
           <TooltipContent side={toolTipPosition} sideOffset={sideOffset}>
             <p>{toolTipContent}</p>
             {showArrow && (

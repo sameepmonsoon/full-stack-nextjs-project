@@ -6,10 +6,10 @@ import { Input } from "@/components/ui/input";
 import UserIconContainer from "../Users/UserIconContainer/UserIconContainer";
 import { IoSearchOutline } from "react-icons/io5";
 import { FaBell } from "react-icons/fa";
-import { SiGooglemessages } from "react-icons/si";
+
 import { useLeftSiderState } from "@/store/commonState/globalState";
 import { useEffect, useState } from "react";
-import { useSystemThemeDetector } from "@/Hooks/useSystemThemeDetector";
+
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { AiOutlineFullscreenExit } from "react-icons/ai";
 import { makeFullScreen } from "@/Helpers/makeFullScreen";
