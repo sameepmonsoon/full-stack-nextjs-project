@@ -46,7 +46,7 @@ function AdminNav() {
         className={`order-1 bg-white  flex w-full z-40 h-[5.5rem] flex-nowrap justify-start items-center px-3 pr-5 pt-0 pb-0  gap-5 dark:bg-darkBg dark:text-white`}
       >
         <div className="hidden pl-5 w-[18rem] lg:flex justify-between items-center flex-nowrap">
-          <Logo to="/admin" title="MARIO" />
+          <Logo to="/admin" title="WALLET" />
           <span
             onClick={setSiderState}
             className="cursor-pointer hover:text-black text-black dark:bg-transparent dark:text-white dark:hover:bg-accent dark:hover:text-black bg-gray-100/60 hover:bg-gray-200/60 h-[2rem] w-[2rem]  flex justify-center items-center rounded-[5px]"

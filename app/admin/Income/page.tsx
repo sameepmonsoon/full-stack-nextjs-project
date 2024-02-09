@@ -8,10 +8,8 @@ import { RxCross2 } from "react-icons/rx";
 import React, { useEffect, useMemo, useState } from "react";
 import { GiWallet } from "react-icons/gi";
 import { TbCurrencyRupeeNepalese } from "react-icons/tb";
-import { RiMoneyDollarBoxLine } from "react-icons/ri";
-import userImage from "@/public/image-one.jpg";
+import { LiaSlidersHSolid } from "react-icons/lia";
 import { CiMoneyCheck1 } from "react-icons/ci";
-import { LiaMoneyCheckSolid } from "react-icons/lia";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import { CiBank } from "react-icons/ci";
 import DetailCard from "@/components/Elements/Cards/DetailCard/DetailCard";
@@ -41,6 +39,10 @@ import SkeletonDetailCard from "@/components/Elements/Skeleton/SkeletonDetailCar
 import { CustomDatePicker } from "@/components/Elements/CustomDatePicker/CustomDatePicker";
 import { PaginationBar } from "@/components/Elements/Pagination/PaginationBar";
 import { Label } from "@radix-ui/react-label";
+import { FilterIcon, FilterXIcon } from "lucide-react";
+import { CustomPopOver } from "@/components/Elements/CustomPopOver/CustomPopOver";
+import { CustomDropDown } from "@/components/Elements/CustomDropDown/CustomDropDown";
+import CustomToolTip from "@/components/Elements/CustomToolTip/CustomToolTip";
 
 const IncomePage = () => {
   const routeHistory = useRouteHistory();
@@ -215,6 +217,20 @@ const IncomePage = () => {
   // }, [userDetail.id]);
 
   // console.log(initialCachedIncomeData);
+
+  //list on change select day type filter
+
+  const [currentListDay, setCurrentListDay] = useState<string>("year");
+  const [currentListPaymentType, setCurrentListPaymentType] =
+    useState<string>("none");
+  const handleListContainerSelect = (e: any) => {
+    setCurrentListDay(e);
+  };
+  const [openFilter, setOpenFilter] = useState(false);
+  const handleListPopOverToggle = (value?: string) => {
+    setOpenFilter(!openFilter);
+    if (typeof value === "string") setCurrentListPaymentType(value);
+  };
   return (
     <>
       <div className="w-full flex flex-row flex-wrap items-center justify-stretch gap-2">
@@ -633,6 +649,60 @@ const IncomePage = () => {
 
       <div className="flex flex-1 gap-5 justify-start items-start flex-wrap">
         <ListContainer
+          listTitleProps={
+            <div className="flex gap-2 flex-1 ">
+              <CustomDropDown
+                changeHandler={handleListContainerSelect}
+                title={`This ${currentListDay}`}
+                data={["day", "month", "year"]}
+              ></CustomDropDown>
+              <CustomPopOver
+                onOpenChange={handleListPopOverToggle}
+                defaultOpen={false}
+                open={openFilter}
+                popOverContent={
+                  <>
+                    {["cash", "cheque", "bank", "none"].map(
+                      (item: any, index: number) => (
+                        <>
+                          <button
+                            key={index}
+                            onClick={() => {
+                              handleListPopOverToggle(item);
+                            }}
+                            className={`gap-2 overflow-hidden cursor-pointer ${
+                              currentListPaymentType === item && "bg-green-200"
+                            } hover:bg-green-200 text-green-950 rounded-sm w-full text-sm flex justify-start items-center py-[2px] px-2`}
+                          >
+                            <Label
+                              key={index}
+                              className="text-ellipsis capitalize cursor-pointer overflow-hidden max-w-[75%] h-full"
+                            >
+                              {item}
+                            </Label>
+                          </button>
+                        </>
+                      )
+                    )}
+                  </>
+                }
+              >
+                <span
+                  className="hover:bg-accent cursor-pointer flex items-center justify-center p-1 rounded-sm"
+                  onClick={() => handleListPopOverToggle}
+                >
+                  <CustomToolTip
+                    showArrow={true}
+                    key={"filter"}
+                    toolTipContent={"Filter"}
+                    showToolTip={true}
+                  >
+                    <LiaSlidersHSolid size={25} />
+                  </CustomToolTip>
+                </span>
+              </CustomPopOver>
+            </div>
+          }
           title={"History"}
           footer={
             <PaginationBar
@@ -655,33 +725,41 @@ const IncomePage = () => {
               </>
             ) : (
               <>
-                {incomeDetail?.map((item: any, id: number) => {
-                  return (
-                    <DetailCard
-                      note={item?.note}
-                      type="row"
-                      image={{
-                        asIcon: true,
-                        content:
-                          item.method === "bank" ? (
-                            <CiBank size={30} />
-                          ) : item.method === "cash" ? (
-                            <LiaRupeeSignSolid size={30} />
-                          ) : (
-                            <CiMoneyCheck1 size={30} />
-                          ),
-                      }}
-                      title={item.title}
-                      detail={
-                        <span className="flex justify-start items-center">
-                          <TbCurrencyRupeeNepalese />
-                          {item.amount}
-                        </span>
-                      }
-                      key={id}
-                    />
-                  );
-                })}
+                {incomeDetail
+                  ?.filter((item: any) => {
+                    if (currentListPaymentType == "none") {
+                      return item;
+                    } else {
+                      return item.method == currentListPaymentType;
+                    }
+                  })
+                  .map((item: any, id: number) => {
+                    return (
+                      <DetailCard
+                        note={item?.note}
+                        type="row"
+                        image={{
+                          asIcon: true,
+                          content:
+                            item.method === "bank" ? (
+                              <CiBank size={30} />
+                            ) : item.method === "cash" ? (
+                              <LiaRupeeSignSolid size={30} />
+                            ) : (
+                              <CiMoneyCheck1 size={30} />
+                            ),
+                        }}
+                        title={item.title}
+                        detail={
+                          <span className="flex justify-start items-center">
+                            <TbCurrencyRupeeNepalese />
+                            {item.amount}
+                          </span>
+                        }
+                        key={id}
+                      />
+                    );
+                  })}
               </>
             )}
           </div>
