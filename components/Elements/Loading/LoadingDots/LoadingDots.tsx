@@ -2,7 +2,10 @@ import React from "react";
 
 const LoadingDots = () => {
   return (
-    <div role="status">
+    <div
+      role="status"
+      className="fixed w-full h-full flex justify-center items-center"
+    >
       <svg
         aria-hidden="true"
         className="w-8 h-8 text-gray-300 animate-spin dark:text-darkBgBlur/50 fill-gray-600"

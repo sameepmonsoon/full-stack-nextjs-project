@@ -81,7 +81,8 @@ const IncomePage = () => {
   const [formValue, setFormValue] =
     useState<AddIncomeFormValueType>(initialValue);
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(5);
+  const [disablePagination, setDisablePagination] = useState(true);
   const theme = localStorage.getItem("theme");
 
   const fetchData = async () => {
@@ -90,6 +91,7 @@ const IncomePage = () => {
       setIncomeDetail(res.data);
       setTotalPosts(res.total);
       setIsFetching(false);
+      setDisablePagination(false);
     }
   };
 
@@ -203,7 +205,7 @@ const IncomePage = () => {
 
   useEffect(() => {
     fetchData();
-  }, [pageNumber, userDetail?.id]);
+  }, [pageNumber, userDetail?.id, pageSize]);
 
   const currentSubCat: any =
     Object.keys(IncomeSubcategoryConstant).find(
@@ -227,8 +229,12 @@ const IncomePage = () => {
     setCurrentListDay(e);
   };
   const [openFilter, setOpenFilter] = useState(false);
-  const handleListPopOverToggle = (value?: string) => {
+  const handleListPopOverToggle: any = (value?: string) => {
     setOpenFilter(!openFilter);
+    if (typeof value === "string" && value !== "none") {
+      setPageSize(1000);
+      setDisablePagination(true);
+    }
     if (typeof value === "string") setCurrentListPaymentType(value);
   };
   return (
@@ -281,12 +287,14 @@ const IncomePage = () => {
           icon={GiWallet}
           type={"column"}
           title={
-            <div className="flex justify-start items-center gap-0">
-              <TbCurrencyRupeeNepalese />
-              <span className="flex justify-start items-center relative -top-[2px]">
-                {(totalIncomeDetail as any)[currentMethod]}
-              </span>
-            </div>
+            (totalIncomeDetail as any)[currentMethod] && (
+              <div className="flex justify-start items-center gap-0">
+                <TbCurrencyRupeeNepalese />
+                <span className="flex justify-start items-center relative -top-[2px]">
+                  {(totalIncomeDetail as any)[currentMethod]}
+                </span>
+              </div>
+            )
           }
           detail={`Total ${currentMethod} Balance`}
         />
@@ -349,7 +357,10 @@ const IncomePage = () => {
           dialogTitle="Income"
           trigger={
             <Button
-              onClick={() => setFormValue(initialValue)}
+              onClick={() => {
+                console.log("clicked");
+                setFormValue(initialValue);
+              }}
               size={"lg"}
               variant={"outline"}
               className="w-[3rem] h-[3rem] hover:bg-white text-gray-400 outline-gray-400 dark:outline-gray-100/30 dark:hover:text-gray-100/30 border-dashed outline-dashed outline-[1px] flex justify-center items-center p-1 rounded-full"
@@ -655,10 +666,10 @@ const IncomePage = () => {
                 changeHandler={handleListContainerSelect}
                 title={`This ${currentListDay}`}
                 data={["day", "month", "year"]}
-              ></CustomDropDown>
+              />
               <CustomPopOver
                 onOpenChange={handleListPopOverToggle}
-                defaultOpen={false}
+                defaultOpen={true}
                 open={openFilter}
                 popOverContent={
                   <>
@@ -687,31 +698,30 @@ const IncomePage = () => {
                   </>
                 }
               >
-                <span
-                  className="hover:bg-accent cursor-pointer flex items-center justify-center p-1 rounded-sm"
-                  onClick={() => handleListPopOverToggle}
+                <Button
+                  onClick={handleListPopOverToggle}
+                  variant={"ghost"}
+                  className="w-[2rem] hidden xl:flex h-[2rem] justify-center items-center p-1"
                 >
-                  <CustomToolTip
-                    showArrow={true}
-                    key={"filter"}
-                    toolTipContent={"Filter"}
-                    showToolTip={true}
-                  >
-                    <LiaSlidersHSolid size={25} />
-                  </CustomToolTip>
-                </span>
+                  <LiaSlidersHSolid
+                    size={25}
+                    className="dark:group-hover:fill-black"
+                  />
+                </Button>
               </CustomPopOver>
             </div>
           }
           title={"History"}
           footer={
-            <PaginationBar
-              siblingCount={5}
-              currentPage={pageNumber}
-              totalCount={totalPosts}
-              pageSize={5}
-              handlePagination={handlePageNumberChange}
-            />
+            !disablePagination && (
+              <PaginationBar
+                siblingCount={5}
+                currentPage={pageNumber}
+                totalCount={totalPosts}
+                pageSize={5}
+                handlePagination={handlePageNumberChange}
+              />
+            )
           }
         >
           <div className="flex flex-col gap-1 w-full h-full">
