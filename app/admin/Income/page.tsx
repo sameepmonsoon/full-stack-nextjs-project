@@ -63,7 +63,7 @@ const IncomePage = () => {
   const [incomeDetail, setIncomeDetail] = useState<any[]>([]);
   const [totalPosts, setTotalPosts] = useState<number>(0);
   const [isFetching, setIsFetching] = useState<boolean>(true);
-
+  const [balance, setBalance] = useState<{totalBalance:number}>({totalBalance:0});
   //popover states
   const [toggle, setToggle] = useState(false);
   const [currentMethod, setCurrentMethod] = useState("income");
@@ -84,7 +84,7 @@ const IncomePage = () => {
   const [pageSize, setPageSize] = useState(5);
   const [disablePagination, setDisablePagination] = useState(true);
   const theme = localStorage.getItem("theme");
-
+  const [currentListDay, setCurrentListDay] = useState<string>("year");
   const fetchData = async () => {
     if (userDetail?.id) {
       const res = await getInitialData(userDetail?.id);
@@ -120,6 +120,10 @@ const IncomePage = () => {
     }
     setIsSubmitting(false);
   }
+  const handleListContainerSelect = (e: any) => {
+    setCurrentListDay(e);
+    console.log(e);
+  };
   const handlePageNumberChange = (pageNumber: any) => {
     setPageNumber(pageNumber);
   };
@@ -170,16 +174,27 @@ const IncomePage = () => {
   }, [userDetail, formValue.userId]);
 
   async function getInitialData(userId: string) {
-    const response = await fetch(
-      `/api/finance/income?userId=${userId}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    let url = `/api/finance/income?userId=${userId}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+
+    if (currentListDay === "day") {
+      url += "&thisDay=thisDay";
+    }
+    if (currentListDay === "month") {
+      url += "&thisMonth=thisMonth";
+    }
+    if (currentListDay === "year") {
+      url += "&thisYear=thisYear";
+    }
+    if (currentListDay === "all") {
+      url += "";
+    }
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
     const response2: any = await fetch(
       `/api/finance/income/getTotalIncome?userId=${userId}`,
       {
@@ -190,6 +205,18 @@ const IncomePage = () => {
         },
       }
     );
+    const response3: any = await fetch(
+      `/api/finance/balance?userId=${userId}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const totalBalance = await response3.json();
+    setBalance(totalBalance);
     const totalUserIncome = await response2.json();
     const { totalCashAmount, totalBankAmount, totalChequeAmount, totalIncome } =
       totalUserIncome;
@@ -205,7 +232,7 @@ const IncomePage = () => {
 
   useEffect(() => {
     fetchData();
-  }, [pageNumber, userDetail?.id, pageSize]);
+  }, [pageNumber, userDetail?.id, pageSize, currentListDay]);
 
   const currentSubCat: any =
     Object.keys(IncomeSubcategoryConstant).find(
@@ -222,12 +249,9 @@ const IncomePage = () => {
 
   //list on change select day type filter
 
-  const [currentListDay, setCurrentListDay] = useState<string>("year");
   const [currentListPaymentType, setCurrentListPaymentType] =
     useState<string>("none");
-  const handleListContainerSelect = (e: any) => {
-    setCurrentListDay(e);
-  };
+
   const [openFilter, setOpenFilter] = useState(false);
   const handleListPopOverToggle: any = (value?: string) => {
     setOpenFilter(!openFilter);
@@ -299,7 +323,14 @@ const IncomePage = () => {
           detail={`Total ${currentMethod} Balance`}
         />
         <div className="min-w-[60%] w-auto flex-1">
-          <BalanceCard />
+          <BalanceCard
+            totalAmount={
+              <span className="w-full flex justify-start h-auto items-center">
+                <TbCurrencyRupeeNepalese />
+                {balance.totalBalance}
+              </span>
+            }
+          />
         </div>
       </div>
       <div className="w-full flex flex-row flex-wrap items-center justify-stretch gap-2">
@@ -664,8 +695,11 @@ const IncomePage = () => {
             <div className="flex gap-2 flex-1 ">
               <CustomDropDown
                 changeHandler={handleListContainerSelect}
-                title={`This ${currentListDay}`}
-                data={["day", "month", "year"]}
+                title={`${
+                  currentListDay === "all" ? "All" : `This ${currentListDay}`
+                } `}
+                data={["day", "month", "year", "all"]}
+                currentData={currentListDay}
               />
               <CustomPopOver
                 onOpenChange={handleListPopOverToggle}

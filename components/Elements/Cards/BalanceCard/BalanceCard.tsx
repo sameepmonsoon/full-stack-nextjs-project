@@ -1,6 +1,10 @@
 import React from "react";
 import { TbDotsVertical } from "react-icons/tb";
-const BalanceCard = () => {
+const BalanceCard = ({
+  totalAmount,
+}: {
+  totalAmount: string | React.ReactNode;
+}) => {
   return (
     <div className="h-[10rem] relative flex justify-center items-center">
       <div className="z-[40] bg-darkBg w-full h-full rounded-[14px] p-5 py-3">
@@ -12,9 +16,9 @@ const BalanceCard = () => {
             <TbDotsVertical size={20} />
           </span>
         </div>
-        <h3 className="font-bold text-white h-10 text-2xl capitalize relative -top-2 ">
-          $6000
-        </h3>
+        <div className="font-bold text-white h-10 text-2xl capitalize relative -top-2 ">
+          {totalAmount}
+        </div>
         <div className="flex flex-1 w-full h-10 justify-start gap-5 overflow-hidden">
           <div className="h-full min-w-24 flex justify-center items-start flex-col">
             <span className="text-gray-500 text-sm font-medium capitalize">

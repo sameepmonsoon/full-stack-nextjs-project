@@ -8,10 +8,8 @@ import { RxCross2 } from "react-icons/rx";
 import React, { useEffect, useMemo, useState } from "react";
 import { GiWallet } from "react-icons/gi";
 import { TbCurrencyRupeeNepalese } from "react-icons/tb";
-import { RiMoneyDollarBoxLine } from "react-icons/ri";
-import userImage from "@/public/image-one.jpg";
+import { LiaSlidersHSolid } from "react-icons/lia";
 import { CiMoneyCheck1 } from "react-icons/ci";
-import { LiaMoneyCheckSolid } from "react-icons/lia";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import { CiBank } from "react-icons/ci";
 import DetailCard from "@/components/Elements/Cards/DetailCard/DetailCard";
@@ -41,9 +39,12 @@ import SkeletonDetailCard from "@/components/Elements/Skeleton/SkeletonDetailCar
 import { CustomDatePicker } from "@/components/Elements/CustomDatePicker/CustomDatePicker";
 import { PaginationBar } from "@/components/Elements/Pagination/PaginationBar";
 import { Label } from "@radix-ui/react-label";
-import { FaMoneyBillTransfer } from "react-icons/fa6";
+import { FilterIcon, FilterXIcon } from "lucide-react";
+import { CustomPopOver } from "@/components/Elements/CustomPopOver/CustomPopOver";
+import { CustomDropDown } from "@/components/Elements/CustomDropDown/CustomDropDown";
+import CustomToolTip from "@/components/Elements/CustomToolTip/CustomToolTip";
 
-const ExpensePage = () => {
+const IncomePage = () => {
   const routeHistory = useRouteHistory();
   const userDetail: any = getUserDetail();
 
@@ -62,7 +63,7 @@ const ExpensePage = () => {
   const [incomeDetail, setIncomeDetail] = useState<any[]>([]);
   const [totalPosts, setTotalPosts] = useState<number>(0);
   const [isFetching, setIsFetching] = useState<boolean>(true);
-
+  const [balance, setBalance] = useState<{totalBalance:number}>({totalBalance:0});
   //popover states
   const [toggle, setToggle] = useState(false);
   const [currentMethod, setCurrentMethod] = useState("income");
@@ -80,15 +81,17 @@ const ExpensePage = () => {
   const [formValue, setFormValue] =
     useState<AddIncomeFormValueType>(initialValue);
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(5);
+  const [disablePagination, setDisablePagination] = useState(true);
   const theme = localStorage.getItem("theme");
-
+  const [currentListDay, setCurrentListDay] = useState<string>("year");
   const fetchData = async () => {
     if (userDetail?.id) {
       const res = await getInitialData(userDetail?.id);
       setIncomeDetail(res.data);
       setTotalPosts(res.total);
       setIsFetching(false);
+      setDisablePagination(false);
     }
   };
 
@@ -117,6 +120,10 @@ const ExpensePage = () => {
     }
     setIsSubmitting(false);
   }
+  const handleListContainerSelect = (e: any) => {
+    setCurrentListDay(e);
+    console.log(e);
+  };
   const handlePageNumberChange = (pageNumber: any) => {
     setPageNumber(pageNumber);
   };
@@ -167,16 +174,27 @@ const ExpensePage = () => {
   }, [userDetail, formValue.userId]);
 
   async function getInitialData(userId: string) {
-    const response = await fetch(
-      `/api/finance/income?userId=${userId}&pageNumber=${pageNumber}&pageSize=${pageSize}`,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    let url = `/api/finance/income?userId=${userId}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+
+    if (currentListDay === "day") {
+      url += "&thisDay=thisDay";
+    }
+    if (currentListDay === "month") {
+      url += "&thisMonth=thisMonth";
+    }
+    if (currentListDay === "year") {
+      url += "&thisYear=thisYear";
+    }
+    if (currentListDay === "all") {
+      url += "";
+    }
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
     const response2: any = await fetch(
       `/api/finance/income/getTotalIncome?userId=${userId}`,
       {
@@ -187,6 +205,18 @@ const ExpensePage = () => {
         },
       }
     );
+    const response3: any = await fetch(
+      `/api/finance/balance?userId=${userId}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const totalBalance = await response3.json();
+    setBalance(totalBalance);
     const totalUserIncome = await response2.json();
     const { totalCashAmount, totalBankAmount, totalChequeAmount, totalIncome } =
       totalUserIncome;
@@ -202,7 +232,7 @@ const ExpensePage = () => {
 
   useEffect(() => {
     fetchData();
-  }, [pageNumber, userDetail?.id]);
+  }, [pageNumber, userDetail?.id, pageSize, currentListDay]);
 
   const currentSubCat: any =
     Object.keys(IncomeSubcategoryConstant).find(
@@ -216,6 +246,21 @@ const ExpensePage = () => {
   // }, [userDetail.id]);
 
   // console.log(initialCachedIncomeData);
+
+  //list on change select day type filter
+
+  const [currentListPaymentType, setCurrentListPaymentType] =
+    useState<string>("none");
+
+  const [openFilter, setOpenFilter] = useState(false);
+  const handleListPopOverToggle: any = (value?: string) => {
+    setOpenFilter(!openFilter);
+    if (typeof value === "string" && value !== "none") {
+      setPageSize(1000);
+      setDisablePagination(true);
+    }
+    if (typeof value === "string") setCurrentListPaymentType(value);
+  };
   return (
     <>
       <div className="w-full flex flex-row flex-wrap items-center justify-stretch gap-2">
@@ -262,21 +307,30 @@ const ExpensePage = () => {
             currentData: currentMethod,
             handler: handlePopOverToggle,
           }}
-          color="alert"
-          icon={FaMoneyBillTransfer}
+          color="safe"
+          icon={GiWallet}
           type={"column"}
           title={
-            <div className="flex justify-start items-center gap-0">
-              <TbCurrencyRupeeNepalese />
-              <span className="flex justify-start items-center relative -top-[2px]">
-                {(totalIncomeDetail as any)[currentMethod]}
-              </span>
-            </div>
+            (totalIncomeDetail as any)[currentMethod] && (
+              <div className="flex justify-start items-center gap-0">
+                <TbCurrencyRupeeNepalese />
+                <span className="flex justify-start items-center relative -top-[2px]">
+                  {(totalIncomeDetail as any)[currentMethod]}
+                </span>
+              </div>
+            )
           }
           detail={`Total ${currentMethod} Balance`}
         />
         <div className="min-w-[60%] w-auto flex-1">
-          <BalanceCard />
+          <BalanceCard
+            totalAmount={
+              <span className="w-full flex justify-start h-auto items-center">
+                <TbCurrencyRupeeNepalese />
+                {balance.totalBalance}
+              </span>
+            }
+          />
         </div>
       </div>
       <div className="w-full flex flex-row flex-wrap items-center justify-stretch gap-2">
@@ -334,7 +388,10 @@ const ExpensePage = () => {
           dialogTitle="Income"
           trigger={
             <Button
-              onClick={() => setFormValue(initialValue)}
+              onClick={() => {
+                console.log("clicked");
+                setFormValue(initialValue);
+              }}
               size={"lg"}
               variant={"outline"}
               className="w-[3rem] h-[3rem] hover:bg-white text-gray-400 outline-gray-400 dark:outline-gray-100/30 dark:hover:text-gray-100/30 border-dashed outline-dashed outline-[1px] flex justify-center items-center p-1 rounded-full"
@@ -634,15 +691,71 @@ const ExpensePage = () => {
 
       <div className="flex flex-1 gap-5 justify-start items-start flex-wrap">
         <ListContainer
+          listTitleProps={
+            <div className="flex gap-2 flex-1 ">
+              <CustomDropDown
+                changeHandler={handleListContainerSelect}
+                title={`${
+                  currentListDay === "all" ? "All" : `This ${currentListDay}`
+                } `}
+                data={["day", "month", "year", "all"]}
+                currentData={currentListDay}
+              />
+              <CustomPopOver
+                onOpenChange={handleListPopOverToggle}
+                defaultOpen={true}
+                open={openFilter}
+                popOverContent={
+                  <>
+                    {["cash", "cheque", "bank", "none"].map(
+                      (item: any, index: number) => (
+                        <>
+                          <button
+                            key={index}
+                            onClick={() => {
+                              handleListPopOverToggle(item);
+                            }}
+                            className={`gap-2 overflow-hidden cursor-pointer ${
+                              currentListPaymentType === item && "bg-green-200"
+                            } hover:bg-green-200 text-green-950 rounded-sm w-full text-sm flex justify-start items-center py-[2px] px-2`}
+                          >
+                            <Label
+                              key={index}
+                              className="text-ellipsis capitalize cursor-pointer overflow-hidden max-w-[75%] h-full"
+                            >
+                              {item}
+                            </Label>
+                          </button>
+                        </>
+                      )
+                    )}
+                  </>
+                }
+              >
+                <Button
+                  onClick={handleListPopOverToggle}
+                  variant={"ghost"}
+                  className="w-[2rem] hidden xl:flex h-[2rem] justify-center items-center p-1"
+                >
+                  <LiaSlidersHSolid
+                    size={25}
+                    className="dark:group-hover:fill-black"
+                  />
+                </Button>
+              </CustomPopOver>
+            </div>
+          }
           title={"History"}
           footer={
-            <PaginationBar
-              siblingCount={5}
-              currentPage={pageNumber}
-              totalCount={totalPosts}
-              pageSize={5}
-              handlePagination={handlePageNumberChange}
-            />
+            !disablePagination && (
+              <PaginationBar
+                siblingCount={5}
+                currentPage={pageNumber}
+                totalCount={totalPosts}
+                pageSize={5}
+                handlePagination={handlePageNumberChange}
+              />
+            )
           }
         >
           <div className="flex flex-col gap-1 w-full h-full">
@@ -656,33 +769,41 @@ const ExpensePage = () => {
               </>
             ) : (
               <>
-                {incomeDetail?.map((item: any, id: number) => {
-                  return (
-                    <DetailCard
-                      note={item?.note}
-                      type="row"
-                      image={{
-                        asIcon: true,
-                        content:
-                          item.method === "bank" ? (
-                            <CiBank size={30} />
-                          ) : item.method === "cash" ? (
-                            <LiaRupeeSignSolid size={30} />
-                          ) : (
-                            <CiMoneyCheck1 size={30} />
-                          ),
-                      }}
-                      title={item.title}
-                      detail={
-                        <span className="flex justify-start items-center">
-                          <TbCurrencyRupeeNepalese />
-                          {item.amount}
-                        </span>
-                      }
-                      key={id}
-                    />
-                  );
-                })}
+                {incomeDetail
+                  ?.filter((item: any) => {
+                    if (currentListPaymentType == "none") {
+                      return item;
+                    } else {
+                      return item.method == currentListPaymentType;
+                    }
+                  })
+                  .map((item: any, id: number) => {
+                    return (
+                      <DetailCard
+                        note={item?.note}
+                        type="row"
+                        image={{
+                          asIcon: true,
+                          content:
+                            item.method === "bank" ? (
+                              <CiBank size={30} />
+                            ) : item.method === "cash" ? (
+                              <LiaRupeeSignSolid size={30} />
+                            ) : (
+                              <CiMoneyCheck1 size={30} />
+                            ),
+                        }}
+                        title={item.title}
+                        detail={
+                          <span className="flex justify-start items-center">
+                            <TbCurrencyRupeeNepalese />
+                            {item.amount}
+                          </span>
+                        }
+                        key={id}
+                      />
+                    );
+                  })}
               </>
             )}
           </div>
@@ -692,4 +813,4 @@ const ExpensePage = () => {
   );
 };
 
-export default ExpensePage;
+export default IncomePage;
