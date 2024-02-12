@@ -2,70 +2,74 @@ import Expense from "@/models/Finance/Expense";
 import connect from "@/utils/db_config";
 import { NextApiResponse } from "next";
 import { NextResponse } from "next/server";
+import { verifyToken } from "../../middleware";
 
+export async function POST(request: any, res: NextResponse) {
+  try {
+    await connect();
+    // verifyToken(request, res, async () => {
+    const body = await request.json();
+    const expenseDetail = await Expense.create({
+      title: body.title,
+      userId: body.userId,
+      source: [body.source],
+      date: body.date,
+      method: body.method?.value,
+      note: body.note,
+      amount: body.amount,
+      category: [body.category],
+    });
+    return NextResponse.json(
+      { message: "Expense Detail Added !", expenseDetail, status: true },
+      { status: 200 }
+    );
+    // });
+  } catch (error: any) {
+    console.error("Error:", error.message);
+    return NextResponse.json(
+      { error: error.message, status: false },
+      { status: 400 }
+    );
+  }
+}
 export async function GET(request: any) {
   try {
     await connect();
 
+    // Get the current date
+    const currentDate = new Date();
+    const currentDay = currentDate.getDate();
+    const currentMonth = currentDate.getMonth() + 1; // Months are zero-indexed
+    const currentYear = currentDate.getFullYear();
+
     const { searchParams } = new URL(request.url);
-    const param = searchParams.get("userId");
+    const userId = searchParams.get("userId");
+    const pageNumber: number = parseInt(
+      searchParams.get("pageNumber") || "1",
+      10
+    );
+    const pageSize: number = parseInt(searchParams.get("pageSize") || "10", 10);
+    const skipAmount = (pageNumber - 1) * pageSize;
 
-    const aggregatedData: any = await Expense.aggregate([
-      {
-        $match: { userId: param, method: { $in: ["cash", "bank", "cheque"] } },
-      },
-      {
-        $facet: {
-          totalCashAmount: [
-            {
-              $match: { method: "cash" },
-            },
-            {
-              $group: {
-                _id: null,
-                totalSum: { $sum: "$amount" },
-              },
-            },
-          ],
-          totalBankAmount: [
-            {
-              $match: { method: "bank" },
-            },
-            {
-              $group: {
-                _id: null,
-                totalSum: { $sum: "$amount" },
-              },
-            },
-          ],
-          totalChequeAmount: [
-            {
-              $match: { method: "cheque" },
-            },
-            {
-              $group: {
-                _id: null,
-                totalSum: { $sum: "$amount" },
-              },
-            },
-          ],
-        },
-      },
-    ]);
+    // Build the query object based on userId
+    const query: any = { userId };
 
-    const totalCashAmount = aggregatedData[0].totalCashAmount[0]?.totalSum || 0;
-    const totalBankAmount = aggregatedData[0].totalBankAmount[0]?.totalSum || 0;
-    const totalChequeAmount =
-      aggregatedData[0].totalChequeAmount[0]?.totalSum || 0;
+    // Check for filters for "this day", "this month", and "this year"
+    if (searchParams.get("thisDay")) {
+      query.$expr = { $eq: [{ $dayOfMonth: "$date" }, currentDay] };
+    }
+    if (searchParams.get("thisMonth")) {
+      query.$expr = { $eq: [{ $month: "$date" }, currentMonth] };
+    }
+    if (searchParams.get("thisYear")) {
+      query.$expr = { $eq: [{ $year: "$date" }, currentYear] };
+    }
 
-    const totalExpense = totalCashAmount + totalBankAmount + totalChequeAmount;
+    // Retrieve total count and paginated data
+    const total = await Expense.countDocuments(query);
+    const data = await Expense.find(query).skip(skipAmount).limit(pageSize);
 
-    return NextResponse.json({
-      totalExpense,
-      totalCashAmount,
-      totalBankAmount,
-      totalChequeAmount,
-    });
+    return NextResponse.json({ total, data });
   } catch (error) {
     console.error("Error fetching data:", error);
     return NextResponse.json({

@@ -6,11 +6,13 @@ const ListContainer = ({
   children,
   footer,
   listTitleProps,
+  hasData,
 }: {
   title: string;
   children?: React.ReactNode;
   footer?: React.ReactNode;
   listTitleProps?: any;
+  hasData: boolean;
 }) => {
   return (
     <section
@@ -20,7 +22,9 @@ const ListContainer = ({
         {title}
         <span className="flex items-center ">{listTitleProps}</span>
       </div>
-      <div className={`w-full p-4 flex-1 h-full ${"min-h-[22.5rem]"}`}>
+      <div
+        className={`w-full p-4 flex-1 h-full ${hasData && "min-h-[22.5rem]"}`}
+      >
         {children}
       </div>
 

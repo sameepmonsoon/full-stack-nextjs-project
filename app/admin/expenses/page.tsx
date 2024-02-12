@@ -32,7 +32,6 @@ import {
   IncomeCategoryConstant,
   IncomeSubcategoryConstant,
   PaymentMethodConstant,
-  incomeCardConstant,
 } from "@/Helpers/Constants/Admin/IncomeConstants";
 import BreadCrumbNav from "@/components/Elements/BreadCrumbs/BreadCrumbNav/BreadCrumbNav";
 import SkeletonDetailCard from "@/components/Elements/Skeleton/SkeletonDetailCard/SkeletonDetailCard";
@@ -43,6 +42,9 @@ import { FilterIcon, FilterXIcon } from "lucide-react";
 import { CustomPopOver } from "@/components/Elements/CustomPopOver/CustomPopOver";
 import { CustomDropDown } from "@/components/Elements/CustomDropDown/CustomDropDown";
 import CustomToolTip from "@/components/Elements/CustomToolTip/CustomToolTip";
+import { expenseCardConstant } from "@/Helpers/Constants/Admin/ExpenseConstants";
+import { debounce } from "@/Helpers/Debounce";
+import { FaMoneyBillTransfer } from "react-icons/fa6";
 
 const IncomePage = () => {
   const routeHistory = useRouteHistory();
@@ -60,20 +62,22 @@ const IncomePage = () => {
   };
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [incomeDetail, setIncomeDetail] = useState<any[]>([]);
+  const [expenseDetail, setExpenseDetail] = useState<any[]>([]);
   const [totalPosts, setTotalPosts] = useState<number>(0);
   const [isFetching, setIsFetching] = useState<boolean>(true);
-  const [balance, setBalance] = useState<{totalBalance:number}>({totalBalance:0});
+  const [balance, setBalance] = useState<{ totalBalance: number }>({
+    totalBalance: 0,
+  });
   //popover states
   const [toggle, setToggle] = useState(false);
-  const [currentMethod, setCurrentMethod] = useState("income");
-  const [totalIncomeDetail, setTotalIncomeDetail] = useState<{
-    income: number;
+  const [currentMethod, setCurrentMethod] = useState("expense");
+  const [totalExpenseDetail, setTotalExpenseDetail] = useState<{
+    expense: number;
     cash: number;
     bank: number;
     cheque: number;
   }>({
-    income: 0,
+    expense: 0,
     cash: 0,
     bank: 0,
     cheque: 0,
@@ -88,17 +92,16 @@ const IncomePage = () => {
   const fetchData = async () => {
     if (userDetail?.id) {
       const res = await getInitialData(userDetail?.id);
-      setIncomeDetail(res.data);
+      setExpenseDetail(res.data);
       setTotalPosts(res.total);
       setIsFetching(false);
       setDisablePagination(false);
     }
   };
-
   async function handleSubmit(e: React.FormEvent<HTMLElement>) {
     e.preventDefault();
     setIsSubmitting(true);
-    const res = await fetch("/api/finance/income", {
+    const res = await fetch("/api/finance/expense", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -122,7 +125,6 @@ const IncomePage = () => {
   }
   const handleListContainerSelect = (e: any) => {
     setCurrentListDay(e);
-    console.log(e);
   };
   const handlePageNumberChange = (pageNumber: any) => {
     setPageNumber(pageNumber);
@@ -174,7 +176,7 @@ const IncomePage = () => {
   }, [userDetail, formValue.userId]);
 
   async function getInitialData(userId: string) {
-    let url = `/api/finance/income?userId=${userId}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    let url = `/api/finance/expense?userId=${userId}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
 
     if (currentListDay === "day") {
       url += "&thisDay=thisDay";
@@ -196,7 +198,7 @@ const IncomePage = () => {
       },
     });
     const response2: any = await fetch(
-      `/api/finance/income/getTotalIncome?userId=${userId}`,
+      `/api/finance/expense/getTotalExpense?userId=${userId}`,
       {
         method: "GET",
         headers: {
@@ -218,10 +220,14 @@ const IncomePage = () => {
     const totalBalance = await response3.json();
     setBalance(totalBalance);
     const totalUserIncome = await response2.json();
-    const { totalCashAmount, totalBankAmount, totalChequeAmount, totalIncome } =
-      totalUserIncome;
-    setTotalIncomeDetail({
-      income: totalIncome,
+    const {
+      totalCashAmount,
+      totalBankAmount,
+      totalChequeAmount,
+      totalExpense,
+    } = totalUserIncome;
+    setTotalExpenseDetail({
+      expense: totalExpense,
       cash: totalCashAmount,
       bank: totalBankAmount,
       cheque: totalChequeAmount,
@@ -240,15 +246,6 @@ const IncomePage = () => {
       (item) => item === formValue?.source?.value
     ) ?? "";
 
-  // const initialCachedIncomeData = useMemo(() => {
-  //   const data = incomeDetail;
-  //   return data;
-  // }, [userDetail.id]);
-
-  // console.log(initialCachedIncomeData);
-
-  //list on change select day type filter
-
   const [currentListPaymentType, setCurrentListPaymentType] =
     useState<string>("none");
 
@@ -265,13 +262,13 @@ const IncomePage = () => {
     <>
       <div className="w-full flex flex-row flex-wrap items-center justify-stretch gap-2">
         <BreadCrumbNav
-          title="income"
+          title="expense"
           crumb={
             <BreadCrumbs
               gap={20}
               separatorType={2}
               routeHistory={routeHistory}
-              icon={GiWallet}
+              icon={FaMoneyBillTransfer}
             />
           }
         />
@@ -281,7 +278,7 @@ const IncomePage = () => {
           popOverContent={{
             content: (
               <>
-                {incomeCardConstant.map((item: any, index: number) => (
+                {expenseCardConstant.map((item: any, index: number) => (
                   <>
                     <button
                       key={index}
@@ -307,18 +304,20 @@ const IncomePage = () => {
             currentData: currentMethod,
             handler: handlePopOverToggle,
           }}
-          color="safe"
+          color="alert"
           icon={GiWallet}
           type={"column"}
           title={
-            (totalIncomeDetail as any)[currentMethod] && (
-              <div className="flex justify-start items-center gap-0">
-                <TbCurrencyRupeeNepalese />
+            <div className="flex justify-start items-center gap-0">
+              <TbCurrencyRupeeNepalese />
+              {(totalExpenseDetail as any)[currentMethod] ? (
                 <span className="flex justify-start items-center relative -top-[2px]">
-                  {(totalIncomeDetail as any)[currentMethod]}
+                  {(totalExpenseDetail as any)[currentMethod]}
                 </span>
-              </div>
-            )
+              ) : (
+                "0"
+              )}
+            </div>
           }
           detail={`Total ${currentMethod} Balance`}
         />
@@ -344,7 +343,7 @@ const IncomePage = () => {
           </div>
         ) : (
           <>
-            {incomeDetail?.map((item: any, id: number) => {
+            {expenseDetail?.map((item: any, id: number) => {
               if (id <= 4) {
                 return (
                   <DetailCard
@@ -384,12 +383,11 @@ const IncomePage = () => {
           </>
         )}
         <DialogBox
-          dialogDescription="Add Income Details"
-          dialogTitle="Income"
+          dialogDescription="Add Expense Details"
+          dialogTitle="Expense"
           trigger={
             <Button
               onClick={() => {
-                console.log("clicked");
                 setFormValue(initialValue);
               }}
               size={"lg"}
@@ -402,7 +400,7 @@ const IncomePage = () => {
         >
           <form
             className="w-full h-full flex flex-col gap-4"
-            onSubmit={handleSubmit}
+            onSubmit={(e) => debounce(handleSubmit(e), 300)}
           >
             <div className="flex gap-2 w-full items-center justify-between flex-1">
               <CustomInputContainer
@@ -691,6 +689,7 @@ const IncomePage = () => {
 
       <div className="flex flex-1 gap-5 justify-start items-start flex-wrap">
         <ListContainer
+          hasData={totalPosts > 0}
           listTitleProps={
             <div className="flex gap-2 flex-1 ">
               <CustomDropDown
@@ -747,7 +746,7 @@ const IncomePage = () => {
           }
           title={"History"}
           footer={
-            !disablePagination && (
+            !disablePagination && totalPosts ? (
               <PaginationBar
                 siblingCount={5}
                 currentPage={pageNumber}
@@ -755,7 +754,7 @@ const IncomePage = () => {
                 pageSize={5}
                 handlePagination={handlePageNumberChange}
               />
-            )
+            ) : null
           }
         >
           <div className="flex flex-col gap-1 w-full h-full">
@@ -769,41 +768,49 @@ const IncomePage = () => {
               </>
             ) : (
               <>
-                {incomeDetail
-                  ?.filter((item: any) => {
-                    if (currentListPaymentType == "none") {
-                      return item;
-                    } else {
-                      return item.method == currentListPaymentType;
-                    }
-                  })
-                  .map((item: any, id: number) => {
-                    return (
-                      <DetailCard
-                        note={item?.note}
-                        type="row"
-                        image={{
-                          asIcon: true,
-                          content:
-                            item.method === "bank" ? (
-                              <CiBank size={30} />
-                            ) : item.method === "cash" ? (
-                              <LiaRupeeSignSolid size={30} />
-                            ) : (
-                              <CiMoneyCheck1 size={30} />
-                            ),
-                        }}
-                        title={item.title}
-                        detail={
-                          <span className="flex justify-start items-center">
-                            <TbCurrencyRupeeNepalese />
-                            {item.amount}
-                          </span>
+                {expenseDetail?.length <= 0 ? (
+                  <div className="min-h-full w-full flex justify-center items-center">
+                    No Data
+                  </div>
+                ) : (
+                  <>
+                    {expenseDetail
+                      ?.filter((item: any) => {
+                        if (currentListPaymentType == "none") {
+                          return item;
+                        } else {
+                          return item.method == currentListPaymentType;
                         }
-                        key={id}
-                      />
-                    );
-                  })}
+                      })
+                      .map((item: any, id: number) => {
+                        return (
+                          <DetailCard
+                            note={item?.note}
+                            type="row"
+                            image={{
+                              asIcon: true,
+                              content:
+                                item.method === "bank" ? (
+                                  <CiBank size={30} />
+                                ) : item.method === "cash" ? (
+                                  <LiaRupeeSignSolid size={30} />
+                                ) : (
+                                  <CiMoneyCheck1 size={30} />
+                                ),
+                            }}
+                            title={item.title}
+                            detail={
+                              <span className="flex justify-start items-center">
+                                <TbCurrencyRupeeNepalese />
+                                {item.amount}
+                              </span>
+                            }
+                            key={id}
+                          />
+                        );
+                      })}
+                  </>
+                )}
               </>
             )}
           </div>

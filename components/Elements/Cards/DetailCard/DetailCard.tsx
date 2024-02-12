@@ -1,6 +1,8 @@
+"ues client";
 import Image, { StaticImageData } from "next/image";
-import React from "react";
-
+import React, { useState } from "react";
+import { MdDeleteOutline } from "react-icons/md";
+import { CiEdit } from "react-icons/ci";
 const DetailCard = ({
   image = { asIcon: false, content: "" },
   title,
@@ -17,8 +19,14 @@ const DetailCard = ({
   detail: string | React.ReactNode;
   type: "row" | "column";
 }) => {
+  const [showIcons, setShowIcons] = useState(false);
   return (
-    <div className="flex overflow-hidden gap-3 flex-1 bg-white dark:bg-transparent rounded-[18px] px-2 py-2 min-w-[15rem] h-[4rem] items-start justify-start border-[1px] border-darkBg/20 dark:border-accent/10">
+    <div
+      onClick={() => {
+        setShowIcons(!showIcons);
+      }}
+      className="relative flex overflow-hidden gap-3 flex-1 bg-white dark:bg-transparent rounded-[18px] px-2 py-2 min-w-[15rem] h-[4rem] items-start justify-start border-[1px] border-darkBg/20 dark:border-accent/10"
+    >
       <div className="h-[45px] overflow-hidden w-[46px] rounded-full flex justify-center items-center">
         {!image.asIcon ? (
           <Image
@@ -29,6 +37,13 @@ const DetailCard = ({
         ) : (
           <>{image.content}</>
         )}
+      </div>
+      <div className="top-0 px-2 rounded-[18px] left-0 absolute w-full backdrop-blur-sm bg-white/5 z-10 h-full flex-1 flex justify-end items-center gap-2">
+        <span className="w-10 h-10 rounded-full fill-red-400">
+         
+          <MdDeleteOutline />
+        </span>
+        <CiEdit />
       </div>
       <div
         className={`${
