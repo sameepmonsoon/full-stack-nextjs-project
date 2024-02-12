@@ -15,10 +15,12 @@ export function CustomDropDown({
   title,
   data,
   changeHandler,
+  currentData,
 }: {
   changeHandler: (e: any) => any;
   title: string;
   data: any;
+  currentData: any;
 }) {
   return (
     <DropdownMenu>
@@ -33,9 +35,13 @@ export function CustomDropDown({
             key={index}
             className="capitalize text-sm my-1 font-normal flex justify-evenly pl-0 items-center"
             checked={true}
-            onCheckedChange={()=>changeHandler(item)}
+            onCheckedChange={() => changeHandler(item)}
           >
-            <span className="flex justify-center p-1 rounded-sm items-center hover:bg-accent w-full cursor-pointer">
+            <span
+              className={`${
+                currentData === item.toLocaleLowerCase() ? "bg-accent" : ""
+              } flex justify-center p-1 rounded-sm items-center hover:bg-accent w-full cursor-pointer`}
+            >
               {item}
             </span>
           </DropdownMenuCheckboxItem>
