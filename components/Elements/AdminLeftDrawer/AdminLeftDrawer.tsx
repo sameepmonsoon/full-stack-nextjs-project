@@ -59,7 +59,7 @@ const AdminLeftDrawer = () => {
                 key={index}
                 className={`${
                   hideSiderDetail ? "lg:hidden h-6 lg:h-0" : "h-6"
-                } flex justify-start items-center font-bold text-[14px]`}
+                } flex justify-start items-center font-bold text-[14px] w-full`}
               >
                 {item.title}
               </div>
@@ -79,7 +79,7 @@ const AdminLeftDrawer = () => {
                         size={"iconWithText"}
                         className={`${
                           hideSiderDetail &&
-                          "lg:justify-center lg:p-0 justify-start gap-4 lg:gap-0"
+                          "lg:justify-center lg:p-0 justify-start gap-4 lg:gap-0 min-w-[3.2rem]"
                         } `}
                       >
                         <item.icon
