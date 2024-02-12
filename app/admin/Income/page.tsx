@@ -81,7 +81,8 @@ const IncomePage = () => {
   const [formValue, setFormValue] =
     useState<AddIncomeFormValueType>(initialValue);
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(5);
+  const [disablePagination, setDisablePagination] = useState(true);
   const theme = localStorage.getItem("theme");
 
   const fetchData = async () => {
@@ -90,6 +91,7 @@ const IncomePage = () => {
       setIncomeDetail(res.data);
       setTotalPosts(res.total);
       setIsFetching(false);
+      setDisablePagination(false);
     }
   };
 
@@ -203,7 +205,7 @@ const IncomePage = () => {
 
   useEffect(() => {
     fetchData();
-  }, [pageNumber, userDetail?.id]);
+  }, [pageNumber, userDetail?.id, pageSize]);
 
   const currentSubCat: any =
     Object.keys(IncomeSubcategoryConstant).find(
@@ -229,8 +231,10 @@ const IncomePage = () => {
   const [openFilter, setOpenFilter] = useState(false);
   const handleListPopOverToggle: any = (value?: string) => {
     setOpenFilter(!openFilter);
-    console.log(openFilter);
-
+    if (typeof value === "string" && value !== "none") {
+      setPageSize(1000);
+      setDisablePagination(true);
+    }
     if (typeof value === "string") setCurrentListPaymentType(value);
   };
   return (
@@ -282,13 +286,15 @@ const IncomePage = () => {
           color="safe"
           icon={GiWallet}
           type={"column"}
-          title={(totalIncomeDetail as any)[currentMethod] &&
-            <div className="flex justify-start items-center gap-0">
-              <TbCurrencyRupeeNepalese />
-              <span className="flex justify-start items-center relative -top-[2px]">
-                {(totalIncomeDetail as any)[currentMethod]}
-              </span>
-            </div>
+          title={
+            (totalIncomeDetail as any)[currentMethod] && (
+              <div className="flex justify-start items-center gap-0">
+                <TbCurrencyRupeeNepalese />
+                <span className="flex justify-start items-center relative -top-[2px]">
+                  {(totalIncomeDetail as any)[currentMethod]}
+                </span>
+              </div>
+            )
           }
           detail={`Total ${currentMethod} Balance`}
         />
@@ -707,13 +713,15 @@ const IncomePage = () => {
           }
           title={"History"}
           footer={
-            <PaginationBar
-              siblingCount={5}
-              currentPage={pageNumber}
-              totalCount={totalPosts}
-              pageSize={5}
-              handlePagination={handlePageNumberChange}
-            />
+            !disablePagination && (
+              <PaginationBar
+                siblingCount={5}
+                currentPage={pageNumber}
+                totalCount={totalPosts}
+                pageSize={5}
+                handlePagination={handlePageNumberChange}
+              />
+            )
           }
         >
           <div className="flex flex-col gap-1 w-full h-full">
