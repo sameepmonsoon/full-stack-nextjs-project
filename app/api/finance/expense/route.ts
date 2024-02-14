@@ -78,3 +78,87 @@ export async function GET(request: any) {
     });
   }
 }
+
+//delete
+export async function DELETE(request: any) {
+  try {
+    await connect();
+    const { searchParams } = new URL(request.url);
+    const expenseId = searchParams.get("expenseId");
+
+    const deletedIncome = await Expense.findByIdAndDelete(expenseId);
+    if (!deletedIncome) {
+      return NextResponse.json(
+        { message: "Expense not found", status: false },
+        { status: 404 }
+      );
+    }
+    return NextResponse.json(
+      { message: "Expense deleted successfully", status: true },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error deleting income:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error", status: false },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PATCH(request: any) {
+  try {
+    await connect();
+
+    const body = await request.json();
+    const {
+      amount,
+      category,
+      date,
+      method,
+      note,
+      source,
+      title,
+      userId,
+      expenseId,
+    } = body;
+    const updatedIncome = await Expense.findByIdAndUpdate(
+      expenseId,
+      {
+        amount,
+        category:[category],
+        date,
+        method: method.value,
+        note,
+        source:[source],
+        title,
+        userId,
+      },
+      {
+        new: true,
+      }
+    );
+
+   
+    if (!updatedIncome) {
+      return NextResponse.json(
+        { message: "Expense not found", status: false },
+        { status: 404 }
+      );
+    }
+    return NextResponse.json(
+      {
+        message: "Expense updated successfully",
+        income: updatedIncome,
+        status: true,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error updating income:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error", status: false },
+      { status: 500 }
+    );
+  }
+}

@@ -9,7 +9,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { GiWallet } from "react-icons/gi";
 import { TbCurrencyRupeeNepalese } from "react-icons/tb";
 import { LiaSlidersHSolid } from "react-icons/lia";
-import { CiMoneyCheck1 } from "react-icons/ci";
+import { CiEdit, CiMoneyCheck1 } from "react-icons/ci";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import { CiBank } from "react-icons/ci";
 import DetailCard from "@/components/Elements/Cards/DetailCard/DetailCard";
@@ -43,6 +43,7 @@ import { FilterIcon, FilterXIcon } from "lucide-react";
 import { CustomPopOver } from "@/components/Elements/CustomPopOver/CustomPopOver";
 import { CustomDropDown } from "@/components/Elements/CustomDropDown/CustomDropDown";
 import CustomToolTip from "@/components/Elements/CustomToolTip/CustomToolTip";
+import { MdDeleteOutline } from "react-icons/md";
 
 const IncomePage = () => {
   const routeHistory = useRouteHistory();
@@ -379,6 +380,16 @@ const IncomePage = () => {
               if (id <= 4) {
                 return (
                   <DetailCard
+                    extraIcons={
+                      <>
+                        <span className="group cursor-pointer hover:bg-red-400 backdrop-blur-md dark:bg-darkModeBg rounded-md p-[2px]">
+                          <MdDeleteOutline className=" " size={18} />
+                        </span>
+                        <span className="group cursor-pointer hover:bg-blue-400  backdrop-blur-md dark:bg-darkModeBg rounded-md p-[2px]">
+                          <CiEdit className=" " size={18} />
+                        </span>
+                      </>
+                    }
                     note={item?.note}
                     type="row"
                     image={{
@@ -811,6 +822,16 @@ const IncomePage = () => {
                   .map((item: any, id: number) => {
                     return (
                       <DetailCard
+                        extraIcons={
+                          <>
+                            <span className="group cursor-pointer hover:bg-red-400 backdrop-blur-md dark:bg-darkModeBg rounded-md p-[2px]">
+                              <MdDeleteOutline className=" " size={18} />
+                            </span>
+                            <span className="group cursor-pointer hover:bg-blue-400  backdrop-blur-md dark:bg-darkModeBg rounded-md p-[2px]">
+                              <CiEdit className=" " size={18} />
+                            </span>
+                          </>
+                        }
                         note={item?.note}
                         type="row"
                         image={{

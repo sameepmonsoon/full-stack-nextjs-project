@@ -9,7 +9,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { GiWallet } from "react-icons/gi";
 import { TbCurrencyRupeeNepalese } from "react-icons/tb";
 import { LiaSlidersHSolid } from "react-icons/lia";
-import { CiMoneyCheck1 } from "react-icons/ci";
+import { CiEdit, CiMoneyCheck1 } from "react-icons/ci";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import { CiBank } from "react-icons/ci";
 import DetailCard from "@/components/Elements/Cards/DetailCard/DetailCard";
@@ -26,7 +26,7 @@ import Select, {
 
 import { validateNumberField, validateTextField } from "@/Helpers/validateForm";
 import { getUserDetail } from "@/utils/token";
-import { AddIncomeFormValueType } from "@/utils/types";
+import { AddExpenseFormValueType, AddIncomeFormValueType } from "@/utils/types";
 import { useToast } from "@/components/ui/use-toast";
 import {
   IncomeCategoryConstant,
@@ -45,12 +45,13 @@ import CustomToolTip from "@/components/Elements/CustomToolTip/CustomToolTip";
 import { expenseCardConstant } from "@/Helpers/Constants/Admin/ExpenseConstants";
 import { debounce } from "@/Helpers/Debounce";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
+import { MdDeleteOutline } from "react-icons/md";
 
 const IncomePage = () => {
   const routeHistory = useRouteHistory();
   const userDetail: any = getUserDetail();
 
-  let initialValue: AddIncomeFormValueType = {
+  let initialValue: AddExpenseFormValueType = {
     title: "",
     amount: "",
     source: "",
@@ -59,12 +60,14 @@ const IncomePage = () => {
     note: "",
     method: "",
     userId: "",
+    expenseId: "",
   };
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [expenseDetail, setExpenseDetail] = useState<any[]>([]);
   const [totalPosts, setTotalPosts] = useState<number>(0);
   const [isFetching, setIsFetching] = useState<boolean>(true);
+  const [enableEdit, setEnableEdit] = useState<boolean>(false);
   const [balance, setBalance] = useState<{ totalBalance: number }>({
     totalBalance: 0,
   });
@@ -83,7 +86,7 @@ const IncomePage = () => {
     cheque: 0,
   });
   const [formValue, setFormValue] =
-    useState<AddIncomeFormValueType>(initialValue);
+    useState<AddExpenseFormValueType>(initialValue);
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [disablePagination, setDisablePagination] = useState(true);
@@ -102,7 +105,7 @@ const IncomePage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     const res = await fetch("/api/finance/expense", {
-      method: "POST",
+      method: `${enableEdit ? "PATCH" : "POST"}`,
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -123,6 +126,60 @@ const IncomePage = () => {
     }
     setIsSubmitting(false);
   }
+
+  //
+
+  async function handleDelete(expenseId: string) {
+    setIsSubmitting(true);
+    const res = await fetch(`/api/finance/expense?expenseId=${expenseId}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await res.json();
+    if (data.status) {
+      toast({
+        duration: 5000,
+        title: data.message,
+        variant: "success",
+      });
+      fetchData();
+      setFormValue(initialValue);
+    }
+    setIsSubmitting(false);
+  }
+
+  const handleEdit = (data: any) => {
+    setEnableEdit(true);
+
+    const {
+      amount,
+      date,
+      category,
+      method,
+      note,
+      title,
+      userId,
+      _id: expenseId,
+      source,
+    } = data;
+    
+    setFormValue({
+      ...formValue,
+      amount,
+      date,
+      category:category[0],
+      method: { value: method, label: method },
+      note,
+      title,
+      source: source[0],
+      expenseId,
+      userId,
+    });
+  };
   const handleListContainerSelect = (e: any) => {
     setCurrentListDay(e);
   };
@@ -141,6 +198,7 @@ const IncomePage = () => {
     setFormValue({ ...formValue, ["date"]: date });
   };
   const handleSelectChange = (e: any) => {
+    console.log(e);
     setFormValue({ ...formValue, ["method"]: e });
   };
   const handleCategoryChange = (e: any) => {
@@ -347,6 +405,24 @@ const IncomePage = () => {
               if (id <= 4) {
                 return (
                   <DetailCard
+                    extraIcons={
+                      <>
+                        <span className="group cursor-pointer hover:bg-red-400 backdrop-blur-md dark:bg-darkModeBg rounded-md p-[2px]">
+                          <MdDeleteOutline
+                            className=" "
+                            size={18}
+                            onClick={(e) => handleDelete(item._id)}
+                          />
+                        </span>
+                        <span className="group cursor-pointer hover:bg-blue-400  backdrop-blur-md dark:bg-darkModeBg rounded-md p-[2px]">
+                          <CiEdit
+                            className=" "
+                            size={18}
+                            onClick={(e) => handleEdit(item)}
+                          />
+                        </span>
+                      </>
+                    }
                     note={item?.note}
                     type="row"
                     image={{
@@ -383,6 +459,7 @@ const IncomePage = () => {
           </>
         )}
         <DialogBox
+          defaultOpen={enableEdit}
           dialogDescription="Add Expense Details"
           dialogTitle="Expense"
           trigger={
@@ -785,6 +862,24 @@ const IncomePage = () => {
                       .map((item: any, id: number) => {
                         return (
                           <DetailCard
+                            extraIcons={
+                              <>
+                                <span className="group cursor-pointer hover:bg-red-400 backdrop-blur-md dark:bg-darkModeBg rounded-md p-[2px]">
+                                  <MdDeleteOutline
+                                    className=" "
+                                    size={18}
+                                    onClick={(e) => handleDelete(item._id)}
+                                  />
+                                </span>
+                                <span className="group cursor-pointer hover:bg-blue-400  backdrop-blur-md dark:bg-darkModeBg rounded-md p-[2px]">
+                                  <CiEdit
+                                    className=" "
+                                    size={18}
+                                    onClick={(e) => handleEdit(item)}
+                                  />
+                                </span>
+                              </>
+                            }
                             note={item?.note}
                             type="row"
                             image={{

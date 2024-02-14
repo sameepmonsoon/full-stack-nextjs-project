@@ -20,15 +20,19 @@ export function DialogBox({
   dialogDescription,
   children,
   footer,
+  defaultOpen,
+  onOpenChange,
 }: {
   dialogDescription: string;
   trigger: React.ReactNode;
   children: React.ReactNode;
   footer?: React.ReactNode;
   dialogTitle: string;
+  defaultOpen?: boolean;
+  onOpenChange?: () => {};
 }) {
   return (
-    <Dialog>
+    <Dialog open={defaultOpen} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="sm:max-w-md dark:bg-darkModeBg opacity-100 dark:text-white border-accent/10 rounded-full shadow-sm">
         <DialogHeader>

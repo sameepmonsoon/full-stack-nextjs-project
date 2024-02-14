@@ -9,6 +9,7 @@ const DetailCard = ({
   detail,
   type,
   note,
+  extraIcons,
 }: {
   image: {
     asIcon: boolean;
@@ -18,12 +19,16 @@ const DetailCard = ({
   note: string;
   detail: string | React.ReactNode;
   type: "row" | "column";
+  extraIcons?: React.ReactNode;
 }) => {
   const [showIcons, setShowIcons] = useState(false);
   return (
     <div
-      onClick={() => {
-        setShowIcons(!showIcons);
+      onMouseEnter={() => {
+        setShowIcons(true);
+      }}
+      onMouseLeave={() => {
+        setShowIcons(false);
       }}
       className="relative flex overflow-hidden gap-3 flex-1 bg-white dark:bg-transparent rounded-[18px] px-2 py-2 min-w-[15rem] h-[4rem] items-start justify-start border-[1px] border-darkBg/20 dark:border-accent/10"
     >
@@ -38,13 +43,11 @@ const DetailCard = ({
           <>{image.content}</>
         )}
       </div>
-      <div className="top-0 px-2 rounded-[18px] left-0 absolute w-full backdrop-blur-sm bg-white/5 z-10 h-full flex-1 flex justify-end items-center gap-2">
-        <span className="w-10 h-10 rounded-full fill-red-400">
-         
-          <MdDeleteOutline />
-        </span>
-        <CiEdit />
-      </div>
+      {showIcons && (
+        <div className="top-0 px-2 rounded-[18px] left-0 absolute w-full backdrop-blur-[1px] bg-white/1  z-10 h-full flex-1 flex justify-end items-center gap-1">
+          {extraIcons}
+        </div>
+      )}
       <div
         className={`${
           type?.toLowerCase() === "column"
