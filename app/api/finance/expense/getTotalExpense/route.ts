@@ -58,10 +58,10 @@ export async function GET(request: any) {
     const totalChequeAmount =
       aggregatedData[0].totalChequeAmount[0]?.totalSum || 0;
 
-    const totalIncome = totalCashAmount + totalBankAmount + totalChequeAmount;
+    const totalExpense = totalCashAmount + totalBankAmount + totalChequeAmount;
 
     return NextResponse.json({
-      totalIncome,
+      totalExpense,
       totalCashAmount,
       totalBankAmount,
       totalChequeAmount,

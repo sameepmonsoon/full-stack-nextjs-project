@@ -9,7 +9,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { GiWallet } from "react-icons/gi";
 import { TbCurrencyRupeeNepalese } from "react-icons/tb";
 import { LiaSlidersHSolid } from "react-icons/lia";
-import { CiMoneyCheck1 } from "react-icons/ci";
+import { CiEdit, CiMoneyCheck1 } from "react-icons/ci";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import { CiBank } from "react-icons/ci";
 import DetailCard from "@/components/Elements/Cards/DetailCard/DetailCard";
@@ -43,6 +43,7 @@ import { FilterIcon, FilterXIcon } from "lucide-react";
 import { CustomPopOver } from "@/components/Elements/CustomPopOver/CustomPopOver";
 import { CustomDropDown } from "@/components/Elements/CustomDropDown/CustomDropDown";
 import CustomToolTip from "@/components/Elements/CustomToolTip/CustomToolTip";
+import { MdDeleteOutline } from "react-icons/md";
 
 const IncomePage = () => {
   const routeHistory = useRouteHistory();
@@ -63,7 +64,9 @@ const IncomePage = () => {
   const [incomeDetail, setIncomeDetail] = useState<any[]>([]);
   const [totalPosts, setTotalPosts] = useState<number>(0);
   const [isFetching, setIsFetching] = useState<boolean>(true);
-  const [balance, setBalance] = useState<{totalBalance:number}>({totalBalance:0});
+  const [balance, setBalance] = useState<{ totalBalance: number }>({
+    totalBalance: 0,
+  });
   //popover states
   const [toggle, setToggle] = useState(false);
   const [currentMethod, setCurrentMethod] = useState("income");
@@ -120,9 +123,38 @@ const IncomePage = () => {
     }
     setIsSubmitting(false);
   }
+
+  async function handleDelete(
+    e: React.FormEvent<HTMLElement>,
+    incomeId: string
+  ) {
+    e.preventDefault();
+    setIsSubmitting(true);
+    const res = await fetch(`/api/finance/income?incomeId=${incomeId}`, {
+      method: "DELTE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await res.json();
+    console.log(data);
+
+    if (data.status) {
+      toast({
+        duration: 900,
+        title: data.message,
+        variant: "success",
+      });
+      fetchData();
+      setFormValue(initialValue);
+    }
+    setIsSubmitting(false);
+  }
+
   const handleListContainerSelect = (e: any) => {
     setCurrentListDay(e);
-    console.log(e);
   };
   const handlePageNumberChange = (pageNumber: any) => {
     setPageNumber(pageNumber);
@@ -311,14 +343,14 @@ const IncomePage = () => {
           icon={GiWallet}
           type={"column"}
           title={
-            (totalIncomeDetail as any)[currentMethod] && (
-              <div className="flex justify-start items-center gap-0">
-                <TbCurrencyRupeeNepalese />
+            <div className="flex justify-start items-center gap-0">
+              <TbCurrencyRupeeNepalese />
+              {(totalIncomeDetail as any)[currentMethod] && (
                 <span className="flex justify-start items-center relative -top-[2px]">
                   {(totalIncomeDetail as any)[currentMethod]}
                 </span>
-              </div>
-            )
+              )}
+            </div>
           }
           detail={`Total ${currentMethod} Balance`}
         />
@@ -348,6 +380,16 @@ const IncomePage = () => {
               if (id <= 4) {
                 return (
                   <DetailCard
+                    extraIcons={
+                      <>
+                        <span className="group cursor-pointer hover:bg-red-400 backdrop-blur-md dark:bg-darkModeBg rounded-md p-[2px]">
+                          <MdDeleteOutline className=" " size={18} />
+                        </span>
+                        <span className="group cursor-pointer hover:bg-blue-400  backdrop-blur-md dark:bg-darkModeBg rounded-md p-[2px]">
+                          <CiEdit className=" " size={18} />
+                        </span>
+                      </>
+                    }
                     note={item?.note}
                     type="row"
                     image={{
@@ -389,7 +431,6 @@ const IncomePage = () => {
           trigger={
             <Button
               onClick={() => {
-                console.log("clicked");
                 setFormValue(initialValue);
               }}
               size={"lg"}
@@ -691,6 +732,7 @@ const IncomePage = () => {
 
       <div className="flex flex-1 gap-5 justify-start items-start flex-wrap">
         <ListContainer
+          hasData={totalPosts > 0}
           listTitleProps={
             <div className="flex gap-2 flex-1 ">
               <CustomDropDown
@@ -747,7 +789,7 @@ const IncomePage = () => {
           }
           title={"History"}
           footer={
-            !disablePagination && (
+            !disablePagination && totalPosts ? (
               <PaginationBar
                 siblingCount={5}
                 currentPage={pageNumber}
@@ -755,7 +797,7 @@ const IncomePage = () => {
                 pageSize={5}
                 handlePagination={handlePageNumberChange}
               />
-            )
+            ) : null
           }
         >
           <div className="flex flex-col gap-1 w-full h-full">
@@ -780,6 +822,16 @@ const IncomePage = () => {
                   .map((item: any, id: number) => {
                     return (
                       <DetailCard
+                        extraIcons={
+                          <>
+                            <span className="group cursor-pointer hover:bg-red-400 backdrop-blur-md dark:bg-darkModeBg rounded-md p-[2px]">
+                              <MdDeleteOutline className=" " size={18} />
+                            </span>
+                            <span className="group cursor-pointer hover:bg-blue-400  backdrop-blur-md dark:bg-darkModeBg rounded-md p-[2px]">
+                              <CiEdit className=" " size={18} />
+                            </span>
+                          </>
+                        }
                         note={item?.note}
                         type="row"
                         image={{
